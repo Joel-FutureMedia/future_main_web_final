@@ -15,10 +15,10 @@
     { group: "Inbox", items: [
       { id: "leads", label: "Leads" },
       { id: "contacts", label: "Contact Us" },
-      { id: "audits", label: "Media Audits" },
-      { id: "shopbeat", label: "Shopbeat" },
+      { id: "audits", label: "Media audits" },
+      { id: "shopbeat", label: "Shopbeat demos" },
       { id: "subscribers", label: "Newsletter" },
-      { id: "downloads", label: "Gated downloads" },
+      { id: "downloads", label: "Document requests" },
       { id: "applications", label: "Job applications" },
       { id: "freelancer-applications", label: "Freelancer applications" }
     ]},
@@ -26,10 +26,10 @@
       { id: "news", label: "News" },
       { id: "events", label: "Events" },
       { id: "gallery", label: "Gallery" },
-      { id: "vacancies", label: "Vacancies" },
-      { id: "freelancers", label: "Freelancer roles" },
       { id: "banners", label: "Banners" },
-      { id: "documents", label: "Documents" }
+      { id: "documents", label: "Documents" },
+      { id: "vacancies", label: "Vacancies" },
+      { id: "freelancers", label: "Freelancer roles" }
     ]},
     { group: "Email", items: [
       { id: "templates", label: "Templates" },
@@ -45,14 +45,78 @@
     { group: "Admin", items: [{ id: "users", label: "Users", super: true }] }
   ];
 
-  const state = { user: null, token: localStorage.getItem(tokenKey) };
+  const state = { user: null, token: localStorage.getItem(tokenKey), saving: false };
 
-  function toast(message, bad) {
-    const node = document.createElement("div");
-    node.className = "toast" + (bad ? " bad" : "");
+  function toast(message, tone, existing) {
+    const node = existing || document.createElement("div");
+    const kind = tone === true ? "bad" : tone === false || tone === "ok" || tone == null ? "ok" : tone;
+    node.className = "toast" + (kind === "bad" ? " bad" : kind === "pending" ? "" : " ok");
     node.textContent = message;
-    $("#toasts").appendChild(node);
-    setTimeout(() => node.remove(), 3200);
+    if (!node.parentNode) $("#toasts").appendChild(node);
+    clearTimeout(node._timer);
+    node._timer = setTimeout(() => node.remove(), kind === "bad" ? 5600 : kind === "pending" ? 12000 : 3200);
+    return node;
+  }
+
+  function hold(button, label) {
+    if (!button) return () => {};
+    const previous = button.textContent;
+    button.disabled = true;
+    button.textContent = label;
+    return () => {
+      button.disabled = false;
+      button.textContent = previous;
+    };
+  }
+
+  function wait(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  async function saveForm(ev, pending, success, work) {
+    ev.preventDefault();
+    if (state.saving) return;
+    state.saving = true;
+    const form = ev.target;
+    const card = $("#modalCard");
+    const button = form.querySelector("[type=submit]");
+    const release = hold(button, pending);
+    card?.classList.add("is-busy");
+    const note = toast(pending, "pending");
+    try {
+      const refresh = await work(ev);
+      toast(success, "ok", note);
+      if (button) button.textContent = "Done";
+      await wait(280);
+      closeModal();
+      if (typeof refresh === "function") {
+        try { await refresh(); } catch (error) {
+          toast(error.message || "Saved, but the list could not refresh", true);
+        }
+      }
+    } catch (error) {
+      toast(error.message || "Could not complete that", true, note);
+      release();
+    } finally {
+      state.saving = false;
+      card?.classList.remove("is-busy");
+    }
+  }
+
+  function fileName(url) {
+    try {
+      const clean = String(url || "").split("?")[0];
+      return decodeURIComponent(clean.split("/").pop() || "File");
+    } catch {
+      return "File";
+    }
+  }
+
+  function fileKind(type, url) {
+    const value = `${type || ""} ${url || ""}`.toLowerCase();
+    if (value.includes("video") || /\.(mp4|webm|mov|m4v)(\b|$)/.test(value)) return "video";
+    if (value.includes("pdf") || /\.(pdf|doc|docx|csv|xls|xlsx|ppt|pptx)(\b|$)/.test(value)) return "file";
+    return "image";
   }
 
   function escape(value) {
@@ -113,9 +177,8 @@
     $("#nav").innerHTML = NAV.map(group => {
       const items = group.items.filter(item => !item.super || role === "SUPER_ADMIN");
       if (!items.length) return "";
-      return `<details class="nav-group" open><summary>${group.group}</summary>` + items.map(item =>
-        `<a href="#/${item.id}" data-id="${item.id}">${item.label}</a>`
-      ).join("") + `</details>`;
+      const links = items.map(item => `<a href="#/${item.id}" data-id="${item.id}">${item.label}</a>`).join("");
+      return `<div class="nav-group"><h4>${group.group}</h4>${links}</div>`;
     }).join("");
   }
 
@@ -152,27 +215,39 @@
     if (type === "select") return `<label>${label}<select name="${name}">${extra}</select></label>`;
     if (type === "checkbox") return `<label><input type="checkbox" name="${name}" ${value ? "checked" : ""}> ${label}</label>`;
     if (type === "color") return `<label>${label}<span class="color"><input type="color" value="${escape(value || "#0b1f3a")}" data-color="${name}"><input name="${name}" value="${escape(value || "")}"></span></label>`;
-    if (type === "file") return `<label class="${extra}">${label}<input type="file" name="${name}" ${name === "images" ? "multiple accept='image/*'" : ""}></label>`;
+    if (type === "file") {
+      const accept = name === "images" || name === "image" ? "accept=\"image/*\"" : name === "media" ? "accept=\"image/*,video/*,.pdf\"" : "";
+      const multiple = name === "images" ? "multiple" : "";
+      return `<label class="${extra}">${label}<input type="file" name="${name}" ${multiple} ${accept}></label>`;
+    }
     return `<label>${label}<input name="${name}" type="${type}" value="${escape(value)}"></label>`;
   }
 
   async function confirmDelete(path, label) {
     if (!confirm("Delete this " + label + "?")) return false;
+    const note = toast("Deleting " + label + "…", "pending");
     await api(path, { method: "DELETE" });
-    toast("Deleted");
+    toast(label.charAt(0).toUpperCase() + label.slice(1) + " deleted", "ok", note);
     return true;
   }
 
   async function download(path, name) {
+    const note = toast("Preparing download…", "pending");
     const response = await fetch(FM.base + path, { headers: { Authorization: "Bearer " + state.token } });
-    if (!response.ok) throw new Error("Download failed");
+    if (!response.ok) {
+      toast("Download failed", true, note);
+      throw new Error("Download failed");
+    }
+    const header = response.headers.get("Content-Disposition") || "";
+    const named = header.match(/filename="?([^";]+)"?/i);
     const blob = await response.blob();
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = name || "download";
+    link.download = (named && named[1]) || name || "download";
     link.click();
     URL.revokeObjectURL(url);
+    toast("Download started", "ok", note);
   }
 
   function dl(obj) {
@@ -424,8 +499,26 @@
     draw();
   }
 
-  function mediaCell(url) {
-    return url ? `<img class="list-media" src="${escape(FM.fileUrl(url))}" alt="">` : "";
+  function mediaCell(url, type, label) {
+    if (!url && !label) return `<span class="file-miss">No file</span>`;
+    if (!url && label) return `<span class="file-chip">${escape(label)}</span>`;
+    const src = escape(FM.fileUrl(url));
+    const kind = fileKind(type, url);
+    if (kind === "video") {
+      return `<video class="list-media" src="${src}" muted playsinline controls preload="metadata" onerror="this.outerHTML='<span class=&quot;file-miss&quot;>Video unavailable</span>'"></video>`;
+    }
+    if (kind === "file") {
+      return `<a class="file-chip" href="${src}" target="_blank" rel="noopener">${escape(label || fileName(url))}</a>`;
+    }
+    return `<a class="media-link" href="${src}" target="_blank" rel="noopener"><img class="list-media" src="${src}" alt="" loading="lazy" onerror="this.classList.add('contain'); this.onerror=function(){this.closest('.media-link').outerHTML='<span class=&quot;file-miss&quot;>Preview unavailable</span>'}"></a>`;
+  }
+
+  function currentFile(item) {
+    if (!item) return "";
+    const path = item.mediaPath || item.imagePath || null;
+    const label = item.originalFileName || null;
+    if (!path && !label) return "";
+    return `<div class="current-file full"><span>Current file</span>${mediaCell(path, item.mediaType || item.contentType, label)}</div>`;
   }
 
   async function pageNews() {
@@ -433,7 +526,7 @@
     const path = filter === "pending" ? "/api/news/pending" : filter === "mine" ? "/api/news/my" : "/api/news";
     const res = await api(path);
     const rows = (res.data || []).map(n => `<tr>
-      <td>${mediaCell(n.mediaPath)}</td>
+      <td>${mediaCell(n.mediaPath, n.mediaType)}</td>
       <td><b>${escape(n.title)}</b></td>
       <td>${n.approvalStatus === "APPROVED" ? pill("Approved","green") : n.approvalStatus === "REJECTED" ? pill("Rejected","red") : pill("Pending","amber")}</td>
       <td>${escape(n.createdBy?.fullName)}</td>
@@ -455,8 +548,18 @@
       const id = buttonFrom(e).dataset.edit || buttonFrom(e).dataset.del || buttonFrom(e).dataset.act;
       if (!id) return;
       if (buttonFrom(e).dataset.del) { if (await confirmDelete("/api/news/" + id, "story")) pageNews(); return; }
-      if (buttonFrom(e).dataset.kind === "approve") { await api("/api/news/" + id + "/approve", { method: "PUT" }); toast("Approved"); return pageNews(); }
-      if (buttonFrom(e).dataset.kind === "reject") { await api("/api/news/" + id + "/reject", { method: "PUT" }); toast("Rejected"); return pageNews(); }
+      if (buttonFrom(e).dataset.kind === "approve") {
+        const note = toast("Approving story…", "pending");
+        await api("/api/news/" + id + "/approve", { method: "PUT" });
+        toast("Story approved", "ok", note);
+        return pageNews();
+      }
+      if (buttonFrom(e).dataset.kind === "reject") {
+        const note = toast("Rejecting story…", "pending");
+        await api("/api/news/" + id + "/reject", { method: "PUT" });
+        toast("Story rejected", "ok", note);
+        return pageNews();
+      }
       newsForm((await api("/api/news/" + id)).data);
     };
   }
@@ -464,18 +567,18 @@
   function newsForm(item) {
     openModal(`<h2>${item ? "Edit story" : "New story"}</h2><form id="mform" class="form-grid">
       ${field("Title", "title", item?.title || "", "text")}
-      ${field("Media", "media", "", "file")}
+      ${currentFile(item)}
+      ${field(item ? "Replace media" : "Media", "media", "", "file")}
       ${field("Description", "description", item?.description || "", "textarea")}
       <div class="modal-actions full"><button type="button" class="ghost" data-close type="button">Cancel</button><button type="submit">Save</button></div>
     </form>`);
-    $("#mform").onsubmit = async ev => {
-      ev.preventDefault();
+    $("#mform").onsubmit = ev => saveForm(ev, "Saving story…", item ? "Story updated" : "Story created", async () => {
       const fd = new FormData(ev.target);
-      if (!item && !fd.get("media")?.size) return toast("Media is required", true);
+      if (!item && !fd.get("media")?.size) throw new Error("Choose an image or video for this story");
       if (item && !fd.get("media")?.size) fd.delete("media");
       await api(item ? "/api/news/" + item.id : "/api/news", { method: item ? "PUT" : "POST", form: true, body: fd });
-      closeModal(); toast("Saved"); pageNews();
-    };
+      return pageNews;
+    });
   }
 
   async function simpleMediaPage(cfg) {
@@ -500,18 +603,17 @@
   const pageEvents = () => simpleMediaPage({
     path: "/api/events", noun: "event", title: "Events", createLabel: "New event",
     headers: ["", "Title", "Date", ""],
-    row: e => `<tr><td>${mediaCell(e.mediaPath)}</td><td>${escape(e.title)}</td><td>${fmt(e.createdDate)}</td><td><div class="row-actions"><button type="button" class="mini" data-edit="${e.id}">Edit</button><button class="mini danger" data-del="${e.id}">Delete</button></div></td></tr>`,
+    row: e => `<tr><td>${mediaCell(e.mediaPath, e.mediaType)}</td><td>${escape(e.title)}</td><td>${fmt(e.createdDate)}</td><td><div class="row-actions"><button type="button" class="mini" data-edit="${e.id}">Edit</button><button class="mini danger" data-del="${e.id}">Delete</button></div></td></tr>`,
     deletePath: id => "/api/events/" + id, itemPath: id => "/api/events/" + id,
     form: item => multipartForm(item ? "Edit event" : "New event",
-      field("Title", "title", item?.title || "") + field("Media", "media", "", "file") + field("Description", "description", item?.description || "", "textarea"),
-      async ev => {
-        ev.preventDefault();
+      field("Title", "title", item?.title || "") + currentFile(item) + field(item ? "Replace media" : "Media", "media", "", "file") + field("Description", "description", item?.description || "", "textarea"),
+      ev => saveForm(ev, "Saving event…", item ? "Event updated" : "Event created", async () => {
         const fd = new FormData(ev.target);
-        if (!item && !fd.get("media")?.size) return toast("Media is required", true);
+        if (!item && !fd.get("media")?.size) throw new Error("Choose an image or video for this event");
         if (item && !fd.get("media")?.size) fd.delete("media");
         await api(item ? "/api/events/" + item.id : "/api/events", { method: item ? "PUT" : "POST", form: true, body: fd });
-        closeModal(); toast("Saved"); pageEvents();
-      })
+        return pageEvents;
+      }))
   });
 
   const pageGallery = () => simpleMediaPage({
@@ -520,16 +622,15 @@
     row: g => `<tr><td>${mediaCell(g.imagePath)}</td><td>${escape(g.title)}</td><td>${fmt(g.createdDate)}</td><td><div class="row-actions"><button type="button" class="mini" data-edit="${g.id}">Edit</button><button class="mini danger" data-del="${g.id}">Delete</button></div></td></tr>`,
     deletePath: id => "/api/gallery/" + id, itemPath: id => "/api/gallery/" + id,
     form: item => multipartForm(item ? "Edit image" : "Upload images",
-      field("Title", "title", item?.title || "") + field(item ? "Replace image" : "Images", item ? "image" : "images", "", "file", "full"),
-      async ev => {
-        ev.preventDefault();
+      field("Title", "title", item?.title || "") + currentFile(item) + field(item ? "Replace image" : "Images", item ? "image" : "images", "", "file", "full"),
+      ev => saveForm(ev, "Uploading images…", item ? "Image updated" : "Images uploaded", async () => {
         const fd = new FormData(ev.target);
         if (item) {
           if (!fd.get("image")?.size) fd.delete("image");
           await api("/api/gallery/" + item.id, { method: "PUT", form: true, body: fd });
         } else {
           const files = ev.target.images.files;
-          if (!files.length) return toast("Choose images", true);
+          if (!files.length) throw new Error("Choose at least one image");
           if (files.length === 1) {
             const single = new FormData();
             if (fd.get("title")) single.append("title", fd.get("title"));
@@ -542,28 +643,32 @@
             await api("/api/gallery/multiple", { method: "POST", form: true, body: multi });
           }
         }
-        closeModal(); toast("Saved"); pageGallery();
-      })
+        return pageGallery;
+      }))
   });
 
   const pageVacancies = () => simpleMediaPage({
     path: "/api/vacancies", noun: "vacancy", title: "Vacancies", createLabel: "New vacancy",
     headers: ["", "Role", "Status", "Closes", ""],
-    row: v => `<tr><td>${mediaCell(v.mediaPath)}</td><td><b>${escape(v.title)}</b></td><td>${v.published ? pill("Live","green") : pill("Hidden","amber")}</td><td>${v.closingDate || "—"}</td><td><div class="row-actions"><button type="button" class="mini" data-act="${v.id}" data-kind="${v.published ? "unpublish" : "publish"}">${v.published ? "Unpublish" : "Publish"}</button><button type="button" class="mini" data-edit="${v.id}">Edit</button><button class="mini danger" data-del="${v.id}">Delete</button></div></td></tr>`,
+    row: v => `<tr><td>${mediaCell(v.mediaPath, v.mediaType)}</td><td><b>${escape(v.title)}</b></td><td>${v.published ? pill("Live","green") : pill("Hidden","amber")}</td><td>${v.closingDate || "—"}</td><td><div class="row-actions"><button type="button" class="mini" data-act="${v.id}" data-kind="${v.published ? "unpublish" : "publish"}">${v.published ? "Unpublish" : "Publish"}</button><button type="button" class="mini" data-edit="${v.id}">Edit</button><button class="mini danger" data-del="${v.id}">Delete</button></div></td></tr>`,
     deletePath: id => "/api/vacancies/" + id, itemPath: id => "/api/vacancies/" + id,
-    onAct: async (id, kind) => { await api("/api/vacancies/" + id + "/" + kind, { method: "PUT" }); pageVacancies(); },
+    onAct: async (id, kind) => {
+      const note = toast(kind === "publish" ? "Publishing vacancy…" : "Hiding vacancy…", "pending");
+      await api("/api/vacancies/" + id + "/" + kind, { method: "PUT" });
+      toast(kind === "publish" ? "Vacancy is live" : "Vacancy hidden", "ok", note);
+      pageVacancies();
+    },
     form: item => multipartForm(item ? "Edit vacancy" : "New vacancy",
       field("Title", "title", item?.title || "") + field("Closing date", "closingDate", item?.closingDate || "", "date") +
-      field("Media", "media", "", "file") + `<label>Published <select name="published"><option value="true" ${item?.published !== false ? "selected" : ""}>Yes</option><option value="false">No</option></select></label>` +
+      currentFile(item) + field(item ? "Replace media" : "Media", "media", "", "file") + `<label>Published <select name="published"><option value="true" ${item?.published !== false ? "selected" : ""}>Yes</option><option value="false">No</option></select></label>` +
       field("Description", "description", item?.description || "", "textarea"),
-      async ev => {
-        ev.preventDefault();
+      ev => saveForm(ev, "Saving vacancy…", item ? "Vacancy updated" : "Vacancy created", async () => {
         const fd = new FormData(ev.target);
-        if (!item && !fd.get("media")?.size) return toast("Media is required", true);
+        if (!item && !fd.get("media")?.size) throw new Error("Choose an image or PDF for this vacancy");
         if (item && !fd.get("media")?.size) fd.delete("media");
         await api(item ? "/api/vacancies/" + item.id : "/api/vacancies", { method: item ? "PUT" : "POST", form: true, body: fd });
-        closeModal(); toast("Saved"); pageVacancies();
-      })
+        return pageVacancies;
+      }))
   });
 
   const pageFreelancers = () => simpleMediaPage({
@@ -571,7 +676,12 @@
     headers: ["Role", "Status", "Closes", ""],
     row: role => `<tr><td><b>${escape(role.title)}</b></td><td>${role.published ? pill("Live","green") : pill("Hidden","amber")}</td><td>${role.closingDate || "—"}</td><td><div class="row-actions"><button type="button" class="mini" data-act="${role.id}" data-kind="${role.published ? "unpublish" : "publish"}">${role.published ? "Unpublish" : "Publish"}</button><button type="button" class="mini" data-edit="${role.id}">Edit</button><button type="button" class="mini danger" data-del="${role.id}">Delete</button></div></td></tr>`,
     deletePath: id => "/api/freelancers/" + id, itemPath: id => "/api/freelancers/" + id,
-    onAct: async (id, kind) => { await api("/api/freelancers/" + id + "/" + kind, { method: "PUT" }); pageFreelancers(); },
+    onAct: async (id, kind) => {
+      const note = toast(kind === "publish" ? "Publishing role…" : "Hiding role…", "pending");
+      await api("/api/freelancers/" + id + "/" + kind, { method: "PUT" });
+      toast(kind === "publish" ? "Role is live" : "Role hidden", "ok", note);
+      pageFreelancers();
+    },
     form: item => {
       openModal(`<h2>${item ? "Edit role" : "New freelancer role"}</h2><form id="mform" class="form-grid">
         ${field("Title", "title", item?.title || "")}
@@ -580,13 +690,13 @@
         ${field("Description", "description", item?.description || "", "textarea")}
         <div class="modal-actions full"><button type="button" class="ghost" data-close>Cancel</button><button type="submit">Save</button></div>
       </form>`);
-      $("#mform").onsubmit = async ev => {
-        ev.preventDefault();
+      $("#mform").onsubmit = ev => saveForm(ev, "Saving role…", item ? "Role updated" : "Role created", async () => {
         const body = Object.fromEntries(new FormData(ev.target).entries());
+        if (!body.title) throw new Error("Title is required");
         body.published = body.published !== "false";
         await api(item ? "/api/freelancers/" + item.id : "/api/freelancers", { method: item ? "PUT" : "POST", body });
-        closeModal(); toast("Saved"); pageFreelancers();
-      };
+        return pageFreelancers;
+      });
     }
   });
 
@@ -596,36 +706,35 @@
     row: b => `<tr><td>${mediaCell(b.imagePath)}</td><td>${escape(b.title)}</td><td>${b.active ? pill("Active","green") : pill("Off","amber")}</td><td><div class="row-actions"><button type="button" class="mini" data-edit="${b.id}">Edit</button><button class="mini danger" data-del="${b.id}">Delete</button></div></td></tr>`,
     deletePath: id => "/api/banners/" + id, itemPath: id => "/api/banners/" + id,
     form: item => multipartForm(item ? "Edit banner" : "New banner",
-      field("Title", "title", item?.title || "") + field("Image", "image", "", "file") +
+      field("Title", "title", item?.title || "") + currentFile(item) + field(item ? "Replace image" : "Image", "image", "", "file") +
       (item ? `<label>Active <select name="active"><option value="true" ${item.active ? "selected" : ""}>Yes</option><option value="false">No</option></select></label>` : "") +
       field("Description", "description", item?.description || "", "textarea"),
-      async ev => {
-        ev.preventDefault();
+      ev => saveForm(ev, "Saving banner…", item ? "Banner updated" : "Banner created", async () => {
         const fd = new FormData(ev.target);
-        if (!item && !fd.get("image")?.size) return toast("Image is required", true);
+        if (!item && !fd.get("image")?.size) throw new Error("Choose a banner image");
         if (item && !fd.get("image")?.size) fd.delete("image");
         await api(item ? "/api/banners/" + item.id : "/api/banners", { method: item ? "PUT" : "POST", form: true, body: fd });
-        closeModal(); toast("Saved"); pageBanners();
-      })
+        return pageBanners;
+      }))
   });
 
   const pageDocuments = () => simpleMediaPage({
     path: "/api/gated-documents", noun: "document", title: "Gated documents", createLabel: "Upload document",
-    headers: ["Title", "Status", "Date", ""],
-    row: d => `<tr><td><b>${escape(d.title)}</b><div style="color:var(--muted)">${escape(d.description || "")}</div></td><td>${d.active ? pill("Live","green") : pill("Hidden","amber")}</td><td>${fmt(d.createdDate)}</td><td><div class="row-actions"><button type="button" class="mini" data-reqs="${d.id}">Requests</button><button type="button" class="mini" data-file="${d.id}">File</button><button type="button" class="mini" data-edit="${d.id}">Edit</button><button class="mini danger" data-del="${d.id}">Delete</button></div></td></tr>`,
+    headers: ["File", "Title", "Status", "Date", ""],
+    row: d => `<tr><td>${mediaCell(null, d.contentType, d.originalFileName || "Document")}</td><td><b>${escape(d.title)}</b><div style="color:var(--muted)">${escape(d.description || "")}</div></td><td>${d.active ? pill("Live","green") : pill("Hidden","amber")}</td><td>${fmt(d.createdDate)}</td><td><div class="row-actions"><button type="button" class="mini" data-reqs="${d.id}">Requests</button><button type="button" class="mini" data-file="${d.id}">Download</button><button type="button" class="mini" data-edit="${d.id}">Edit</button><button class="mini danger" data-del="${d.id}">Delete</button></div></td></tr>`,
     deletePath: id => "/api/gated-documents/" + id, itemPath: id => "/api/gated-documents/" + id,
     form: item => multipartForm(item ? "Edit document" : "Upload document",
-      field("Public title", "title", item?.title || "") + field("File", "file", "", "file") +
+      field("Public title", "title", item?.title || "") + currentFile(item) + field(item ? "Replace file" : "File", "file", "", "file") +
       (item ? `<label>Active <select name="active"><option value="true" ${item.active ? "selected" : ""}>Yes</option><option value="false">No</option></select></label>` : "") +
       field("Description", "description", item?.description || "", "textarea"),
-      async ev => {
-        ev.preventDefault();
+      ev => saveForm(ev, "Uploading document…", item ? "Document updated" : "Document uploaded", async () => {
         const fd = new FormData(ev.target);
-        if (!item && !fd.get("file")?.size) return toast("File is required", true);
+        if (!item && !fd.get("file")?.size) throw new Error("Choose the document file to upload");
+        if (!String(fd.get("title") || "").trim()) throw new Error("A public title is required");
         if (item && !fd.get("file")?.size) fd.delete("file");
         await api(item ? "/api/gated-documents/" + item.id : "/api/gated-documents", { method: item ? "PUT" : "POST", form: true, body: fd });
-        closeModal(); toast("Saved"); pageDocuments();
-      })
+        return pageDocuments;
+      }))
   });
 
   document.body.addEventListener("click", async e => {
@@ -667,9 +776,12 @@
     </form>`);
     $("#mform").onsubmit = async ev => {
       ev.preventDefault();
-      const body = Object.fromEntries(new FormData(ev.target).entries());
-      await api(item ? cfg.path + "/" + item.id : cfg.path, { method: item ? "PUT" : "POST", body });
-      closeModal(); toast("Saved"); catalogPage(cfg)();
+      return saveForm(ev, "Saving…", item ? cfg.noun + " updated" : cfg.noun + " added", async () => {
+        const body = Object.fromEntries(new FormData(ev.target).entries());
+        if (!String(body.name || "").trim()) throw new Error("Name is required");
+        await api(item ? cfg.path + "/" + item.id : cfg.path, { method: item ? "PUT" : "POST", body });
+        return () => catalogPage(cfg)();
+      });
     };
   }
 
@@ -701,7 +813,13 @@
       const id = buttonFrom(e).dataset.edit || buttonFrom(e).dataset.del || buttonFrom(e).dataset.act;
       if (!id) return;
       if (buttonFrom(e).dataset.del) { if (await confirmDelete("/api/users/" + id, "user")) pageUsers(); return; }
-      if (buttonFrom(e).dataset.kind) { await api("/api/users/" + id + "/" + buttonFrom(e).dataset.kind, { method: "PUT" }); return pageUsers(); }
+      if (buttonFrom(e).dataset.kind) {
+        const kind = buttonFrom(e).dataset.kind;
+        const note = toast(kind === "enable" ? "Enabling user…" : "Disabling user…");
+        await api("/api/users/" + id + "/" + kind, { method: "PUT" });
+        toast(kind === "enable" ? "User enabled" : "User disabled", false, note);
+        return pageUsers();
+      }
       userForm((await api("/api/users/" + id)).data);
     };
     draw();
@@ -715,13 +833,14 @@
       <label>Role<select name="role"><option ${item?.role === "USER" ? "selected" : ""}>USER</option><option ${item?.role === "SUPER_ADMIN" ? "selected" : ""}>SUPER_ADMIN</option></select></label>
       <div class="modal-actions full"><button type="button" class="ghost" data-close type="button">Cancel</button><button type="submit">Save</button></div>
     </form>`);
-    $("#mform").onsubmit = async ev => {
-      ev.preventDefault();
+    $("#mform").onsubmit = ev => saveForm(ev, "Saving user…", item ? "User updated" : "User created", async () => {
       const body = Object.fromEntries(new FormData(ev.target).entries());
+      if (!body.fullName || !body.email) throw new Error("Name and email are required");
+      if (!item && !body.password) throw new Error("A password is required for a new user");
       if (item && !body.password) delete body.password;
       await api(item ? "/api/users/" + item.id : "/api/users", { method: item ? "PUT" : "POST", body });
-      closeModal(); toast("Saved"); pageUsers();
-    };
+      return pageUsers;
+    });
   }
 
   async function pageTemplates() {
@@ -741,12 +860,11 @@
 
   async function createTemplate() {
     openModal(`<h2>New template</h2><form id="mform">${field("Name", "name")}<div class="modal-actions"><button type="button" class="ghost" data-close type="button">Cancel</button><button type="submit">Create</button></div></form>`);
-    $("#mform").onsubmit = async ev => {
-      ev.preventDefault();
+    $("#mform").onsubmit = ev => saveForm(ev, "Creating template…", "Template created", async () => {
+      if (!ev.target.name.value.trim()) throw new Error("A template name is required");
       const created = await api("/api/email-templates", { method: "POST", body: { name: ev.target.name.value, headerHeadline: "Hello {{name}}", bodyContent: "Write your message here.", ctaText: "Visit FutureMedia", ctaUrl: "https://futuremedia.simplyfound.com.na", footerText: "Future Media · Namibia" } });
-      closeModal();
       location.hash = "#/templates/" + created.data.id;
-    };
+    });
   }
 
   async function pageTemplateEditor(id) {
@@ -799,7 +917,18 @@
       const html = (await api("/api/email-templates/" + id + "/preview")).data.html;
       $("#preview").srcdoc = html;
     }
-    $("#saveBtn").onclick = async () => { await refresh(); toast("Template saved"); };
+    $("#saveBtn").onclick = async () => {
+      const release = hold($("#saveBtn"), "Saving…");
+      const note = toast("Saving template…");
+      try {
+        await refresh();
+        toast("Template saved", false, note);
+      } catch (error) {
+        toast(error.message || "Could not save the template", true, note);
+      } finally {
+        release();
+      }
+    };
     $("#tpl").addEventListener("input", e => {
       if (buttonFrom(e).dataset.color) {
         const linked = e.target.closest("label")?.querySelector(`[name="${buttonFrom(e).dataset.color}"]`);
@@ -812,11 +941,13 @@
     });
     $("#tplFile").onchange = async ev => {
       if (!ev.target.files[0]) return;
+      const note = toast("Uploading image…");
       const fd = new FormData();
       fd.append("section", $("#tpl").section.value);
       fd.append("file", ev.target.files[0]);
       await api("/api/email-templates/" + id + "/images", { method: "POST", form: true, body: fd });
-      toast("Image added"); pageTemplateEditor(id);
+      toast("Image added", false, note);
+      pageTemplateEditor(id);
     };
     $("#tplImages")?.addEventListener("click", async e => {
       if (!buttonFrom(e).dataset.img) return;
@@ -825,11 +956,9 @@
     });
     $("#testBtn").onclick = () => {
       openModal(`<h2>Send test email</h2><form id="mform">${field("Email","email", state.user?.email || "", "email")}${field("Name","name", state.user?.fullName || "")}${field("Company","company","Future Media")}<div class="modal-actions"><button type="button" class="ghost" data-close type="button">Cancel</button><button type="submit">Send</button></div></form>`);
-      $("#mform").onsubmit = async ev => {
-        ev.preventDefault();
+      $("#mform").onsubmit = ev => saveForm(ev, "Sending test…", "Test email sent", async () => {
         await api("/api/email-templates/" + id + "/test", { method: "POST", body: Object.fromEntries(new FormData(ev.target).entries()) });
-        closeModal(); toast("Test email sent");
-      };
+      });
     };
     refresh();
   }
@@ -970,7 +1099,7 @@
     const hash = (location.hash || "#/overview").replace(/^#\/?/, "");
     const [id, extra] = hash.split("/");
     setActive(id || "overview");
-    view.innerHTML = `<div class="empty">Loading…</div>`;
+    view.innerHTML = `<div class="view-loading">Loading…</div>`;
     try {
       if (id === "templates" && extra) return await pageTemplateEditor(extra);
       if (id === "campaigns" && extra) return await pageCampaignEditor(extra);
@@ -985,13 +1114,17 @@
   $("#loginForm").addEventListener("submit", async ev => {
     ev.preventDefault();
     $("#loginError").hidden = true;
+    const button = ev.target.querySelector("[type=submit]");
+    const release = hold(button, "Signing in…");
     try {
       const body = Object.fromEntries(new FormData(ev.target).entries());
       const res = await FM.request("/api/auth/login", { method: "POST", body });
+      toast("Welcome back, " + (res.data.fullName || "admin"), "ok");
       signIn(res.data);
     } catch (error) {
       $("#loginError").hidden = false;
       $("#loginError").textContent = error.message;
+      release();
     }
   });
 

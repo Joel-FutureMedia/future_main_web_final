@@ -4,11 +4,30 @@
   const title = document.querySelector("#ctitle");
   const desc = document.querySelector("#cdesc");
   const hero = document.querySelector(".confhero");
+  const panel = document.querySelector(".cpanel");
   if (!sl || !dots || !title || !desc || typeof CONFS === "undefined") return;
   const pics = [...sl.querySelectorAll("img")].map((img) => img.getAttribute("src"));
   let i = 0;
   let timer;
   let token = 0;
+
+  if (panel) {
+    const rows = panel.querySelector(".rows");
+    const top = panel.querySelector(".top");
+    if (rows && top && !panel.querySelector(".arrows")) {
+      const arrows = document.createElement("div");
+      arrows.className = "arrows";
+      arrows.innerHTML = `<button type="button" data-dir="-1" aria-label="Previous options">↑</button><button type="button" data-dir="1" aria-label="Next options">↓</button>`;
+      top.appendChild(arrows);
+      arrows.onclick = (e) => {
+        const btn = e.target.closest("button");
+        if (!btn) return;
+        const step = Math.max(72, Math.round(rows.clientHeight * 0.72));
+        rows.scrollBy({ top: Number(btn.dataset.dir) * step, behavior: "smooth" });
+      };
+    }
+  }
+
   CONFS.forEach((_, k) => {
     const button = document.createElement("button");
     button.setAttribute("aria-label", "Slide " + (k + 1));
@@ -21,6 +40,7 @@
   function go(n) {
     i = (n + CONFS.length) % CONFS.length;
     sl.style.transform = `translateX(-${i * 100}%)`;
+    [...sl.querySelectorAll("figure")].forEach((fig, k) => fig.classList.toggle("is-active", k === i));
     [...dots.children].forEach((dot, k) => dot.classList.toggle("on", k === i));
     if (hero && pics[i]) hero.style.backgroundImage = `url("${pics[i]}")`;
     const current = ++token;

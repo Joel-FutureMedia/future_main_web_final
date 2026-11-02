@@ -1,7 +1,7 @@
 const NAV=[
+  {href:"/advertise.html",label:"Advertise",menu:[["/advertise.html","Solutions"],["/advertise.html","Advertise"],["/terms.html","Policy"],["/index.html#offers","Offers"]]},
   {href:"/conferences.html",label:"Conferences"},
   {href:"/brands.html",label:"Brands",menu:[["/brands.html","Broadcast"],["/digital.html","Digital"]]},
-  {href:"/advertise.html",label:"Advertise",menu:[["/advertise.html","Solutions"],["/advertise.html","Advertise"],["/terms.html","Policy"],["/index.html#offers","Offers"]]},
   {href:"/audience.html",label:"Audience Insights",menu:[["/audience.html","Insights"],["/media-audit.html","Media Audit"]]},
   {href:"/news.html",label:"News"}
 ];
@@ -44,8 +44,59 @@ document.querySelectorAll(".panel[data-offers]").forEach(panel=>{
     const img=`<img class="${o[4]==="contain"?"contain":"cover"}" src="${o[3]}" alt="" decoding="async" loading="lazy">`;
     return `<a class="offer" href="${o[2]}"><span class="thumb">${img}</span><span><b>${o[0]}</b><small>${o[1]}</small></span></a>`;
   }).join("");
-  panel.querySelector(".arrows")?.remove();
+  let arrows=panel.querySelector(".arrows");
+  if(!arrows){
+    arrows=document.createElement("div");
+    arrows.className="arrows";
+    arrows.innerHTML=`<button type="button" data-dir="-1" aria-label="Previous offers">↑</button><button type="button" data-dir="1" aria-label="Next offers">↓</button>`;
+    const top=panel.querySelector(".top");
+    if(top) top.appendChild(arrows); else panel.appendChild(arrows);
+  }
+  arrows.onclick=e=>{
+    const btn=e.target.closest("button");
+    if(!btn)return;
+    const step=Math.max(96,Math.round(rows.clientHeight*.72));
+    rows.scrollBy({top:Number(btn.dataset.dir)*step,behavior:"smooth"});
+  };
 });
+
+(()=>{
+  const quotes=document.querySelector(".quotes");
+  if(!quotes)return;
+  const slides=[...quotes.querySelectorAll("article")];
+  if(slides.length<2)return;
+  quotes.classList.add("quotes-slider");
+  const viewport=document.createElement("div");
+  viewport.className="quotes-viewport";
+  const track=document.createElement("div");
+  track.className="quotes-track";
+  slides.forEach(slide=>{
+    slide.classList.add("quote-slide");
+    track.appendChild(slide);
+  });
+  viewport.appendChild(track);
+  quotes.innerHTML="";
+  quotes.appendChild(viewport);
+  const dots=document.createElement("div");
+  dots.className="quotes-dots";
+  slides.forEach((_,i)=>{
+    const b=document.createElement("button");
+    b.type="button";
+    b.setAttribute("aria-label","Testimonial "+(i+1));
+    b.onclick=()=>go(i);
+    dots.appendChild(b);
+  });
+  quotes.appendChild(dots);
+  let i=0,timer;
+  const go=n=>{
+    i=(n+slides.length)%slides.length;
+    track.style.transform=`translate3d(-${i*viewport.clientWidth}px,0,0)`;
+    [...dots.children].forEach((d,k)=>d.classList.toggle("on",k===i));
+  };
+  const reset=()=>{clearInterval(timer);timer=setInterval(()=>go(i+1),5200)};
+  go(0);reset();
+  window.addEventListener("resize",()=>{track.style.transition="none";go(i);requestAnimationFrame(()=>{track.style.transition="";})});
+})();
 document.querySelectorAll("[data-bg]").forEach(el=>{
   const io=new IntersectionObserver(entries=>{
     if(!entries.some(entry=>entry.isIntersecting))return;
@@ -154,7 +205,7 @@ document.querySelector("#waOpen").addEventListener("click",()=>{
 });
 document.querySelector("#chatClose").addEventListener("click",()=>{chat.hidden=true});
 if(!matchMedia("(prefers-reduced-motion: reduce)").matches){
-  const revealNodes=[...document.querySelectorAll(".team h1, .member, .about-story, .about-stats, .belief, main.sub > *, .wrap .card, .hero .panel, .upc h2, .upc .e, .quotes article")];
+  const revealNodes=[...document.querySelectorAll(".team h1, .member, .about-story, .about-stats, .belief, main.sub > *, .wrap .card, .hero .panel, .upc h2, .upc .e, .quotes:not(.quotes-slider) article, .quotes.quotes-slider")];
   const reveal=new IntersectionObserver(entries=>{
     entries.forEach(entry=>{
       if(!entry.isIntersecting)return;

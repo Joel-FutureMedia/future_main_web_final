@@ -18,7 +18,13 @@ const brands = [
     map: `${root}/One%20Africa/FM_Brands_One_Map.svg`,
     copy: "One Africa Television brings Namibians news, drama, sport and entertainment on DStv and local free-to-air platforms. Stories told in a voice audiences recognise as their own.",
     f: 46, m: 54, lsm: "6 - 10",
-    offers: offer("/assets/Brandlogos/oneafrica.webp", [["Prime Time Spots", "Be seen during the evening news."], ["Sponsor a Show", "Own a weekly programme slot."], ["Sports Bundle", "Live match sponsorship package."]])
+    offers: offer("/assets/Brandlogos/oneafrica.webp", [
+      ["Prime Time Spots", "Be seen during the evening news."],
+      ["Sponsor a Show", "Own a weekly programme slot."],
+      ["Sports Bundle", "Live match sponsorship package."],
+      ["Breakfast News", "Own the morning bulletin break."],
+      ["Brand Integration", "Product placement across lifestyle shows."]
+    ])
   },
   {
     id: "99fm", color: "#e30a7f", name: "99FM", logo: "/assets/Brandlogos/99fm.webp",
@@ -27,7 +33,13 @@ const brands = [
     map: `${root}/99FM/FM_Brands_99_Map.svg`,
     copy: "99FM reaches people driven by economic, social, and personal advancement, with uplifting talk and Hip-Hop, Afro, and RnB.",
     f: 48, m: 52, lsm: "7 - 10",
-    offers: offer("/assets/Brandlogos/99fm.webp", [["Dolar Set", "Drive-time ad packages."], ["Amat Gorum", "Conversation Café sponsorship."], ["Tes Tolut Kim", "Live-read host mentions."]])
+    offers: offer("/assets/Brandlogos/99fm.webp", [
+      ["Dolar Set", "Drive-time ad packages."],
+      ["Amat Gorum", "Conversation Café sponsorship."],
+      ["Tes Tolut Kim", "Live-read host mentions."],
+      ["Night Mix", "Late-evening takeover slots."],
+      ["Social Boost", "On-air plus Instagram story package."]
+    ])
   },
   {
     id: "nova", color: "#1e8dc5", name: "Nova FM", logo: "/assets/Brandlogos/novafm.webp",
@@ -36,7 +48,13 @@ const brands = [
     map: `${root}/Nova/FM_Brands_Nova_Map.svg`,
     copy: "Nova FM is pop, R&B and lifestyle talk for young professionals. A strong home for fashion, finance, tech and entertainment brands.",
     f: 55, m: 45, lsm: "6 - 10",
-    offers: offer("/assets/Brandlogos/novafm.webp", [["Morning Show", "Own the daily wake-up call."], ["Weekend Mix", "Presenting sponsor slots."], ["Digital Boost", "Social and stream bundles."]])
+    offers: offer("/assets/Brandlogos/novafm.webp", [
+      ["Morning Show", "Own the daily wake-up call."],
+      ["Weekend Mix", "Presenting sponsor slots."],
+      ["Digital Boost", "Social and stream bundles."],
+      ["Lifestyle Hour", "Fashion and beauty segment."],
+      ["Listener Club", "Competition and giveaway package."]
+    ])
   },
   {
     id: "fresh", color: "#ee3030", name: "Fresh FM", logo: "/assets/Brandlogos/freshfm.webp",
@@ -45,7 +63,13 @@ const brands = [
     map: `${root}/Fresh/FM_Brands_Fresh_Map.svg`,
     copy: "Fresh FM plays the biggest hits, Afro house and party energy for a young, social audience. Built for beverages, retail, mobile and events.",
     f: 45, m: 55, lsm: "5 - 9",
-    offers: offer("/assets/Brandlogos/freshfm.webp", [["Friday Fresh", "Weekend kick-off takeover."], ["Campus Tour", "Activation at universities."], ["Hit Countdown", "Sponsor the weekly chart."]])
+    offers: offer("/assets/Brandlogos/freshfm.webp", [
+      ["Friday Fresh", "Weekend kick-off takeover."],
+      ["Campus Tour", "Activation at universities."],
+      ["Hit Countdown", "Sponsor the weekly chart."],
+      ["Club Night", "Live remote from venues."],
+      ["Street Team", "Brand ambassadors on air and on ground."]
+    ])
   },
   {
     id: "omulunga", color: "#0c6633", name: "Omulunga Radio", logo: "/assets/Brandlogos/omulungar.webp",
@@ -54,7 +78,13 @@ const brands = [
     map: `${root}/Omulunga/FM_Brands_Omulunga_Map.svg`,
     copy: "Omulunga Radio broadcasts in Oshiwambo, connecting families across the northern regions with local music, community news and cultural stories.",
     f: 51, m: 49, lsm: "4 - 8",
-    offers: offer("/assets/Brandlogos/omulungar.webp", [["Community News", "Sponsor the daily bulletin."], ["Gospel Sunday", "Family-focused slots."], ["Market Day", "Retail promotion packages."]])
+    offers: offer("/assets/Brandlogos/omulungar.webp", [
+      ["Community News", "Sponsor the daily bulletin."],
+      ["Gospel Sunday", "Family-focused slots."],
+      ["Market Day", "Retail promotion packages."],
+      ["Cultural Hour", "Own a heritage music segment."],
+      ["Regional Drive", "Northern Namibia roadshow package."]
+    ])
   },
   {
     id: "radiowave", color: "#143443", name: "Radio Wave", logo: "/assets/Brandlogos/radiowave.webp",
@@ -63,7 +93,13 @@ const brands = [
     map: `${root}/Radiowave/FM_Brands_Wave_Map.svg`,
     copy: "Radio Wave plays classic and contemporary favourites for working adults and decision makers through the workday.",
     f: 49, m: 51, lsm: "7 - 10",
-    offers: offer("/assets/Brandlogos/radiowave.webp", [["Workday Drive", "Sponsor the 9 to 5 playlist."], ["Business Hour", "Thought leadership segment."], ["Classic Weekend", "Premium lifestyle slots."]])
+    offers: offer("/assets/Brandlogos/radiowave.webp", [
+      ["Workday Drive", "Sponsor the 9 to 5 playlist."],
+      ["Business Hour", "Thought leadership segment."],
+      ["Classic Weekend", "Premium lifestyle slots."],
+      ["Afternoon Soft", "Midday soft-sell packages."],
+      ["Decision Maker", "Executive audience live reads."]
+    ])
   }
 ];
 ---
@@ -76,13 +112,14 @@ const brands = [
     <p class="eyebrow">The network</p>
     <h1>Six Broadcast brands. One powerful network.</h1>
     <p>Scroll to move from one brand to the next. Each station fills the screen on its own.</p>
-  </div>
-  <div class="orbit" aria-hidden="true">
-    <img class="orbit-core" src={`${root}/logo-cirlce.png`} alt="">
-    <div class="orbit-spin">
-      {logos.map(([src, name], i) => <span style={`--i:${i}`}><img src={src} alt={name}></span>)}
+    <div class="intro-brands" aria-label="Broadcast brands">
+      {logos.map(([src, name]) => <img src={src} alt={name} decoding="async">)}
     </div>
   </div>
+  <a class="scroll-cue" href={`#${brands[0].id}`}>
+    <span class="scroll-arrow" aria-hidden="true"></span>
+    <span>Scroll down to explore our broadcast brands</span>
+  </a>
 </section>
 
 {brands.map(brand => (

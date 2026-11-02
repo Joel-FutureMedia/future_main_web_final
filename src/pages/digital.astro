@@ -12,7 +12,9 @@ const logos = [
 const offer = (logo, href = "/contact.html") => [
   ["Talk to sales", "Plan a campaign with the FutureMedia team.", href, logo, "contain"],
   ["Free media audit", "A clear read on where your brand should be.", "/media-audit.html", logo, "contain"],
-  ["Book a demo", "See how Shopbeat can change the room.", "/shopbeat.html", logo, "contain"]
+  ["Book a demo", "See how Shopbeat can change the room.", "/shopbeat.html", logo, "contain"],
+  ["Launch package", "Launch-week content and amplification.", href, logo, "contain"],
+  ["Always-on plan", "Stay visible with a monthly digital mix.", href, logo, "contain"]
 ];
 const brands = [
   {
@@ -56,13 +58,14 @@ const brands = [
     <p class="eyebrow">The network</p>
     <h1>Five Digital brands. One powerful network.</h1>
     <p>Scroll to move from one brand to the next. Each platform fills the screen on its own.</p>
-  </div>
-  <div class="orbit" aria-hidden="true">
-    <img class="orbit-core" src="/assets/Broadcast%20Brands/logo-cirlce.png" alt="">
-    <div class="orbit-spin" style="--step:72deg">
-      {logos.map(([src, name], i) => <span style={`--i:${i}`}><img src={src} alt={name}></span>)}
+    <div class="intro-brands" aria-label="Digital brands">
+      {logos.map(([src, name]) => <img src={src} alt={name} decoding="async">)}
     </div>
   </div>
+  <a class="scroll-cue" href={`#${brands[0].id}`}>
+    <span class="scroll-arrow" aria-hidden="true"></span>
+    <span>Scroll down to explore our digital brands</span>
+  </a>
 </section>
 
 {brands.map(brand => (

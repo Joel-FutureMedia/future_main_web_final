@@ -9,11 +9,25 @@
   }
 
   function note(id, message, ok) {
-    const node = $(id);
+    const node = typeof id === "string" ? $(id) : id;
     if (!node) return;
     node.hidden = false;
-    node.className = "note " + (ok ? "ok" : "bad");
+    node.setAttribute("role", "status");
+    node.className = "note " + (ok ? "ok" : "bad") + (node.classList.contains("sub-note") ? " sub-note" : "");
     node.textContent = message;
+    node.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  function busy(form, label) {
+    const button = form.querySelector("[type=submit]");
+    if (!button) return () => {};
+    const previous = button.textContent;
+    button.disabled = true;
+    button.textContent = label;
+    return next => {
+      button.disabled = false;
+      button.textContent = next || previous;
+    };
   }
 
   function pop(html, cardClass = "pop-card") {
@@ -128,12 +142,16 @@
       ev.preventDefault();
       const fd = new FormData(ev.target);
       fd.append("vacancyId", job.id);
+      const release = busy(ev.target, "Sending application…");
+      note("#applyNote", "Sending your application…", true);
       try {
         await FM.request("/api/applications/apply", { method: "POST", form: true, body: fd });
-        note("#applyNote", "Application sent. We’ll be in touch.", true);
+        note("#applyNote", "Application received. We’ll be in touch.", true);
         ev.target.querySelector("[type=submit]").disabled = true;
+        ev.target.querySelector("[type=submit]").textContent = "Application sent";
       } catch (error) {
         note("#applyNote", error.message, false);
+        release();
       }
     };
   }
@@ -148,13 +166,17 @@
     ]);
     form.onsubmit = async ev => {
       ev.preventDefault();
+      const release = busy(form, "Sending…");
+      note("#contactNote", "Sending your message…", true);
       try {
         const body = Object.fromEntries(new FormData(form).entries());
         await FM.request("/api/contact", { method: "POST", body });
-        note("#contactNote", "Thanks — the sales team will follow up.", true);
         form.reset();
+        note("#contactNote", "Message received. The sales team will follow up shortly.", true);
+        release("Send message");
       } catch (error) {
-        note("#contactNote", error.message, false);
+        note("#contactNote", error.message || "We could not send that message. Please try again.", false);
+        release();
       }
     };
   }
@@ -169,8 +191,8 @@
       grid.innerHTML = items.map(item => `
         <article class="news-card" data-id="${item.id}">
           ${item.mediaType === "VIDEO"
-            ? `<video src="${escape(FM.fileUrl(item.mediaPath))}" muted></video>`
-            : `<img src="${escape(FM.fileUrl(item.mediaPath))}" alt="">`}
+            ? `<video src="${escape(FM.fileUrl(item.mediaPath))}" muted onerror="this.remove()"></video>`
+            : `<img src="${escape(FM.fileUrl(item.mediaPath))}" alt="" onerror="this.remove()">`}
           <div class="body"><h3>${escape(item.title)}</h3><small>Read story</small></div>
         </article>`).join("");
       grid.onclick = async e => {
@@ -199,8 +221,8 @@
       grid.innerHTML = items.map(item => `
         <article class="news-card" data-id="${item.id}">
           ${item.mediaType === "VIDEO"
-            ? `<video src="${escape(FM.fileUrl(item.mediaPath))}" muted></video>`
-            : `<img src="${escape(FM.fileUrl(item.mediaPath))}" alt="">`}
+            ? `<video src="${escape(FM.fileUrl(item.mediaPath))}" muted onerror="this.remove()"></video>`
+            : `<img src="${escape(FM.fileUrl(item.mediaPath))}" alt="" onerror="this.remove()">`}
           <div class="body"><h3>${escape(item.title)}</h3><small>View event</small></div>
         </article>`).join("");
       grid.onclick = async e => {
@@ -243,13 +265,17 @@
     await fillSelect(form.feelingId, "/api/shopbeat/feelings/public");
     form.onsubmit = async ev => {
       ev.preventDefault();
+      const release = busy(form, "Sending…");
+      note("#shopbeatNote", "Sending your demo request…", true);
       try {
         const body = Object.fromEntries(new FormData(form).entries());
         await FM.request("/api/shopbeat/demo", { method: "POST", body });
-        note("#shopbeatNote", "Demo request sent.", true);
         form.reset();
+        note("#shopbeatNote", "Demo request received. We’ll be in touch about Shopbeat.", true);
+        release("Request demo");
       } catch (error) {
-        note("#shopbeatNote", error.message, false);
+        note("#shopbeatNote", error.message || "We could not send that request. Please try again.", false);
+        release();
       }
     };
   }
@@ -353,12 +379,15 @@
         `);
         form.querySelector("#docForm").onsubmit = async ev2 => {
           ev2.preventDefault();
+          const release = busy(ev2.target, "Sending…");
+          const email = ev2.target.email.value;
+          note("#docNote", "Sending " + doc.title + "…", true);
           try {
             await FM.request("/api/gated-documents/" + doc.id + "/request", { method: "POST", body: Object.fromEntries(new FormData(ev2.target).entries()) });
-            note("#docNote", "Sent to your inbox.", true);
-            ev2.target.querySelector("[type=submit]").disabled = true;
+            ev2.target.innerHTML = `<p class="note ok" role="status">Request received. We’ll email ${escape(doc.title)} to ${escape(email)}.</p>`;
           } catch (error) {
-            note("#docNote", error.message, false);
+            note("#docNote", error.message || "We could not send that document. Please try again.", false);
+            release();
           }
         };
       };
@@ -396,11 +425,15 @@
         `);
         modal.querySelector("#docForm").onsubmit = async ev => {
           ev.preventDefault();
+          const release = busy(ev.target, "Sending…");
+          const email = ev.target.email.value;
+          note("#docNote", "Sending " + doc.title + "…", true);
           try {
             await FM.request("/api/gated-documents/" + doc.id + "/request", { method: "POST", body: Object.fromEntries(new FormData(ev.target).entries()) });
-            note("#docNote", "Sent to your inbox.", true);
+            ev.target.innerHTML = `<p class="note ok" role="status">Request received. We’ll email ${escape(doc.title)} to ${escape(email)}.</p>`;
           } catch (error) {
-            note("#docNote", error.message, false);
+            note("#docNote", error.message || "We could not send that document. Please try again.", false);
+            release();
           }
         };
       };
@@ -444,16 +477,28 @@
   }
 
   async function subscribe(form) {
+    let status = form.querySelector(".sub-note");
+    if (!status) {
+      status = document.createElement("p");
+      status.className = "note sub-note";
+      status.hidden = true;
+      form.appendChild(status);
+    }
     form.onsubmit = async ev => {
       ev.preventDefault();
       const body = Object.fromEntries(new FormData(form).entries());
       body.language = body.language || "ENGLISH";
+      const release = busy(form, "Subscribing…");
+      note(status, "Subscribing you to FutureMedia updates…", true);
       try {
         await FM.request("/api/subscriptions", { method: "POST", body });
-        form.querySelector("button").textContent = "Subscribed";
         form.reset();
+        note(status, "You’re subscribed. We’ll send FutureMedia updates to your inbox.", true);
+        release("Subscribed");
+        form.querySelector("[type=submit]").disabled = true;
       } catch (error) {
-        alert(error.message);
+        note(status, error.message || "We could not subscribe you right now. Please try again.", false);
+        release();
       }
     };
   }

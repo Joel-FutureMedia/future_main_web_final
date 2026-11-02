@@ -32,7 +32,10 @@ window.FM = (function () {
 
   function fileUrl(path) {
     if (!path) return "";
-    if (/^https?:\/\//i.test(path)) return path;
+    if (/^https?:\/\//i.test(path)) {
+      // Keep absolute MinIO / CDN links intact for previews and downloads.
+      return path;
+    }
     return base.replace(/\/$/, "") + "/" + String(path).replace(/^\/+/, "");
   }
 

@@ -120,10 +120,12 @@ if (deck && slides.length) {
     if (next < 0 || next > slides.length - 1) return;
     go(next, false);
   }, { passive: true });
-  links.forEach(link => {
+  const jumpLinks = [...links, ...document.querySelectorAll(".scroll-cue")];
+  jumpLinks.forEach(link => {
     link.addEventListener("click", event => {
-      const id = link.getAttribute("href").slice(1);
-      const next = slides.findIndex(slide => slide.id === id);
+      const href = link.getAttribute("href") || "";
+      const id = href.startsWith("#") ? href.slice(1) : "";
+      const next = id ? slides.findIndex(slide => slide.id === id) : 1;
       if (next < 0) return;
       event.preventDefault();
       go(next, false);

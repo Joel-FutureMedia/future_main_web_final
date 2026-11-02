@@ -353,6 +353,9 @@
   async function submit() {
     nextBtn.disabled = true;
     nextBtn.textContent = "Sending…";
+    backBtn.disabled = true;
+    skipBtn.disabled = true;
+    setError("");
     try {
       const response = await fetch(`${API_BASE}/api/media-audit`, {
         method: "POST",
@@ -370,6 +373,8 @@
       setError(error.message || "Could not submit your media audit. Please try again.");
       nextBtn.disabled = false;
       nextBtn.textContent = "Submit";
+      backBtn.disabled = false;
+      skipBtn.disabled = false;
     }
   }
 
