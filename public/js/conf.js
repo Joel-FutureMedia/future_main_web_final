@@ -13,18 +13,24 @@
 
   if (panel) {
     const rows = panel.querySelector(".rows");
+    let arrows = panel.querySelector(".arrows");
     const top = panel.querySelector(".top");
-    if (rows && top && !panel.querySelector(".arrows")) {
-      const arrows = document.createElement("div");
-      arrows.className = "arrows";
-      arrows.innerHTML = `<button type="button" data-dir="-1" aria-label="Previous options">↑</button><button type="button" data-dir="1" aria-label="Next options">↓</button>`;
-      top.appendChild(arrows);
-      arrows.onclick = (e) => {
-        const btn = e.target.closest("button");
-        if (!btn) return;
-        const step = Math.max(72, Math.round(rows.clientHeight * 0.72));
-        rows.scrollBy({ top: Number(btn.dataset.dir) * step, behavior: "smooth" });
-      };
+    if (rows) {
+      if (!arrows && top) {
+        arrows = document.createElement("div");
+        arrows.className = "arrows";
+        arrows.innerHTML = `<button type="button" data-dir="-1" aria-label="Previous options">↑</button><button type="button" data-dir="1" aria-label="Next options">↓</button>`;
+        top.appendChild(arrows);
+      }
+      if (arrows) {
+        arrows.onclick = (e) => {
+          const btn = e.target.closest("button");
+          if (!btn) return;
+          const item = rows.querySelector("a");
+          const step = item ? item.getBoundingClientRect().height + 10 : 96;
+          rows.scrollBy({ top: Number(btn.dataset.dir) * step, behavior: "smooth" });
+        };
+      }
     }
   }
 

@@ -91,6 +91,7 @@ document.querySelectorAll(".panel[data-offers]").forEach(panel=>{
   const go=n=>{
     i=(n+slides.length)%slides.length;
     track.style.transform=`translate3d(-${i*viewport.clientWidth}px,0,0)`;
+    slides.forEach((slide,k)=>slide.classList.toggle("is-active",k===i));
     [...dots.children].forEach((d,k)=>d.classList.toggle("on",k===i));
   };
   const reset=()=>{clearInterval(timer);timer=setInterval(()=>go(i+1),5200)};

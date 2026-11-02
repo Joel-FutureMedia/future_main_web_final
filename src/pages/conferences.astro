@@ -14,7 +14,13 @@ import Layout from '../layouts/Layout.astro';
 <div class="dots"></div>
 </div>
 <aside class="cpanel">
-<div class="top"><h2>Join the conversation</h2></div>
+<div class="top">
+<h2>Join the conversation</h2>
+<div class="arrows">
+<button type="button" data-dir="-1" aria-label="Previous options">↑</button>
+<button type="button" data-dir="1" aria-label="Next options">↓</button>
+</div>
+</div>
 <div class="rows list">
 <a href="/contact.html">Become a Sponsor</a>
 <a href="/contact.html">Sponsor Coffee</a>
@@ -22,6 +28,8 @@ import Layout from '../layouts/Layout.astro';
 <a href="/news.html">Newsletter Sign Up</a>
 <a href="/about.html">FAQ</a>
 <a href="/gallery.html">Past Events</a>
+<a href="/contact.html">Request a Proposal</a>
+<a href="/contact.html">Book a Table</a>
 </div>
 </aside>
 </div>
