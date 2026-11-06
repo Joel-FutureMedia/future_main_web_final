@@ -1,10 +1,29 @@
 ---
 import Layout from '../layouts/Layout.astro';
+const bg = "/assets/vacancies/bg.png";
 ---
-<Layout title="Freelancers – FutureMedia">
-<main class="jobs">
-  <h1>Freelancers</h1>
+<Layout title="Freelancers – FutureMedia" bodyClass="careers freelance" preload={bg}>
+<section class="careers-hero" style={`--careers-bg:url('${bg}')`}>
+  <div class="careers-copy">
+    <p class="eyebrow">Careers at Future Media</p>
+    <h1>Your next chapter<br>starts here.</h1>
+    <p>We’re a Namibian media family that builds trusted brands, bold ideas and real opportunity. If you’re ready to grow with people who care - we’d love to meet you.</p>
+    <div class="careers-actions">
+      <a class="pill" href="#roles">See open briefs</a>
+      <a class="careers-link" href="/vacancies.html">Looking for a full-time role?</a>
+    </div>
+  </div>
+</section>
+
+<main class="jobs careers-body">
+  <div class="careers-intro">
+    <h2 id="roles">Freelance opportunities</h2>
+    <p>Tell us what you do best. When the right project lands, we’ll know who to call.</p>
+  </div>
   <div class="job-grid" id="freelanceGrid"><p>Loading roles…</p></div>
-  <a class="job-freelance" href="/vacancies.html">See open vacancies</a>
+  <a class="job-freelance" href="/vacancies.html">
+    <span>See open vacancies</span>
+    <small>Ready for a permanent seat at the table? Explore full-time roles.</small>
+  </a>
 </main>
 </Layout>

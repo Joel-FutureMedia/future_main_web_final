@@ -1,5 +1,4 @@
 const svgText = fetch("/assets/namibia.svg").then(r => r.text());
-const C = 2 * Math.PI * 42;
 
 svgText.then(svg => {
   document.querySelectorAll(".nam-map").forEach(el => {
@@ -24,13 +23,14 @@ svgText.then(svg => {
 document.querySelectorAll(".gender").forEach(el => {
   const f = Number(el.dataset.f);
   const m = Number(el.dataset.m);
+  const R = 36;
+  const ring = 2 * Math.PI * R;
   el.innerHTML = `<svg viewBox="0 0 120 120" aria-hidden="true">
-    <circle class="track" cx="60" cy="60" r="42"></circle>
-    <circle class="arc" cx="60" cy="60" r="42" stroke-dasharray="${C}" stroke-dashoffset="${C}"></circle>
-    <text class="gf" x="60" y="66" text-anchor="middle">${f}%</text>
+    <circle class="ring" cx="60" cy="60" r="${R}"></circle>
+    <circle class="arc" cx="60" cy="60" r="${R}" stroke-dasharray="${ring}" stroke-dashoffset="${ring}"></circle>
   </svg>
-  <div class="glegend"><span><i></i>${f}% Female</span><span><i class="m"></i>${m}% Male</span></div>`;
-  el.dataset.off = String(C * (1 - f / 100));
+  <div class="glegend"><span>${f}% Female</span><span>${m}% Male</span></div>`;
+  el.dataset.off = String(ring * (1 - f / 100));
 });
 
 function runCount(el) {
@@ -48,17 +48,87 @@ function runCount(el) {
   requestAnimationFrame(step);
 }
 
-const sections = [...document.querySelectorAll(".brand")];
+const deck = document.querySelector(".branddeck");
+const slides = [...document.querySelectorAll(".brandstage .slide")];
 const links = [...document.querySelectorAll(".rail a")];
-const watch = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (!entry.isIntersecting) return;
-    entry.target.classList.add("in");
-    links.forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#" + entry.target.id));
-    entry.target.querySelectorAll(".count").forEach(runCount);
-    entry.target.querySelectorAll(".gender .arc").forEach(arc => {
-      arc.style.strokeDashoffset = arc.closest(".gender").dataset.off;
+let index = 0;
+let lock = false;
+
+function show(slide) {
+  slide.classList.add("in");
+  slide.querySelectorAll(".count").forEach(runCount);
+  slide.querySelectorAll(".gender .arc").forEach(arc => {
+    arc.style.strokeDashoffset = arc.closest(".gender").dataset.off;
+  });
+  links.forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#" + slide.id));
+}
+
+function go(next, fromScroll) {
+  next = Math.max(0, Math.min(slides.length - 1, next));
+  if (next === index) return;
+  const dir = next > index ? "down" : "up";
+  const prev = slides[index];
+  prev.classList.remove("on", "dir-down", "dir-up");
+  prev.classList.add("out");
+  index = next;
+  const slide = slides[index];
+  slide.classList.remove("out");
+  slide.classList.add("on", dir === "down" ? "dir-down" : "dir-up");
+  show(slide);
+  setTimeout(() => prev.classList.remove("out"), 40);
+  if (!fromScroll && deck) {
+    const span = deck.offsetHeight - window.innerHeight;
+    const y = deck.offsetTop + (slides.length === 1 ? 0 : (index / (slides.length - 1)) * span);
+    lock = true;
+    window.scrollTo({ top: y, behavior: "smooth" });
+    const release = () => { lock = false; };
+    window.addEventListener("scrollend", release, { once: true });
+    setTimeout(release, 900);
+  }
+}
+
+if (deck && slides.length) {
+  const start = slides.findIndex(slide => slide.id === location.hash.replace("#", ""));
+  show(slides[0]);
+  if (start > 0) go(start, true);
+  window.addEventListener("scroll", () => {
+    if (lock) return;
+    const span = deck.offsetHeight - window.innerHeight;
+    if (span <= 0) return;
+    const p = Math.min(1, Math.max(0, (window.scrollY - deck.offsetTop) / span));
+    go(Math.round(p * (slides.length - 1)), true);
+  }, { passive: true });
+  window.addEventListener("wheel", event => {
+    if (event.target.closest(".rows, .panel")) return;
+    const box = deck.getBoundingClientRect();
+    const inside = box.top <= 2 && box.bottom >= window.innerHeight - 2;
+    if (!inside || Math.abs(event.deltaY) < 12) return;
+    const next = index + (event.deltaY > 0 ? 1 : -1);
+    if (next < 0 || next > slides.length - 1) return;
+    event.preventDefault();
+    if (lock) return;
+    go(next, false);
+  }, { passive: false });
+  let touchY = 0;
+  window.addEventListener("touchstart", event => { touchY = event.touches[0].clientY; }, { passive: true });
+  window.addEventListener("touchend", event => {
+    const box = deck.getBoundingClientRect();
+    if (box.top > 2 || box.bottom < window.innerHeight - 2) return;
+    const delta = touchY - event.changedTouches[0].clientY;
+    if (Math.abs(delta) < 40) return;
+    const next = index + (delta > 0 ? 1 : -1);
+    if (next < 0 || next > slides.length - 1) return;
+    go(next, false);
+  }, { passive: true });
+  const jumpLinks = [...links, ...document.querySelectorAll(".scroll-cue")];
+  jumpLinks.forEach(link => {
+    link.addEventListener("click", event => {
+      const href = link.getAttribute("href") || "";
+      const id = href.startsWith("#") ? href.slice(1) : "";
+      const next = id ? slides.findIndex(slide => slide.id === id) : 1;
+      if (next < 0) return;
+      event.preventDefault();
+      go(next, false);
     });
   });
-}, { threshold: 0.42 });
-sections.forEach(section => watch.observe(section));
+}

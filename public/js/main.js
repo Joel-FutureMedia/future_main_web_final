@@ -37,13 +37,20 @@ document.querySelector("#ftr").innerHTML=`<footer>
 <div class="chat-quick" id="chatQuick"></div>
 <form id="chatForm"><input id="chatInput" autocomplete="off" placeholder="Type a message"><button type="submit">Send</button></form>
 </div>`;
-document.querySelectorAll(".panel[data-offers]").forEach(panel=>{
-  const offers=JSON.parse(panel.dataset.offers);
+document.querySelectorAll(".panel[data-offers], .panel[data-list]").forEach(panel=>{
   const rows=panel.querySelector(".rows");
-  rows.innerHTML=offers.map(o=>{
-    const img=`<img class="${o[4]==="contain"?"contain":"cover"}" src="${o[3]}" alt="" decoding="async" loading="lazy">`;
-    return `<a class="offer" href="${o[2]}"><span class="thumb">${img}</span><span><b>${o[0]}</b><small>${o[1]}</small></span></a>`;
-  }).join("");
+  if(!rows)return;
+  if(panel.dataset.list){
+    const items=JSON.parse(panel.dataset.list);
+    rows.classList.add("list");
+    rows.innerHTML=items.map(([label,href])=>`<a href="${href}">${label}</a>`).join("");
+  }else{
+    const offers=JSON.parse(panel.dataset.offers);
+    rows.innerHTML=offers.map(o=>{
+      const img=`<img class="${o[4]==="contain"?"contain":"cover"}" src="${o[3]}" alt="" decoding="async" loading="lazy">`;
+      return `<a class="offer" href="${o[2]}"><span class="thumb">${img}</span><span><b>${o[0]}</b><small>${o[1]}</small></span></a>`;
+    }).join("");
+  }
   let arrows=panel.querySelector(".arrows");
   if(!arrows){
     arrows=document.createElement("div");
@@ -206,7 +213,7 @@ document.querySelector("#waOpen").addEventListener("click",()=>{
 });
 document.querySelector("#chatClose").addEventListener("click",()=>{chat.hidden=true});
 if(!matchMedia("(prefers-reduced-motion: reduce)").matches){
-  const revealNodes=[...document.querySelectorAll(".team h1, .member, .about-story, .about-stats, .belief, main.sub > *, .wrap .card, .hero .panel, .upc h2, .upc .e, .quotes:not(.quotes-slider) article, .quotes.quotes-slider")];
+  const revealNodes=[...document.querySelectorAll(".team h1, .member, .about-story, .about-stats, .belief, .careers-intro, .careers-body .job-grid, .careers-body .job-freelance, main.sub > *, .wrap .card, .hero .panel, .upc h2, .upc .e, .quotes:not(.quotes-slider) article, .quotes.quotes-slider")];
   const reveal=new IntersectionObserver(entries=>{
     entries.forEach(entry=>{
       if(!entry.isIntersecting)return;

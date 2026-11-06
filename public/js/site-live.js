@@ -121,12 +121,17 @@
   function applyForm(job) {
     const modal = pop(`
       <h2>Apply for ${escape(job.title)}</h2>
-      <form id="applyForm">
-        <label>Name<input name="name" required></label>
-        <label>Surname<input name="surname" required></label>
-        <label>Date of birth<input name="dateOfBirth" type="date" required></label>
-        <label>Highest qualification<input name="highestQualification" required></label>
-        <label>Work experience<textarea name="workExperience" rows="4" required></textarea></label>
+      <p class="fm-lead">Share a few details and attach your CV. We’ll review every application.</p>
+      <form id="applyForm" class="fm-form-body">
+        <div class="fm-row">
+          <label>Name<input name="name" required placeholder="First name"></label>
+          <label>Surname<input name="surname" required placeholder="Surname"></label>
+        </div>
+        <div class="fm-row">
+          <label>Date of birth<input name="dateOfBirth" type="date" required></label>
+          <label>Highest qualification<input name="highestQualification" required placeholder="e.g. Diploma"></label>
+        </div>
+        <label>Work experience<textarea name="workExperience" rows="4" required placeholder="A short summary of your experience"></textarea></label>
         <label>Namibian?
           <select name="namibian" required>
             <option value="Yes">Yes</option>
@@ -135,9 +140,9 @@
         </label>
         <label>CV (PDF or Word)<input name="cv" type="file" accept=".pdf,.doc,.docx" required></label>
         <p class="note" id="applyNote" hidden></p>
-        <div class="pop-actions"><button class="btn ghost" data-close type="button">Cancel</button><button class="btn" type="submit">Submit application</button></div>
+        <div class="pop-actions"><button class="fm-btn fm-btn-idle" data-close type="button">Cancel</button><button class="fm-btn" type="submit">Submit application</button></div>
       </form>
-    `, "pop-card job-apply");
+    `, "pop-card job-apply fm-form");
     modal.querySelector("#applyForm").onsubmit = async ev => {
       ev.preventDefault();
       const fd = new FormData(ev.target);
@@ -313,14 +318,21 @@
   function freelancerForm(role) {
     const modal = pop(`
       <h2>Join as ${escape(role.title)}</h2>
-      <form id="freelanceForm">
-        <label>Name<input name="name" required></label>
-        <label>Surname<input name="surname" required></label>
-        <label>Email<input name="email" type="email" required></label>
-        <label>Telephone<input name="telephone" required></label>
-        <label>Where you are based<input name="location"></label>
-        <label>Skill or craft<input name="skill" required></label>
-        <label>Experience<textarea name="experience" rows="4" required></textarea></label>
+      <p class="fm-lead">Tell us about your craft and how we can reach you.</p>
+      <form id="freelanceForm" class="fm-form-body">
+        <div class="fm-row">
+          <label>Name<input name="name" required placeholder="First name"></label>
+          <label>Surname<input name="surname" required placeholder="Surname"></label>
+        </div>
+        <div class="fm-row">
+          <label>Email<input name="email" type="email" required placeholder="you@email.com"></label>
+          <label>Telephone<input name="telephone" required placeholder="+264 …"></label>
+        </div>
+        <div class="fm-row">
+          <label>Where you are based<input name="location" placeholder="City or town"></label>
+          <label>Skill or craft<input name="skill" required placeholder="e.g. Producer"></label>
+        </div>
+        <label>Experience<textarea name="experience" rows="4" required placeholder="A short summary of your experience"></textarea></label>
         <label>Namibian?
           <select name="namibian" required>
             <option value="Yes">Yes</option>
@@ -329,9 +341,9 @@
         </label>
         <label>CV (PDF or Word)<input name="cv" type="file" accept=".pdf,.doc,.docx" required></label>
         <p class="note" id="freelanceNote" hidden></p>
-        <div class="pop-actions"><button class="btn ghost" data-close type="button">Cancel</button><button class="btn" type="submit">Submit application</button></div>
+        <div class="pop-actions"><button class="fm-btn fm-btn-idle" data-close type="button">Cancel</button><button class="fm-btn" type="submit">Submit application</button></div>
       </form>
-    `, "pop-card job-apply");
+    `, "pop-card job-apply fm-form");
     modal.querySelector("#freelanceForm").onsubmit = async ev => {
       ev.preventDefault();
       const fd = new FormData(ev.target);

@@ -7,7 +7,8 @@ const logos = [
   ["/assets/Brandlogos/novafm.webp", "Nova FM"],
   ["/assets/Brandlogos/omulungar.webp", "Omulunga Radio"],
   ["/assets/Brandlogos/oneafrica.webp", "One Africa"],
-  ["/assets/Brandlogos/radiowave.webp", "Radio Wave"]
+  ["/assets/Brandlogos/radiowave.webp", "Radio Wave"],
+  ["/assets/Brandlogos/learn%20on%20one.webp", "Learn on One"]
 ];
 const offer = (logo, rows) => rows.map(row => [row[0], row[1], "/contact.html", logo, "contain"]);
 const brands = [
@@ -100,17 +101,32 @@ const brands = [
       ["Afternoon Soft", "Midday soft-sell packages."],
       ["Decision Maker", "Executive audience live reads."]
     ])
+  },
+  {
+    id: "learnonone", color: "#00843d", name: "Learn on One", logo: "/assets/Brandlogos/learn%20on%20one.webp",
+    bg: `${root}/LearnOnOne/FM_Brands_LOO_BG.jpg`,
+    person: `${root}/LearnOnOne/FM_Brands_LOO_Personality.png`,
+    map: `${root}/LearnOnOne/FM_Brands_LOO_Map.svg`,
+    copy: "Learn on One broadcasts free curriculum-based lessons for Pre-Primary, Primary and Secondary learners on One Africa and on-demand online. Endorsed by the Ministry of Education, Arts and Culture.",
+    f: 52, m: 48, lsm: "4 - 8",
+    offers: offer("/assets/Brandlogos/learn%20on%20one.webp", [
+      ["Lesson Sponsorship", "Brand a weekday subject block."],
+      ["Exam Prep Series", "Own the revision season."],
+      ["School Activation", "Reach learners on campus."],
+      ["Parent Hour", "Connect with decision-makers at home."],
+      ["Be Extra Bundle", "On-air plus learnonone.org package."]
+    ])
   }
 ];
 ---
 <Layout title="Broadcast Brands – FutureMedia" fonts="display" bodyClass="brands" preload={`${root}/One%20Africa/FM_Brands_One_BG.jpg`}>
-<div class="branddeck" style="--n:7">
+<div class="branddeck" style="--n:8">
 <div class="brandstage">
 <section class="slide bintro on" id="network">
   <div class="bgimg" style="background-image:url(/assets/landingpage_image.webp)"></div>
   <div class="introcopy">
     <p class="eyebrow">The network</p>
-    <h1>Six Broadcast brands. One powerful network.</h1>
+    <h1>Seven Broadcast brands. One powerful network.</h1>
     <p>Scroll to move from one brand to the next. Each station fills the screen on its own.</p>
     <div class="intro-brands" aria-label="Broadcast brands">
       {logos.map(([src, name]) => <img src={src} alt={name} decoding="async">)}

@@ -1,7 +1,211 @@
 ---
 import Layout from '../layouts/Layout.astro';
+const root = "/assets/Solutions_Assets";
+const offers = [
+  ["Audio Production", "Broadcast-ready radio spots under one roof.", "/contact.html", "/assets/Brandlogos/99fm.webp", "contain"],
+  ["Video for One Africa", "Graphic ads, motion and full advert shoots.", "/contact.html", "/assets/Brandlogos/oneafrica.webp", "contain"],
+  ["Specials.na", "Put your deals where shoppers already look.", "/digital.html#specials", "/assets/Logos/fm_web_scroll_specials.png", "contain"],
+  ["Shop Beat", "Curated in-store audio that drives purchase.", "/shopbeat.html", "/assets/Logos/fm_web_scroll_shopbeat.png", "contain"],
+  ["Entryfy", "AI competitions with WhatsApp entries and clean data.", "/digital.html#entryfy", "/assets/Logos/fm_web_scroll_entryfy.png", "contain"],
+  ["Free media audit", "A clear read on where your brand should be.", "/media-audit.html", "/assets/landingpage_image.webp", "cover"]
+];
+const solutions = [
+  {
+    id: "audio",
+    title: "Audio Production",
+    bg: `${root}/FM_Advertise_Solutions_1_Audio_Production.jpg`,
+    pos: "92% 38%",
+    kind: "accordion",
+    items: [
+      {
+        title: "Sound that sells",
+        body: "Great radio advertising starts with great audio. Our in-house production team turns your brief into broadcast-ready sound, handling scriptwriting, professional voice talent, music, sound effects and studio time under one roof. Whether you need a single radio spot or a full suite of brand audio, we make sure your message lands the moment it hits the airwaves."
+      },
+      {
+        title: "30-Second Radio Commercials",
+        body: "Tight, memorable spots written and produced for Future Media’s stations — from concept and casting to the final mix ready for flighting."
+      },
+      {
+        title: "Billboards, Teasers & Whips",
+        body: "Short-form audio that keeps your brand top of mind between songs, shows and news: billboards, teasers, whips and stingers cut for radio."
+      },
+      {
+        title: "Podcast & Vodcast Audio",
+        body: "Clean dialogue, beds and branded intros for podcasts and vodcasts — recorded and mixed so every episode sounds broadcast-ready."
+      },
+      {
+        title: "PABX Telephone Recordings",
+        body: "On-hold and IVR messaging that matches your brand voice, recorded in-studio and delivered ready for your telephone system."
+      }
+    ]
+  },
+  {
+    id: "video",
+    title: "Video Production",
+    bg: `${root}/FM_Advertise_Solutions_2_Video_Production.jpg`,
+    pos: "right center",
+    kind: "accordion",
+    items: [
+      {
+        title: "Stories that move",
+        body: "From social clips to full TV commercials for One Africa, our video team handles script, voice, music, graphics and edit. We craft stories that hold attention on every screen — phone, web and living room."
+      },
+      {
+        title: "Graphic Adverts",
+        body: "Bold motion graphic ads built from your artwork, timed for TV and digital with music and on-brand messaging."
+      },
+      {
+        title: "Animations & Motion Graphics",
+        body: "Animated explainers, logo treatments and motion packs that lift campaigns across TV, social and web."
+      },
+      {
+        title: "AI Creations",
+        body: "AI-assisted concepts and visuals that speed up production while staying true to your brand guidelines."
+      },
+      {
+        title: "Vodcast Production",
+        body: "Multi-camera vodcast shoots with lighting, sound and edit — ready to publish on your channels and ours."
+      },
+      {
+        title: "TV Billboards & Squeezebacks",
+        body: "Short TV branding moments and squeezebacks produced for One Africa, timed to sit cleanly in the break."
+      },
+      {
+        title: "Social Media & Professional Advert Shoots",
+        body: "Directed shoots for social and TV — talent, location, lighting and post — so one production works across platforms."
+      }
+    ]
+  },
+  {
+    id: "studio",
+    title: "Studio Production",
+    bg: `${root}/FM_Advertise_Solutions_3_Studio_Production.jpg`,
+    pos: "62% center",
+    kind: "accordion",
+    items: [
+      {
+        title: "Space that performs",
+        body: "Book Future Media’s studios for radio, TV and digital. From live shows and interviews to branded content days, we provide the room, the kit and the crew so you walk in with a brief and walk out with broadcast-ready output."
+      },
+      {
+        title: "Radio & Podcast Studios",
+        body: "Acoustic rooms, consoles and engineer support for live radio, voice sessions and long-form podcast recording."
+      },
+      {
+        title: "TV & Multi-Camera Sets",
+        body: "Lit sets and multi-camera capture for talk formats, product demos, launches and branded TV segments."
+      },
+      {
+        title: "Outside Broadcast Support",
+        body: "Remote and OB-ready setups for events, activations and roadshows that need to go live or record on site."
+      },
+      {
+        title: "Crew, Lighting & Post",
+        body: "Directors, camera, sound and editors available as a package — one team from call sheet to final delivery."
+      }
+    ]
+  },
+  {
+    id: "specials",
+    title: "Specials.na",
+    bg: `${root}/FM_Advertise_Solutions_4_Specials.jpg`,
+    pos: "78% center",
+    kind: "copy",
+    tagline: "Namibia's home of the best deals.",
+    body: [
+      "Specials.na is Namibia’s most popular destination for shoppers hunting deals. Retailers and brands list multi-page pamphlets, single deals, flash offers and custom brand pages where audiences already come to compare and buy.",
+      "Pair your listing with social and WhatsApp amplification so every special reaches more of the right people — online and into store."
+    ]
+  },
+  {
+    id: "shopbeat",
+    title: "Shop Beat",
+    bg: `${root}/FM_Advertise_Solutions_5_Shopbeat.jpg`,
+    pos: "68% center",
+    kind: "copy",
+    tagline: "Sound that sells in-store.",
+    body: [
+      "What do you want customers to feel when they walk through your doors? Shop Beat turns your premises into a brand-led soundscape with curated playlists, custom messaging and royalty-safe music.",
+      "From creative production to installation and ongoing music management, we run the full service so your in-store audio keeps working at the point of purchase."
+    ]
+  },
+  {
+    id: "entryfy",
+    title: "Entryfy",
+    bg: `${root}/FM_Advertise_Solutions_6_Entryfy.jpg`,
+    pos: "70% center",
+    kind: "copy",
+    tagline: "Competitions without the manual headache.",
+    body: [
+      "Entryfy is Future Media’s AI platform for retail, FMCG and brand activations. Automate WhatsApp entries, validate receipts instantly and collect clean consumer data in one place.",
+      "No lost leads. No spreadsheet chaos. Just accurate reporting and insights from every campaign you run."
+    ]
+  },
+  {
+    id: "sway",
+    title: "Sway",
+    bg: `${root}/FM_Advertise_Solutions_7_Sway.jpg`,
+    pos: "58% center",
+    kind: "copy",
+    tagline: "Creators that carry your brand.",
+    body: [
+      "Sway connects your brand with creators and social-first storytelling — from concept and talent to shoot, edit and publish across the channels your audience already watches.",
+      "Use it for launches, always-on content and campaign amplification that feels native on phone screens and still works alongside radio and TV."
+    ]
+  }
+];
 ---
-<Layout title="Advertise – FutureMedia" fonts="text">
-<main class="sub"><h1>Advertise</h1><p>Reach audiences across FutureMedia's radio, digital and event platforms. Talk to our sales team about campaigns, sponsorships and media packages.</p>
-<a class="btn" href="/media-audit.html">Get a free media audit</a> <a class="btn" href="/brands.html">Explore our brands</a></main>
+<Layout title="Advertise – FutureMedia" bodyClass="advertise" preload={`${root}/FM_Advertise_Solutions_0_BG.jpeg`}>
+<div class="branddeck" style="--n:8">
+<div class="brandstage">
+
+<section class="slide sol-hero on" id="solutions">
+  <div class="bgimg" style={`background-image:url('${root}/FM_Advertise_Solutions_0_BG.jpeg');background-position:center`}></div>
+  <div class="sol-hero-copy">
+    <h1>More than airtime.</h1>
+    <p>Future Media is Namibia’s home of radio, television and digital. We build the content, own the platforms and craft the tools that put brands in front of the right people — on air, on screen and online.</p>
+  </div>
+  <div class="panel" data-offers={JSON.stringify(offers)}>
+    <div class="top"><h2>Latest Offers</h2></div>
+    <div class="rows"></div>
+  </div>
+</section>
+
+{solutions.map(sol => (
+<section class={`slide sol-section${sol.kind === "copy" ? " sol-copy" : ""}`} id={sol.id}>
+  <div class="bgimg" style={`background-image:url('${sol.bg}');background-position:${sol.pos || "center"}`}></div>
+  <div class="sol-inner">
+    <h2>{sol.title}</h2>
+    {sol.kind === "accordion" ? (
+      <div class="sol-acc" data-acc>
+        {sol.items.map((item, i) => (
+          <details {...(i === 0 ? { open: true } : {})}>
+            <summary>{item.title}</summary>
+            <p>{item.body}</p>
+          </details>
+        ))}
+      </div>
+    ) : (
+      <div class="sol-body">
+        <p class="sol-tag">{sol.tagline}</p>
+        {sol.body.map(p => <p>{p}</p>)}
+      </div>
+    )}
+  </div>
+  <a class="sol-cta" href="/contact.html">Enquire now</a>
+</section>
+))}
+
+</div>
+</div>
+
+<nav class="rail" aria-label="Solutions">
+  <a href="#solutions" aria-label="Overview"></a>
+  {solutions.map(sol => <a href={`#${sol.id}`} aria-label={sol.title}></a>)}
+</nav>
+
+<Fragment slot="scripts">
+<script is:inline src="/js/brands.js"></script>
+<script is:inline src="/js/advertise.js"></script>
+</Fragment>
 </Layout>
