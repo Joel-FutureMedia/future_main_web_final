@@ -30,12 +30,12 @@ document.querySelector("#ftr").innerHTML=`<footer>
 <form data-subscribe class="sub-form"><input name="fullName" placeholder="Name" required><input name="email" type="email" placeholder="Email" required><button type="submit">Subscribe</button></form>
 </div>
 </footer>
-<button class="wa" id="waOpen" type="button" aria-label="Chat with FutureMedia"><img src="/assets/whatsapp%20(1).png" alt=""></button>
+<button class="wa" id="waOpen" type="button" aria-label="Chat with FutureMedia"><img src="/assets/chat-icon.png" alt=""></button>
 <div class="chat" id="chat" hidden role="dialog" aria-label="FutureMedia chat">
-<div class="chat-head"><img src="/assets/whatsapp%20(1).png" alt=""><div><b>FutureMedia</b><small>Usually replies instantly</small></div><button type="button" id="chatClose" aria-label="Close chat">×</button></div>
+<div class="chat-head"><span class="chat-avatar"><img src="/assets/chat-icon.png" alt=""></span><div><b>FutureMedia</b><small><i></i>online</small></div><button type="button" id="chatClose" aria-label="Close chat">×</button></div>
 <div class="chat-log" id="chatLog"></div>
 <div class="chat-quick" id="chatQuick"></div>
-<form id="chatForm"><input id="chatInput" autocomplete="off" placeholder="Type a message"><button type="submit">Send</button></form>
+<form id="chatForm"><input id="chatInput" autocomplete="off" placeholder="Type a message"><button type="submit" aria-label="Send"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.2 20.8 21.2 12 3.2 3.2l.2 6.7L15.2 12 3.4 14.1z"/></svg></button></form>
 </div>`;
 document.querySelectorAll(".panel[data-offers], .panel[data-list]").forEach(panel=>{
   const rows=panel.querySelector(".rows");
@@ -195,13 +195,13 @@ function finishChat(){
   const summary=`Hello FutureMedia, my name is ${answers.name}. Contact: ${answers.contact}. I need help with: ${answers.need}. ${answers.detail}`;
   setTimeout(()=>{
     typing.remove();
-    chatBubble(`Thanks ${answers.name}. I've got that. A producer will follow up, or you can send this chat on WhatsApp now.`,"bot");
+    chatBubble(`Thanks ${answers.name}. I've got that. A producer will follow up, or you can send this chat now.`,"bot");
     const link=document.createElement("a");
     link.className="bubble bot link";
     link.href="https://wa.me/264830001000?text="+encodeURIComponent(summary);
     link.target="_blank";
     link.rel="noopener";
-    link.textContent="Send this chat on WhatsApp";
+    link.textContent="Send this chat";
     chatLog.appendChild(link);
     chatLog.scrollTop=chatLog.scrollHeight;
   },620);
