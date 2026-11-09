@@ -1,0 +1,105 @@
+---
+import Layout from '../layouts/Layout.astro';
+import fs from 'node:fs';
+import path from 'node:path';
+
+const exts = /\.(jpe?g|png|webp|gif)$/i;
+
+function loadAlbum(dir, title, blurb) {
+  const root = path.join(process.cwd(), 'public', 'assets', dir);
+  const files = fs.existsSync(root)
+    ? fs.readdirSync(root).filter((f) => exts.test(f)).sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
+    : [];
+  return {
+    id: dir.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+    dir,
+    title,
+    blurb,
+    images: files.map((file) => ({
+      src: `/assets/${dir.split('/').map(encodeURIComponent).join('/')}/${encodeURIComponent(file)}`,
+      alt: `${title} — ${file.replace(/\.[^.]+$/, '').replace(/[_-]+/g, ' ')}`,
+    })),
+  };
+}
+
+const albums = [
+  loadAlbum('NEDBANK_IMC_CONFERENCE_2025', 'Nedbank IMC Conference 2025', 'Highlights from Namibia’s flagship IMC gathering.'),
+  loadAlbum('2025_FUTUREMEDIA_CLIENT_FUNCTION', 'Future Media Client Function 2025', 'Celebrating partners, brands and the year behind us.'),
+  loadAlbum('99fm', '99FM', 'Moments from Namibia’s boldest radio brand.'),
+].filter((a) => a.images.length);
+
+const breakLines = [
+  'Future Media',
+  'Moments that move',
+  'Brands · People · Events',
+  'Namibia',
+];
+---
+<Layout title="Gallery – FutureMedia" bodyClass="gallery-page">
+<section class="gallery-hero">
+  <div class="gallery-hero-copy">
+    <p class="eyebrow">Moments</p>
+    <h1>Gallery</h1>
+    <p>Events, brands and people — captured across Future Media.</p>
+  </div>
+</section>
+
+<main class="gallery-main">
+  <nav class="gallery-tabs" aria-label="Gallery collections">
+    <button type="button" class="on" data-album="all">All</button>
+    {albums.map((album) => (
+      <button type="button" data-album={album.id}>{album.title}</button>
+    ))}
+  </nav>
+
+  {albums.map((album, albumIndex) => {
+    const line = breakLines[albumIndex % breakLines.length];
+    return (
+      <section class="gallery-album" id={album.id} data-album={album.id}>
+        <div class="gallery-album-head">
+          <h2>{album.title}</h2>
+          <p>{album.blurb}</p>
+        </div>
+        <div class="gallery-masonry">
+          {album.images.map((img, i) => (
+            <figure class="gallery-item" style={`--d:${(i % 8) * 0.05}s`} data-src={img.src} data-title={album.title}>
+              <button type="button" class="gallery-frame" aria-label={`Open ${album.title} photo`}>
+                <img src={img.src} alt={img.alt} loading="lazy" decoding="async">
+              </button>
+            </figure>
+          ))}
+        </div>
+
+        <div class="gallery-break" aria-hidden="true">
+          <div class="gallery-break-glow"></div>
+          <div class="gallery-marquee gallery-marquee-words">
+            <div class="gallery-marquee-track">
+              {[0, 1].map(() => (
+                <div class="gallery-marquee-group">
+                  {[album.title, line, 'Future Media', album.title, line, 'Captured live'].map((text) => (
+                    <span>{text}</span>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  })}
+</main>
+
+<div class="gallery-lightbox" id="galleryLightbox" hidden>
+  <button type="button" class="gl-close" aria-label="Close">×</button>
+  <button type="button" class="gl-prev" aria-label="Previous">‹</button>
+  <button type="button" class="gl-next" aria-label="Next">›</button>
+  <figure class="gl-stage">
+    <img id="glImage" alt="">
+    <figcaption id="glCaption"></figcaption>
+  </figure>
+</div>
+
+<Fragment slot="scripts">
+<script is:inline src="/js/gallery.js"></script>
+</Fragment>
+</Layout>

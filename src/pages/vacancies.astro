@@ -1,0 +1,29 @@
+---
+import Layout from '../layouts/Layout.astro';
+const bg = "/assets/vacancies/bg.png";
+---
+<Layout title="Vacancies – FutureMedia" bodyClass="careers" preload={bg}>
+<section class="careers-hero" style={`--careers-bg:url('${bg}')`}>
+  <div class="careers-copy">
+    <p class="eyebrow">Careers at Future Media</p>
+    <h1>Your next chapter<br>starts here.</h1>
+    <p>We’re a Namibian media family that builds trusted brands, bold ideas and real opportunity. If you’re ready to grow with people who care - we’d love to meet you.</p>
+    <div class="careers-actions">
+      <a class="pill" href="#roles">See open roles</a>
+      <a class="careers-link" href="/freelancer.html">Prefer freelance? Join our list</a>
+    </div>
+  </div>
+</section>
+
+<main class="jobs careers-body">
+  <div class="careers-intro">
+    <h2 id="roles">Open vacancies</h2>
+    <p>Browse live roles and apply in a few minutes. Every application reaches a real person on our team.</p>
+  </div>
+  <div class="job-grid" id="jobGrid"><p>Loading roles…</p></div>
+  <a class="job-freelance" href="/freelancer.html">
+    <span>Join our list of Freelancers</span>
+    <small>Share your craft — we’ll keep you in mind for the right brief.</small>
+  </a>
+</main>
+</Layout>

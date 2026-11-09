@@ -1,0 +1,104 @@
+---
+import Layout from '../layouts/Layout.astro';
+const bg = "/assets/2025_FUTUREMEDIA_CLIENT_FUNCTION/CLB8482.jpg";
+---
+<Layout title="Media Audit – FutureMedia" bodyClass="audit" preload={bg}>
+<section class="audit-shell" style={`--audit-bg:url('${bg}')`}>
+  <div class="audit-landing">
+    <p class="eyebrow">Free media audit</p>
+    <h1>Where should your brand show up next?</h1>
+    <p class="audit-lead">Future Media reaches Namibians across radio, television and digital every day. Tell us what you’re building, and we’ll point you to the mix that fits.</p>
+    <div class="audit-highlights">
+      <p><b>7</b> short questions</p>
+      <p><b>1</b> clear recommendation</p>
+      <p><b>Real</b> producer follow-up</p>
+    </div>
+    <p class="audit-note">No guesswork. No generic deck. Just a practical read on audience, timing and budget — from the team that runs Namibia’s most trusted brands.</p>
+    <button type="button" class="pill audit-start" id="auditStart">Start your media audit application now</button>
+  </div>
+</section>
+
+<div class="audit-modal" id="auditModal" hidden>
+  <button type="button" class="audit-modal-backdrop" id="auditModalClose" aria-label="Close form"></button>
+  <div class="audit-modal-panel" role="dialog" aria-modal="true" aria-labelledby="auditModalTitle">
+    <button type="button" class="audit-modal-x" id="auditModalX" aria-label="Close">×</button>
+    <main class="audit-page">
+      <form class="audit-card fm-form" id="mediaAuditForm" data-api="https://futuremediaapi.simplyfound.com.na" novalidate>
+        <p class="audit-modal-title" id="auditModalTitle">Media audit</p>
+        <div class="audit-progress" id="auditProgress" aria-label="Form progress"></div>
+        <p class="audit-kicker" id="auditKicker">Step 1 of 7</p>
+        <h2 id="auditTitle">Which of these best describes your business?</h2>
+        <p class="audit-hint" id="auditHint">Select all that apply.</p>
+        <p class="audit-error" id="auditError" hidden></p>
+
+        <div class="audit-tiles" id="auditTiles"></div>
+
+        <div class="audit-extra" id="auditLocationExtra" hidden>
+          <label class="audit-label" id="auditTownLabel" for="namibiaTown">Namibia town</label>
+          <select id="namibiaTown" name="namibiaTown">
+            <option value="">Select a town</option>
+            <option>Windhoek</option>
+            <option>Swakopmund</option>
+            <option>Walvis Bay</option>
+            <option>Oshakati</option>
+            <option>Rundu</option>
+            <option>Lüderitz</option>
+            <option value="Other town">Other town</option>
+          </select>
+          <label class="audit-label" id="auditOtherLabel" for="locationOther" hidden>Other town</label>
+          <input id="locationOther" name="locationOther" type="text" hidden placeholder="Enter your town">
+        </div>
+
+        <div class="audit-extra" id="auditOtherCampaign" hidden>
+          <label class="audit-label" for="campaignTypeOther">Please specify</label>
+          <input id="campaignTypeOther" name="campaignTypeOther" type="text" placeholder="What type of campaign are you planning?">
+        </div>
+
+        <div class="audit-details" id="auditDetails" hidden>
+          <div class="fm-row">
+            <label>Name
+              <input id="name" name="name" type="text" autocomplete="name" required placeholder="Your name">
+            </label>
+            <label>Email
+              <input id="email" name="email" type="email" autocomplete="email" required placeholder="you@company.com">
+            </label>
+          </div>
+          <div class="fm-row">
+            <label>Telephone
+              <input id="telephone" name="telephone" type="tel" autocomplete="tel" required placeholder="+264 …">
+            </label>
+            <label>Company you represent
+              <input id="company" name="company" type="text" autocomplete="organization" required placeholder="Company name">
+            </label>
+          </div>
+          <label>Campaign name
+            <input id="campaignName" name="campaignName" type="text" required placeholder="Campaign name">
+          </label>
+          <label>Additional details
+            <textarea id="additionalDetails" name="additionalDetails" rows="4" placeholder="Anything else we should know?"></textarea>
+          </label>
+        </div>
+
+        <div class="audit-nav">
+          <button type="button" class="fm-btn fm-btn-idle audit-back" id="auditBack" hidden>Back</button>
+          <div class="audit-nav-end">
+            <button type="button" class="audit-skip" id="auditSkip" hidden>Skip this step</button>
+            <button type="button" class="fm-btn audit-next" id="auditNext">Next</button>
+          </div>
+        </div>
+      </form>
+
+      <div class="audit-card fm-form audit-done" id="auditDone" hidden>
+        <p class="eyebrow">Request received</p>
+        <h2>Thanks - your media audit is with the team.</h2>
+        <p>We have your answers. A producer will review them and follow up with a media mix that fits your audience, timing and budget.</p>
+        <a class="btn" href="/index.html">Back home</a>
+      </div>
+    </main>
+  </div>
+</div>
+
+<Fragment slot="scripts">
+  <script is:inline src="/js/media-audit.js"></script>
+</Fragment>
+</Layout>
