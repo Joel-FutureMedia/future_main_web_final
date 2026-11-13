@@ -26,9 +26,6 @@
     if (e.key === "Escape" && modal && !modal.hidden) closeModal();
   });
 
-  const localHost = location.hostname === "localhost" || location.hostname === "127.0.0.1";
-  const API_BASE = localHost ? "http://localhost:8980" : (form.dataset.api || "https://futuremediaapi.simplyfound.com.na");
-
   const tilesEl = document.querySelector("#auditTiles");
   const extraLocation = document.querySelector("#auditLocationExtra");
   const extraCampaign = document.querySelector("#auditOtherCampaign");
@@ -381,15 +378,8 @@
     skipBtn.disabled = true;
     setError("");
     try {
-      const response = await fetch(`${API_BASE}/api/media-audit`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload())
-      });
-      const data = await response.json().catch(() => ({}));
-      if (!response.ok || data.success === false) {
-        throw new Error(data.message || "Could not submit your media audit. Please try again.");
-      }
+      if (!window.FM) throw new Error("API client is not ready. Please refresh and try again.");
+      await FM.request("/api/media-audit", { method: "POST", body: payload(), timeoutMs: 30000 });
       form.hidden = true;
       doneEl.hidden = false;
       doneEl.scrollIntoView({ behavior: "smooth", block: "nearest" });

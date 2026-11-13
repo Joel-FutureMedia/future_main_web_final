@@ -45,10 +45,19 @@ const albums = [
 <main class="gallery-main">
   <nav class="gallery-tabs" aria-label="Gallery collections">
     <button type="button" class="on" data-album="all">All</button>
+    <button type="button" data-album="live-gallery" hidden id="liveGalleryTab">Latest uploads</button>
     {albums.map((album) => (
       <button type="button" data-album={album.id}>{album.title}</button>
     ))}
   </nav>
+
+  <section class="gallery-album" id="live-gallery" data-album="live-gallery" hidden>
+    <div class="gallery-album-head">
+      <h2>Latest uploads</h2>
+      <p>Fresh moments published from the Future Media studio.</p>
+    </div>
+    <div class="gallery-masonry" id="galleryGrid"></div>
+  </section>
 
   {albums.map((album) => (
     <section class="gallery-album" id={album.id} data-album={album.id}>

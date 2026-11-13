@@ -1,6 +1,7 @@
 window.FM = (function () {
   const local = location.hostname === "localhost" || location.hostname === "127.0.0.1";
-  const base = local ? "http://localhost:8980" : (window.FM_API_BASE || "https://futuremediaapi.simplyfound.com.na");
+  const LIVE = "https://futuremediaapi.simplyfound.com.na";
+  const base = local ? "http://localhost:8980" : (window.FM_API_BASE || LIVE);
 
   async function request(path, options = {}) {
     const headers = Object.assign({}, options.headers || {});
@@ -9,7 +10,9 @@ window.FM = (function () {
     if (!options.form && options.body && typeof options.body !== "string") {
       headers["Content-Type"] = "application/json";
     }
-    const timeoutMs = typeof options.timeoutMs === "number" ? options.timeoutMs : 4000;
+    const timeoutMs = typeof options.timeoutMs === "number"
+      ? options.timeoutMs
+      : (options.form ? 60000 : 15000);
     const controller = typeof AbortController !== "undefined" ? new AbortController() : null;
     const timer = controller
       ? setTimeout(() => controller.abort(), timeoutMs)

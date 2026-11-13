@@ -78,10 +78,16 @@
 
   async function fillSelect(select, path, label = "name") {
     if (!select) return;
-    const res = await FM.request(path);
-    select.innerHTML = `<option value="">Select</option>` + (res.data || []).map(item =>
-      `<option value="${item.id}">${escape(item[label])}</option>`
-    ).join("");
+    try {
+      const res = await FM.request(path);
+      select.innerHTML = `<option value="">Select</option>` + (res.data || []).map(item =>
+        `<option value="${item.id}">${escape(item[label])}</option>`
+      ).join("");
+    } catch {
+      if (!select.options.length) {
+        select.innerHTML = `<option value="">Select</option>`;
+      }
+    }
   }
 
   function vacancyImage(job) {
@@ -231,7 +237,12 @@
   async function vacancies() {
     const grid = $("#jobGrid");
     if (!grid) return;
+    grid.innerHTML = `<p class="jobs-loading">Loading live roles…</p>`;
     const bind = (items, isDemo) => {
+      if (!items.length) {
+        grid.innerHTML = `<p class="jobs-empty">No open roles right now. Check back soon or <a href="/freelancer.html">join our freelance list</a>.</p>`;
+        return;
+      }
       renderVacancyCards(grid, items, isDemo);
       grid.onclick = async e => {
         const card = e.target.closest(".job-card");
@@ -265,8 +276,12 @@
       <p class="fm-lead">Share a few details and attach your CV. We’ll review every application.</p>
       <form id="applyForm" class="fm-form-body">
         <div class="fm-row">
-          <label>Name<input name="name" required placeholder="First name"></label>
-          <label>Surname<input name="surname" required placeholder="Surname"></label>
+          <label>Name<input name="name" required placeholder="First name" autocomplete="given-name"></label>
+          <label>Surname<input name="surname" required placeholder="Surname" autocomplete="family-name"></label>
+        </div>
+        <div class="fm-row">
+          <label>Email<input name="email" type="email" required placeholder="you@email.com" autocomplete="email"></label>
+          <label>Telephone<input name="telephone" required placeholder="+264 …" autocomplete="tel"></label>
         </div>
         <div class="fm-row">
           <label>Date of birth<input name="dateOfBirth" type="date" required></label>
@@ -279,7 +294,7 @@
             <option value="No">No</option>
           </select>
         </label>
-        <label>CV (PDF or Word)<input name="cv" type="file" accept=".pdf,.doc,.docx" required></label>
+        <label>CV (PDF or Word)<input name="cv" type="file" accept=".pdf,.doc,.docx,application/pdf" required></label>
         <p class="note" id="applyNote" hidden></p>
         <div class="pop-actions"><button class="fm-btn fm-btn-idle" data-close type="button">Cancel</button><button class="fm-btn" type="submit">Submit application</button></div>
       </form>
@@ -291,12 +306,12 @@
       const release = busy(ev.target, "Sending application…");
       note("#applyNote", "Sending your application…", true);
       try {
-        await FM.request("/api/applications/apply", { method: "POST", form: true, body: fd });
+        await FM.request("/api/applications/apply", { method: "POST", form: true, body: fd, timeoutMs: 90000 });
         note("#applyNote", "Application received. We’ll be in touch.", true);
         ev.target.querySelector("[type=submit]").disabled = true;
         ev.target.querySelector("[type=submit]").textContent = "Application sent";
       } catch (error) {
-        note("#applyNote", error.message, false);
+        note("#applyNote", error.message || "We could not send that application. Please try again.", false);
         release();
       }
     };
@@ -433,9 +448,9 @@
   ];
 
   async function gallery() {
-    if (document.body.classList.contains("gallery-page")) return;
     const grid = $("#galleryGrid");
     if (!grid) return;
+    const section = grid.closest(".gallery-album") || grid.parentElement;
     const paintLocal = () => {
       grid.innerHTML = demoGallery.map(([src, title]) => `<img src="${escape(src)}" alt="${escape(title)}" data-demo="1" data-title="${escape(title)}">`).join("");
       grid.onclick = e => {
@@ -446,15 +461,42 @@
     try {
       const res = await FM.request("/api/gallery/public");
       const items = res.data || [];
-      if (!items.length) { paintLocal(); return; }
-      grid.innerHTML = items.map(item => `<img src="${escape(FM.fileUrl(item.imagePath))}" alt="${escape(item.title || "")}" data-id="${item.id}">`).join("");
+      if (!items.length) {
+        if (document.body.classList.contains("gallery-page")) {
+          section?.setAttribute("hidden", "");
+          return;
+        }
+        paintLocal();
+        return;
+      }
+      section?.removeAttribute("hidden");
+      document.querySelector("#liveGalleryTab")?.removeAttribute("hidden");
+      grid.innerHTML = items.map(item => {
+        const src = escape(FM.fileUrl(item.imagePath));
+        const title = escape(item.title || "Gallery");
+        if (grid.classList.contains("gallery-masonry")) {
+          return `<figure class="gallery-item" data-src="${src}" data-title="${title}" data-id="${item.id}">
+            <button type="button" class="gallery-frame" aria-label="Open ${title}">
+              <img src="${src}" alt="${title}" loading="lazy" decoding="async">
+            </button>
+          </figure>`;
+        }
+        return `<img src="${src}" alt="${title}" data-id="${item.id}">`;
+      }).join("");
       grid.onclick = async e => {
-        if (e.target.tagName !== "IMG") return;
-        if (e.target.dataset.demo === "1") return;
-        const item = (await FM.request("/api/gallery/public/" + e.target.dataset.id)).data;
+        const img = e.target.closest("img");
+        if (!img) return;
+        if (img.dataset.demo === "1") return;
+        const id = img.closest("[data-id]")?.dataset.id || img.dataset.id;
+        if (!id) return;
+        const item = (await FM.request("/api/gallery/public/" + id)).data;
         pop(`<img src="${escape(FM.fileUrl(item.imagePath))}" alt=""><h2>${escape(item.title || "Gallery")}</h2><div class="pop-actions"><button class="btn ghost" data-close type="button">Close</button></div>`);
       };
     } catch (error) {
+      if (document.body.classList.contains("gallery-page")) {
+        section?.setAttribute("hidden", "");
+        return;
+      }
       paintLocal();
     }
   }
@@ -567,12 +609,16 @@
       ev.preventDefault();
       const fd = new FormData(ev.target);
       fd.append("roleId", role.id);
+      const release = busy(ev.target, "Sending application…");
+      note("#freelanceNote", "Sending your application…", true);
       try {
-        await FM.request("/api/freelancer-applications/apply", { method: "POST", form: true, body: fd });
+        await FM.request("/api/freelancer-applications/apply", { method: "POST", form: true, body: fd, timeoutMs: 90000 });
         note("#freelanceNote", "Application sent. We’ll be in touch.", true);
         ev.target.querySelector("[type=submit]").disabled = true;
+        ev.target.querySelector("[type=submit]").textContent = "Application sent";
       } catch (error) {
-        note("#freelanceNote", error.message, false);
+        note("#freelanceNote", error.message || "We could not send that application. Please try again.", false);
+        release();
       }
     };
   }
@@ -721,13 +767,16 @@
     try {
       const res = await FM.request("/api/news/public");
       const items = (res.data || []).slice(0, 3);
-      if (!items.length) return;
-      wrap.innerHTML = items.map(item => `
-        <a class="card reveal-in" href="/news.html" style="background-image:url('${escape(FM.fileUrl(item.mediaPath))}')">
+      if (!items.length) return; // keep Astro demo cards until CMS publishes news
+      wrap.innerHTML = items.map(item => {
+        const img = item.mediaPath ? FM.fileUrl(item.mediaPath) : "/assets/news/news01.webp";
+        const text = (item.description || "").replace(/<[^>]+>/g, "").slice(0, 140);
+        return `<a class="card reveal-in" href="/news.html" style="background-image:url('${escape(img)}')">
           <span class="tag">News</span>
           <h3>${escape(item.title)}</h3>
-          <p>${escape((item.description || "").slice(0, 140))}</p>
-        </a>`).join("");
+          <p>${escape(text)}</p>
+        </a>`;
+      }).join("");
     } catch {}
   }
 

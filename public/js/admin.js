@@ -141,7 +141,7 @@
 
   async function api(path, options = {}) {
     try {
-      return await FM.request(path, Object.assign({ token: state.token }, options));
+      return await FM.request(path, Object.assign({ token: state.token, timeoutMs: options.form ? 90000 : 20000 }, options));
     } catch (error) {
       if (error.status === 401 || error.status === 403) {
         if (!location.hash.includes("login")) signOut(true);
@@ -442,14 +442,15 @@
           ? await api("/api/applications/search?keyword=" + encodeURIComponent(q))
           : await api("/api/applications");
       const rows = (res.data || []).map(a => `<tr>
-        <td><b>${escape(a.name)} ${escape(a.surname)}</b></td>
+        <td><b>${escape(a.name)} ${escape(a.surname)}</b><div class="muted">${escape(a.email || "")}</div></td>
         <td>${pill("Application","navy")} ${escape(a.vacancy?.title)}</td>
+        <td>${escape(a.telephone || "—")}</td>
         <td>${escape(a.highestQualification)}</td>
         <td>${a.namibian ? "Namibian" : "Other"}</td>
         <td>${fmt(a.appliedDate)}</td>
         <td><div class="row-actions"><button type="button" class="mini" data-view="${a.id}">View</button><button type="button" class="mini" data-cv="${a.id}">CV</button><button class="mini danger" data-del="${a.id}">Delete</button></div></td>
       </tr>`).join("");
-      $("#appTable").innerHTML = table(["Applicant", "Role / source", "Qualification", "Nationality", "Date", ""], rows);
+      $("#appTable").innerHTML = table(["Applicant", "Role", "Phone", "Qualification", "Nationality", "Date", ""], rows);
     };
     $("#q").addEventListener("input", () => { clearTimeout(pageApplications.t); pageApplications.t = setTimeout(draw, 240); });
     $("#vacancyFilter").addEventListener("change", draw);
@@ -459,7 +460,7 @@
       if (buttonFrom(e).dataset.del) { if (await confirmDelete("/api/applications/" + id, "application")) pageApplications(); return; }
       if (buttonFrom(e).dataset.cv) { await download("/api/applications/" + id + "/cv", "cv"); return; }
       const item = (await api("/api/applications/" + id)).data;
-      openModal(`<h2>${escape(item.name)} ${escape(item.surname)}</h2>${dl({ Role: item.vacancy?.title, DOB: item.dateOfBirth, Qualification: item.highestQualification, Experience: item.workExperience, Namibian: item.namibian ? "Yes" : "No", Date: fmt(item.appliedDate) })}<div class="modal-actions"><button type="button" class="ghost" data-close>Close</button><button data-cv="${item.id}">Download CV</button></div>`);
+      openModal(`<h2>${escape(item.name)} ${escape(item.surname)}</h2>${dl({ Role: item.vacancy?.title, Email: item.email || "—", Telephone: item.telephone || "—", DOB: item.dateOfBirth, Qualification: item.highestQualification, Experience: item.workExperience, Namibian: item.namibian ? "Yes" : "No", Date: fmt(item.appliedDate) })}<div class="modal-actions"><button type="button" class="ghost" data-close>Close</button><button data-cv="${item.id}">Download CV</button></div>`);
     });
     draw();
   }
@@ -647,20 +648,30 @@
       }))
   });
 
-  const pageVacancies = () => simpleMediaPage({
-    path: "/api/vacancies", noun: "vacancy", title: "Vacancies", createLabel: "New vacancy",
-    headers: ["", "Role", "Status", "Closes", ""],
-    row: v => `<tr><td>${mediaCell(v.mediaPath, v.mediaType)}</td><td><b>${escape(v.title)}</b></td><td>${v.published ? pill("Live","green") : pill("Hidden","amber")}</td><td>${v.closingDate || "—"}</td><td><div class="row-actions"><button type="button" class="mini" data-act="${v.id}" data-kind="${v.published ? "unpublish" : "publish"}">${v.published ? "Unpublish" : "Publish"}</button><button type="button" class="mini" data-edit="${v.id}">Edit</button><button class="mini danger" data-del="${v.id}">Delete</button></div></td></tr>`,
-    deletePath: id => "/api/vacancies/" + id, itemPath: id => "/api/vacancies/" + id,
-    onAct: async (id, kind) => {
-      const note = toast(kind === "publish" ? "Publishing vacancy…" : "Hiding vacancy…", "pending");
-      await api("/api/vacancies/" + id + "/" + kind, { method: "PUT" });
-      toast(kind === "publish" ? "Vacancy is live" : "Vacancy hidden", "ok", note);
-      pageVacancies();
-    },
-    form: item => multipartForm(item ? "Edit vacancy" : "New vacancy",
+  async function pageVacancies() {
+    const [vacanciesRes, appsRes] = await Promise.all([
+      api("/api/vacancies"),
+      api("/api/applications").catch(() => ({ data: [] }))
+    ]);
+    const apps = appsRes.data || [];
+    const counts = apps.reduce((map, app) => {
+      const id = app.vacancy?.id;
+      if (id != null) map[id] = (map[id] || 0) + 1;
+      return map;
+    }, {});
+    view.innerHTML = toolbar("Vacancies", `<button type="button" class="btn" data-create style="width:auto">New vacancy</button>`) +
+      table(["", "Role", "Status", "Apps", "Closes", ""], (vacanciesRes.data || []).map(v => `<tr>
+        <td>${mediaCell(v.mediaPath, v.mediaType)}</td>
+        <td><b>${escape(v.title)}</b></td>
+        <td>${v.published ? pill("Live","green") : pill("Hidden","amber")}</td>
+        <td><button type="button" class="mini" data-apps="${v.id}">${counts[v.id] || 0}</button></td>
+        <td>${v.closingDate || "—"}</td>
+        <td><div class="row-actions"><button type="button" class="mini" data-act="${v.id}" data-kind="${v.published ? "unpublish" : "publish"}">${v.published ? "Unpublish" : "Publish"}</button><button type="button" class="mini" data-edit="${v.id}">Edit</button><button class="mini danger" data-del="${v.id}">Delete</button></div></td>
+      </tr>`).join(""));
+    const openVacancyForm = item => multipartForm(item ? "Edit vacancy" : "New vacancy",
       field("Title", "title", item?.title || "") + field("Closing date", "closingDate", item?.closingDate || "", "date") +
-      currentFile(item) + field(item ? "Replace media" : "Media", "media", "", "file") + `<label>Published <select name="published"><option value="true" ${item?.published !== false ? "selected" : ""}>Yes</option><option value="false">No</option></select></label>` +
+      currentFile(item) + field(item ? "Replace media" : "Media (image or PDF)", "media", "", "file") +
+      `<label>Published <select name="published"><option value="true" ${item?.published !== false ? "selected" : ""}>Yes</option><option value="false" ${item?.published === false ? "selected" : ""}>No</option></select></label>` +
       field("Description", "description", item?.description || "", "textarea"),
       ev => saveForm(ev, "Saving vacancy…", item ? "Vacancy updated" : "Vacancy created", async () => {
         const fd = new FormData(ev.target);
@@ -668,8 +679,28 @@
         if (item && !fd.get("media")?.size) fd.delete("media");
         await api(item ? "/api/vacancies/" + item.id : "/api/vacancies", { method: item ? "PUT" : "POST", form: true, body: fd });
         return pageVacancies;
-      }))
-  });
+      }));
+    view.onclick = async e => {
+      const btn = buttonFrom(e);
+      if ("create" in btn.dataset) { openVacancyForm(null); return; }
+      if (btn.dataset.apps) { location.hash = "#/applications"; return; }
+      if (btn.dataset.act) {
+        const note = toast(btn.dataset.kind === "publish" ? "Publishing vacancy…" : "Hiding vacancy…", "pending");
+        await api("/api/vacancies/" + btn.dataset.act + "/" + btn.dataset.kind, { method: "PUT" });
+        toast(btn.dataset.kind === "publish" ? "Vacancy is live" : "Vacancy hidden", "ok", note);
+        pageVacancies();
+        return;
+      }
+      if (btn.dataset.edit) {
+        const item = (await api("/api/vacancies/" + btn.dataset.edit)).data;
+        openVacancyForm(item);
+        return;
+      }
+      if (btn.dataset.del) {
+        if (await confirmDelete("/api/vacancies/" + btn.dataset.del, "vacancy")) pageVacancies();
+      }
+    };
+  }
 
   const pageFreelancers = () => simpleMediaPage({
     path: "/api/freelancers", noun: "role", title: "Freelancer roles", createLabel: "New role",

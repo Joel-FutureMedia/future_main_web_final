@@ -634,6 +634,8 @@ body.careers{background:#0a1550}
 .careers-link{font-weight:600;font-size:15px;text-decoration:underline;text-underline-offset:4px;color:rgba(255,255,255,.92)}
 .careers-link:hover{color:#E3564E}
 .jobs{padding:150px 8vw 80px;max-width:1180px;margin:auto;text-align:center}
+.jobs-loading,.jobs-empty{grid-column:1/-1;padding:28px 18px;color:rgba(255,255,255,.9);font-size:16px;line-height:1.5}
+.jobs-empty a{text-decoration:underline}
 .jobs h1{font-size:clamp(40px,5vw,56px);font-weight:600;letter-spacing:.02em;margin-bottom:48px}
 .careers-body{padding:72px 5vw 96px;max-width:1180px;margin:auto;text-align:center}
 .careers-intro{max-width:620px;margin:0 auto 40px}
