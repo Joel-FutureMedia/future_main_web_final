@@ -26,6 +26,10 @@
 /team/         /team.html          200
 /terms         /terms.html         200
 /terms/        /terms.html         200
+/privacy       /terms.html         200
+/privacy/      /terms.html         200
+/privacy-policy /terms.html        200
+/privacy-policy/ /terms.html       200
 /vacancies     /vacancies.html     200
 /vacancies/    /vacancies.html     200
 /freelancer    /freelancer.html    200

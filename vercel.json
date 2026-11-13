@@ -41,6 +41,8 @@
     { "source": "/search", "destination": "/search.html" },
     { "source": "/team", "destination": "/team.html" },
     { "source": "/terms", "destination": "/terms.html" },
+    { "source": "/privacy", "destination": "/terms.html" },
+    { "source": "/privacy-policy", "destination": "/terms.html" },
     { "source": "/vacancies", "destination": "/vacancies.html" },
     { "source": "/freelancer", "destination": "/freelancer.html" },
     { "source": "/media-audit", "destination": "/media-audit.html" },

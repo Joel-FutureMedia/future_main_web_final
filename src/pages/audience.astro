@@ -1,13 +1,146 @@
 ---
 import Layout from '../layouts/Layout.astro';
+const period = "Apr-Jun 2026";
+const audience = [
+  { name: "Omulunga", value: 876915, color: "#196232" },
+  { name: "One Africa", value: 837602, color: "#ff4d00" },
+  { name: "Fresh FM", value: 291371, color: "#ee2d2e" },
+  { name: "99 FM", value: 276313, color: "#e4007e" },
+  { name: "Radiowave", value: 173645, color: "#ffc423" },
+  { name: "Nova FM", value: 74154, color: "#1c8dc6" }
+];
+const engagement = [
+  { name: "Omulunga", value: 1545736, color: "#196232" },
+  { name: "Fresh FM", value: 368291, color: "#ee2d2e" },
+  { name: "Radiowave", value: 184294, color: "#ffc423" },
+  { name: "One Africa", value: 145493, color: "#ff4d00" },
+  { name: "Nova FM", value: 121223, color: "#1c8dc6" },
+  { name: "99FM", value: 94313, color: "#e4007e" }
+];
+const plays = [
+  { name: "Radiowave", value: 357143, color: "#ffc423", logo: "/assets/insights/radiowave.png" },
+  { name: "Omulunga", value: 5003732, color: "#196232", logo: "/assets/insights/omulunga.png" },
+  { name: "Fresh FM", value: 443240, color: "#ee2d2e", logo: "/assets/insights/fresh.png" },
+  { name: "Nova FM", value: 296393, color: "#1c8dc6", logo: "/assets/insights/nova.png" },
+  { name: "99 FM", value: 297503, color: "#e4007e", logo: "/assets/insights/99fm.png" },
+  { name: "One Africa", value: 1033870, color: "#ff4d00", logo: "/assets/insights/oneafrica.png" }
+];
+const maxPlay = Math.max(...plays.map(p => p.value));
+function fmt(n) {
+  return n.toLocaleString("en-US").replace(/,/g, " ");
+}
+function donut(items) {
+  const total = items.reduce((sum, item) => sum + item.value, 0);
+  let offset = 0;
+  const r = 42;
+  const c = 2 * Math.PI * r;
+  return items.map(item => {
+    const len = (item.value / total) * c;
+    const seg = { ...item, dash: `${len} ${c - len}`, offset: -offset };
+    offset += len;
+    return seg;
+  });
+}
+const audienceRing = donut(audience);
+const engagementRing = donut(engagement);
 ---
-<Layout title="Audience Insights – FutureMedia" fonts="text">
-<main class="sub live-page">
-  <div class="live-hero">
-    <p class="eyebrow">Insights</p>
-    <h1>Audience Insights</h1>
-    <p>Request a document and we’ll email it to you. For a channel recommendation, take the <a href="/media-audit.html">media audit</a>.</p>
+<Layout title="Audience Insights – FutureMedia" bodyClass="insights-page" preload="/assets/insights/signage.jpg">
+<section class="insights-hero">
+  <div class="insights-hero-copy">
+    <p class="eyebrow">Audience Insights</p>
+    <h1>Our universe <span class="insights-period">{period}</span></h1>
+    <p>How Namibia listens, watches and engages with Future Media - audience, engagement and media plays in one view.</p>
   </div>
-  <div class="doc-grid" id="docGrid"><p>Loading documents…</p></div>
+  <aside class="insights-signage" aria-hidden="true">
+    <img src="/assets/insights/signage.jpg" alt="" decoding="async" fetchpriority="high">
+  </aside>
+</section>
+
+<main class="insights-main">
+  <section class="insights-layout">
+    <article class="insight-card insight-ring">
+      <div class="insight-card-head">
+        <h2>Audience</h2>
+        <b class="insight-metric">2 530 000</b>
+      </div>
+      <div class="ring-wrap">
+        <svg viewBox="0 0 120 120" aria-hidden="true">
+          <circle class="ring-track" cx="60" cy="60" r="42"></circle>
+          {audienceRing.map(seg => (
+            <circle class="ring-seg" cx="60" cy="60" r="42" data-dash={seg.dash} data-offset={String(seg.offset)} style={`stroke:${seg.color}`}></circle>
+          ))}
+        </svg>
+        <div class="ring-center"><b>2.53M</b><span>Audience</span></div>
+      </div>
+      <ul class="insight-list">
+        {audience.map(item => (
+          <li><i style={`background:${item.color}`}></i><span>{item.name}</span><b>{fmt(item.value)}</b></li>
+        ))}
+      </ul>
+    </article>
+
+    <article class="insight-card insight-ring">
+      <div class="insight-card-head">
+        <h2>Engagement</h2>
+        <b class="insight-metric">2 459 350</b>
+      </div>
+      <div class="ring-wrap">
+        <svg viewBox="0 0 120 120" aria-hidden="true">
+          <circle class="ring-track" cx="60" cy="60" r="42"></circle>
+          {engagementRing.map(seg => (
+            <circle class="ring-seg" cx="60" cy="60" r="42" data-dash={seg.dash} data-offset={String(seg.offset)} style={`stroke:${seg.color}`}></circle>
+          ))}
+        </svg>
+        <div class="ring-center"><b>2.46M</b><span>Engage</span></div>
+      </div>
+      <ul class="insight-list">
+        {engagement.map(item => (
+          <li><i style={`background:${item.color}`}></i><span>{item.name}</span><b>{fmt(item.value)}</b></li>
+        ))}
+      </ul>
+    </article>
+
+    <article class="insight-card insight-map">
+      <div class="insight-card-head">
+        <h2>Coverage</h2>
+        <p>Where Future Media brands reach Namibia</p>
+      </div>
+      <div class="insight-map-frame" aria-hidden="true">
+        <img src="/assets/insights/coverage-map.svg" alt="" decoding="async" loading="lazy">
+      </div>
+    </article>
+
+    <article class="insight-card insight-plays">
+      <div class="insight-card-head">
+        <h2>Media plays</h2>
+        <b class="insight-metric">7 431 881</b>
+        <p>Audio and video views across the network</p>
+      </div>
+      <ul class="play-bars">
+        {plays.map((item, i) => (
+          <li style={`--w:${(item.value / maxPlay) * 100}%;--c:${item.color};--d:${0.05 + i * 0.06}s`}>
+            <img src={item.logo} alt="" width="48" height="48" decoding="async" loading="lazy">
+            <div class="play-track"><span class="play-fill"></span></div>
+            <b>{fmt(item.value)}</b>
+          </li>
+        ))}
+      </ul>
+    </article>
+  </section>
+
+  <p class="insights-source">Sources: MediaMetrics™ 2025, Google &amp; Social Analytics — Jul – Sep 2026</p>
+
+  <section class="insights-docs">
+    <div class="insights-docs-copy">
+      <p class="eyebrow">Briefings</p>
+      <h2>Request a document</h2>
+      <p>Need a deeper cut for a pitch or plan? Request a briefing and we’ll email it to you. For a channel recommendation, take the <a href="/media-audit.html">media audit</a>.</p>
+    </div>
+    <div class="doc-grid" id="docGrid"><p>Loading documents…</p></div>
+  </section>
 </main>
+
+<Fragment slot="scripts">
+<script is:inline src="/js/insights.js"></script>
+</Fragment>
 </Layout>

@@ -48,7 +48,10 @@
   }
 
   function formatJobCopy(text) {
-    const lines = String(text || "").replace(/\r/g, "").split("\n");
+    const raw = String(text || "").trim();
+    if (!raw) return "<p>Role details will be shared soon.</p>";
+    if (/<[a-z][\s\S]*>/i.test(raw)) return raw;
+    const lines = raw.replace(/\r/g, "").split("\n");
     let html = "";
     let list = [];
     const flush = () => {
@@ -56,9 +59,9 @@
       html += "<ul>" + list.map(item => `<li>${item}</li>`).join("") + "</ul>";
       list = [];
     };
-    const heading = /^(what you.?ll be doing|what we.?re looking for|bonus points if|what.?s in it for you)\b/i;
-    for (const raw of lines) {
-      const line = raw.trim();
+    const heading = /^(what you.?ll be doing|what we.?re looking for|you.?ll bring|you.?ll do|bonus points if|what.?s in it for you|about the role)\b/i;
+    for (const lineRaw of lines) {
+      const line = lineRaw.trim();
       if (!line) { flush(); continue; }
       const bullet = line.replace(/^[-•–]\s+/, "");
       if (bullet !== line) { list.push(escape(bullet)); continue; }
@@ -70,7 +73,7 @@
       }
     }
     flush();
-    return html || `<p>${escape(text)}</p>`;
+    return html || `<p>${escape(raw)}</p>`;
   }
 
   async function fillSelect(select, path, label = "name") {
@@ -86,35 +89,173 @@
     return `<img src="${escape(FM.fileUrl(job.mediaPath))}" alt="${escape(job.title || "")}" onerror="this.remove()">`;
   }
 
+  const demoVacancies = [
+    {
+      id: "demo-radio-producer",
+      title: "Radio Producer",
+      closingDate: null,
+      location: "Windhoek",
+      department: "Broadcast",
+      description: [
+        "About the role",
+        "Join our broadcast team and help craft shows that keep Namibia listening — from daily drive-time to special series across the Future Media network.",
+        "You’ll bring",
+        "- Strong editorial judgement and on-air instincts",
+        "- Experience producing live or recorded radio content",
+        "- Clear communication with presenters, clients and sales",
+        "You’ll do",
+        "- Plan and produce daily and weekly shows",
+        "- Coordinate guests, segments and promotions",
+        "- Work with brand teams on campaign integrations",
+        "What’s in it for you",
+        "- A seat in Namibia’s leading media family",
+        "- Creative briefs with real audience impact",
+        "- Mentorship from experienced broadcast producers"
+      ].join("\n"),
+      mediaType: "IMAGE",
+      mediaPath: null,
+      demoImage: "/assets/Broadcast%20Brands/FM_Brands_Intro_Personality.png"
+    },
+    {
+      id: "demo-digital-sales",
+      title: "Digital Sales Executive",
+      closingDate: null,
+      location: "Windhoek",
+      department: "Sales",
+      description: [
+        "About the role",
+        "Grow Future Media’s digital brands with clients who want measurable reach across Specials.na, Shop Beat, Property News and more.",
+        "You’ll bring",
+        "- Media or digital sales experience",
+        "- Confidence presenting packages and results",
+        "- A hunger to build lasting client relationships",
+        "You’ll do",
+        "- Pitch digital packages and campaign ideas",
+        "- Build proposals with brand and creative teams",
+        "- Own the pipeline from first call to flight",
+        "What’s in it for you",
+        "- Competitive commission structure",
+        "- Access to Namibia’s strongest digital inventory",
+        "- Close collaboration with broadcast sales"
+      ].join("\n"),
+      mediaType: "IMAGE",
+      mediaPath: null,
+      demoImage: "/assets/Digital/FM_Brands_Digital_Intro_Personality.png"
+    },
+    {
+      id: "demo-video-editor",
+      title: "Video Editor",
+      closingDate: null,
+      location: "Windhoek",
+      department: "Production",
+      description: [
+        "About the role",
+        "Cut stories for One Africa, social and brand campaigns that hold attention — from commercials to show packages.",
+        "You’ll bring",
+        "- Proven editing skills in Premiere, Resolve or similar",
+        "- An eye for pace, sound and on-brand graphics",
+        "- Comfort working to broadcast and digital deadlines",
+        "You’ll do",
+        "- Edit commercials, social clips and show packages",
+        "- Collaborate with producers and creatives",
+        "- Deliver clean masters ready for air and web",
+        "What’s in it for you",
+        "- Varied briefs across TV, social and brand",
+        "- Modern tools and a collaborative studio culture",
+        "- Room to grow into senior edit / motion roles"
+      ].join("\n"),
+      mediaType: "IMAGE",
+      mediaPath: null,
+      demoImage: "/assets/vacancies/handshake.png"
+    }
+  ];
+
+  function jobImageHtml(job, fallbackTitle) {
+    const alt = escape(fallbackTitle || job.title || "Vacancy");
+    const fallback = `/assets/vacancies/handshake.png`;
+    if (job.mediaType === "IMAGE" && job.mediaPath) {
+      return `<img src="${escape(FM.fileUrl(job.mediaPath))}" alt="${alt}" onerror="this.onerror=null;this.src='${fallback}'">`;
+    }
+    if (job.demoImage) {
+      return `<img src="${escape(job.demoImage)}" alt="${alt}" onerror="this.onerror=null;this.src='${fallback}'">`;
+    }
+    return `<img src="${fallback}" alt="${alt}">`;
+  }
+
+  function renderVacancyCards(grid, items, isDemo) {
+    grid.innerHTML = items.map(job => `
+        <article class="job-card" data-id="${escape(String(job.id))}" ${isDemo ? 'data-demo="1"' : ""}>
+          ${jobImageHtml(job)}
+          <div class="job-copy">
+            <h3>${escape(job.title)}</h3>
+            <small>${isDemo ? "Open role · apply anytime" : closingLabel(job.closingDate)}</small>
+          </div>
+        </article>`).join("");
+  }
+
+  function openVacancyDetail(job, isDemo) {
+    const meta = [
+      job.department ? `<span>${escape(job.department)}</span>` : "",
+      job.location ? `<span>${escape(job.location)}</span>` : "",
+      `<span>${isDemo ? "Open role · apply anytime" : escape(closingLabel(job.closingDate))}</span>`
+    ].filter(Boolean).join("");
+    const modal = pop(`
+      ${jobImageHtml(job)}
+      <div class="job-detail-title">${escape(job.title)}</div>
+      <div class="job-detail-meta">${meta}</div>
+      <div class="job-detail-body">${formatJobCopy(job.description)}</div>
+      <div class="job-detail-actions">
+        <button class="btn" id="applyBtn" type="button">Apply now</button>
+        <button class="btn ghost" data-close type="button">Close</button>
+      </div>
+    `, "pop-card job-detail");
+    modal.querySelector("#applyBtn").onclick = () => {
+      if (isDemo) {
+        pop(`<h2>Apply for ${escape(job.title)}</h2>
+          <p class="fm-lead">Send your CV and a short note on why you’re a fit. Our people team reviews every application.</p>
+          <ul class="job-apply-points">
+            <li>Email <a href="mailto:sales@futuremedia.com.na">sales@futuremedia.com.na</a></li>
+            <li>Use subject line: <strong>Application: ${escape(job.title)}</strong></li>
+            <li>Attach your CV (PDF preferred) and portfolio links if relevant</li>
+          </ul>
+          <div class="pop-actions">
+            <button class="btn ghost" data-close type="button">Close</button>
+            <a class="btn" href="mailto:sales@futuremedia.com.na?subject=${encodeURIComponent("Application: " + job.title)}">Email CV</a>
+          </div>`, "pop-card job-apply");
+        return;
+      }
+      applyForm(job);
+    };
+  }
+
   async function vacancies() {
     const grid = $("#jobGrid");
     if (!grid) return;
-    try {
-      const res = await FM.request("/api/vacancies/public");
-      const items = res.data || [];
-      if (!items.length) { grid.innerHTML = "<p>No live vacancies right now.</p>"; return; }
-      grid.innerHTML = items.map(job => `
-        <article class="job-card" data-id="${job.id}">
-          ${vacancyImage(job)}
-          <div class="job-copy">
-            <h3>${escape(job.title)}</h3>
-            <small>${closingLabel(job.closingDate)}</small>
-          </div>
-        </article>`).join("");
+    const bind = (items, isDemo) => {
+      renderVacancyCards(grid, items, isDemo);
       grid.onclick = async e => {
         const card = e.target.closest(".job-card");
         if (!card) return;
-        const job = (await FM.request("/api/vacancies/public/" + card.dataset.id)).data;
-        const modal = pop(`
-          ${vacancyImage(job)}
-          <div class="job-detail-title">${escape(job.title)}</div>
-          <div class="job-detail-body">${formatJobCopy(job.description)}</div>
-          <button class="btn" id="applyBtn" type="button">Apply</button>
-        `, "pop-card job-detail");
-        modal.querySelector("#applyBtn").onclick = () => applyForm(job);
+        if (card.dataset.demo === "1") {
+          const job = demoVacancies.find(item => String(item.id) === card.dataset.id);
+          if (job) openVacancyDetail(job, true);
+          return;
+        }
+        try {
+          const job = (await FM.request("/api/vacancies/public/" + card.dataset.id)).data;
+          openVacancyDetail(job, false);
+        } catch (error) {
+          pop(`<h2>Role unavailable</h2><p>${escape(error.message || "Please try again shortly.")}</p><div class="pop-actions"><button class="btn ghost" data-close type="button">Close</button></div>`);
+        }
       };
+    };
+    try {
+      const res = await FM.request("/api/vacancies/public");
+      const items = res.data || [];
+      if (!items.length) { bind(demoVacancies, true); return; }
+      bind(items, false);
     } catch (error) {
-      grid.innerHTML = `<p>${escape(error.message)}</p>`;
+      bind(demoVacancies, true);
     }
   }
 
@@ -169,14 +310,32 @@
       fillSelect(form.salesId, "/api/sales/public"),
       fillSelect(form.serviceId, "/api/services/public")
     ]);
+    const syncPhone = () => {
+      const code = (form.phoneCode?.value || "").trim();
+      const number = (form.phoneNumber?.value || "").replace(/[^\d\s()-]/g, "").trim();
+      if (form.telephone) form.telephone.value = [code, number].filter(Boolean).join(" ").trim();
+    };
+    form.phoneCode?.addEventListener("change", syncPhone);
+    form.phoneNumber?.addEventListener("input", syncPhone);
+    syncPhone();
     form.onsubmit = async ev => {
       ev.preventDefault();
+      syncPhone();
+      if (!form.telephone?.value || form.telephone.value.replace(/\D/g, "").length < 8) {
+        note("#contactNote", "Please enter a valid telephone number with your country code.", false);
+        form.phoneNumber?.focus();
+        return;
+      }
       const release = busy(form, "Sending…");
       note("#contactNote", "Sending your message…", true);
       try {
         const body = Object.fromEntries(new FormData(form).entries());
+        delete body.phoneCode;
+        delete body.phoneNumber;
         await FM.request("/api/contact", { method: "POST", body });
         form.reset();
+        if (form.phoneCode) form.phoneCode.value = "+264";
+        syncPhone();
         note("#contactNote", "Message received. The sales team will follow up shortly.", true);
         release("Send message");
       } catch (error) {
@@ -264,22 +423,39 @@
     }
   }
 
+  const demoGallery = [
+    ["/assets/NEDBANK_IMC_CONFERENCE_2025/DSC_5591_1.jpg", "Nedbank IMC Conference"],
+    ["/assets/NEDBANK_IMC_CONFERENCE_2025/DSC_5618_1.jpg", "Conference floor"],
+    ["/assets/2025_FUTUREMEDIA_CLIENT_FUNCTION/CLB8447.jpg", "Client function"],
+    ["/assets/2025_FUTUREMEDIA_CLIENT_FUNCTION/CLB8469.jpg", "Future Media moments"],
+    ["/assets/conference/slide1.webp", "Future of Business"],
+    ["/assets/homepage/homepage.jpg", "Life at Future Media"]
+  ];
+
   async function gallery() {
     if (document.body.classList.contains("gallery-page")) return;
     const grid = $("#galleryGrid");
     if (!grid) return;
+    const paintLocal = () => {
+      grid.innerHTML = demoGallery.map(([src, title]) => `<img src="${escape(src)}" alt="${escape(title)}" data-demo="1" data-title="${escape(title)}">`).join("");
+      grid.onclick = e => {
+        if (e.target.tagName !== "IMG") return;
+        pop(`<img src="${escape(e.target.src)}" alt=""><h2>${escape(e.target.dataset.title || "Gallery")}</h2><div class="pop-actions"><button class="btn ghost" data-close type="button">Close</button></div>`);
+      };
+    };
     try {
       const res = await FM.request("/api/gallery/public");
       const items = res.data || [];
-      if (!items.length) { grid.innerHTML = "<p>Gallery is being updated.</p>"; return; }
+      if (!items.length) { paintLocal(); return; }
       grid.innerHTML = items.map(item => `<img src="${escape(FM.fileUrl(item.imagePath))}" alt="${escape(item.title || "")}" data-id="${item.id}">`).join("");
       grid.onclick = async e => {
         if (e.target.tagName !== "IMG") return;
+        if (e.target.dataset.demo === "1") return;
         const item = (await FM.request("/api/gallery/public/" + e.target.dataset.id)).data;
         pop(`<img src="${escape(FM.fileUrl(item.imagePath))}" alt=""><h2>${escape(item.title || "Gallery")}</h2><div class="pop-actions"><button class="btn ghost" data-close type="button">Close</button></div>`);
       };
     } catch (error) {
-      grid.innerHTML = `<p>${escape(error.message)}</p>`;
+      paintLocal();
     }
   }
 
@@ -304,33 +480,57 @@
     };
   }
 
+  const demoFreelance = [
+    { id: "demo-voice", title: "Voice Artist", closingDate: null, description: "<p>Record radio and brand audio with our in-house production team.</p>" },
+    { id: "demo-camera", title: "Camera Operator", closingDate: null, description: "<p>Shoot commercials, social and conference content across Namibia.</p>" },
+    { id: "demo-designer", title: "Graphic Designer", closingDate: null, description: "<p>Create on-brand stills, motion and social assets for Future Media campaigns.</p>" }
+  ];
+
   async function freelancers() {
     const grid = $("#freelanceGrid");
     if (!grid) return;
-    try {
-      const res = await FM.request("/api/freelancers/public");
-      const items = res.data || [];
-      if (!items.length) { grid.innerHTML = "<p>No freelance roles are open right now.</p>"; return; }
+    const bind = (items, isDemo) => {
       grid.innerHTML = items.map(role => `
-        <article class="job-card" data-id="${role.id}">
+        <article class="job-card" data-id="${escape(String(role.id))}" ${isDemo ? 'data-demo="1"' : ""}>
           <div class="job-copy">
             <h3>${escape(role.title)}</h3>
-            <small>${closingLabel(role.closingDate)}</small>
+            <small>${isDemo ? "Join our freelance list" : closingLabel(role.closingDate)}</small>
           </div>
         </article>`).join("");
       grid.onclick = async e => {
         const card = e.target.closest(".job-card");
         if (!card) return;
-        const role = (await FM.request("/api/freelancers/public/" + card.dataset.id)).data;
-        const modal = pop(`
-          <div class="job-detail-title">${escape(role.title)}</div>
-          <div class="job-detail-body">${formatJobCopy(role.description)}</div>
-          <button class="btn" id="applyBtn" type="button">Apply</button>
-        `, "pop-card job-detail");
-        modal.querySelector("#applyBtn").onclick = () => freelancerForm(role);
+        if (card.dataset.demo === "1") {
+          const role = demoFreelance.find(item => String(item.id) === card.dataset.id);
+          if (!role) return;
+          pop(`
+            <div class="job-detail-title">${escape(role.title)}</div>
+            <div class="job-detail-body">${formatJobCopy(role.description)}</div>
+            <p class="fm-lead">Demo role while live freelance posts sync. Email your portfolio to <a href="mailto:sales@futuremedia.com.na">sales@futuremedia.com.na</a>.</p>
+            <div class="pop-actions"><button class="btn ghost" data-close type="button">Close</button><a class="btn" href="mailto:sales@futuremedia.com.na?subject=${encodeURIComponent("Freelance: " + role.title)}">Email portfolio</a></div>
+          `, "pop-card job-detail");
+          return;
+        }
+        try {
+          const role = (await FM.request("/api/freelancers/public/" + card.dataset.id)).data;
+          const modal = pop(`
+            <div class="job-detail-title">${escape(role.title)}</div>
+            <div class="job-detail-body">${formatJobCopy(role.description)}</div>
+            <button class="btn" id="applyBtn" type="button">Apply</button>
+          `, "pop-card job-detail");
+          modal.querySelector("#applyBtn").onclick = () => freelancerForm(role);
+        } catch (error) {
+          pop(`<h2>Role unavailable</h2><p>${escape(error.message || "Please try again shortly.")}</p><div class="pop-actions"><button class="btn ghost" data-close type="button">Close</button></div>`);
+        }
       };
+    };
+    try {
+      const res = await FM.request("/api/freelancers/public");
+      const items = res.data || [];
+      if (!items.length) { bind(demoFreelance, true); return; }
+      bind(items, false);
     } catch (error) {
-      grid.innerHTML = `<p>${escape(error.message)}</p>`;
+      bind(demoFreelance, true);
     }
   }
 
@@ -427,20 +627,31 @@
     }
   }
 
-  async function documents() {
-    const grid = $("#docGrid");
-    if (!grid) return;
-    try {
-      const res = await FM.request("/api/gated-documents/public");
-      const items = res.data || [];
-      if (!items.length) { grid.innerHTML = "<p>No documents available yet.</p>"; return; }
-      grid.innerHTML = items.map(doc => `
-        <article class="doc-card" data-id="${doc.id}">
-          <div class="body"><h3>${escape(doc.title)}</h3><p>${escape(doc.description || "Request this briefing and we’ll email it to you.")}</p></div>
-        </article>`).join("");
-      grid.onclick = async e => {
-        const card = e.target.closest(".doc-card");
-        if (!card) return;
+  const demoDocuments = [
+    { id: "demo-company-profile", title: "Company Profile", description: "A concise overview of Future Media’s brands, reach and partnerships across Namibia." },
+    { id: "demo-audience-brief", title: "Audience Briefing", description: "Network audience, engagement and media-play highlights for planning and pitches." },
+    { id: "demo-rate-overview", title: "Media Rate Overview", description: "A high-level look at broadcast and digital packaging — request the full deck by email." }
+  ];
+
+  function paintDocuments(grid, items, isDemo) {
+    grid.innerHTML = items.map(doc => `
+      <article class="doc-card" data-id="${escape(String(doc.id))}" ${isDemo ? 'data-demo="1"' : ""}>
+        <div class="body"><h3>${escape(doc.title)}</h3><p>${escape(doc.description || "Request this briefing and we’ll email it to you.")}</p></div>
+      </article>`).join("");
+    grid.onclick = async e => {
+      const card = e.target.closest(".doc-card");
+      if (!card) return;
+      if (card.dataset.demo === "1") {
+        const doc = demoDocuments.find(item => String(item.id) === card.dataset.id) || { title: "Document", description: "" };
+        pop(`
+          <h2>${escape(doc.title)}</h2>
+          <p>${escape(doc.description || "")}</p>
+          <p class="fm-lead">Live document requests sync when the API is available. For now, email us and we’ll send the latest pack.</p>
+          <div class="pop-actions"><button class="btn ghost" data-close type="button">Close</button><a class="btn" href="mailto:sales@futuremedia.com.na?subject=${encodeURIComponent("Request: " + doc.title)}">Email request</a></div>
+        `);
+        return;
+      }
+      try {
         const doc = (await FM.request("/api/gated-documents/public/" + card.dataset.id)).data;
         const modal = pop(`
           <h2>${escape(doc.title)}</h2>
@@ -467,9 +678,22 @@
             release();
           }
         };
-      };
+      } catch (error) {
+        pop(`<h2>Document unavailable</h2><p>${escape(error.message || "Please try again shortly.")}</p><div class="pop-actions"><button class="btn ghost" data-close type="button">Close</button></div>`);
+      }
+    };
+  }
+
+  async function documents() {
+    const grid = $("#docGrid");
+    if (!grid) return;
+    try {
+      const res = await FM.request("/api/gated-documents/public");
+      const items = res.data || [];
+      if (!items.length) { paintDocuments(grid, demoDocuments, true); return; }
+      paintDocuments(grid, items, false);
     } catch (error) {
-      grid.innerHTML = `<p>${escape(error.message)}</p>`;
+      paintDocuments(grid, demoDocuments, true);
     }
   }
 

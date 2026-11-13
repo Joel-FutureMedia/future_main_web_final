@@ -23,17 +23,15 @@ function loadAlbum(dir, title, blurb) {
 }
 
 const albums = [
-  loadAlbum('NEDBANK_IMC_CONFERENCE_2025', 'Nedbank IMC Conference 2025', 'Highlights from Namibia’s flagship IMC gathering.'),
+  (() => {
+    const album = loadAlbum('NEDBANK_IMC_CONFERENCE_2025', 'Nedbank IMC Conference 2025', 'Highlights from Namibia’s flagship IMC gathering.');
+    album.images = album.images.slice(0, -1);
+    return album;
+  })(),
   loadAlbum('2025_FUTUREMEDIA_CLIENT_FUNCTION', 'Future Media Client Function 2025', 'Celebrating partners, brands and the year behind us.'),
   loadAlbum('99fm', '99FM', 'Moments from Namibia’s boldest radio brand.'),
 ].filter((a) => a.images.length);
 
-const breakLines = [
-  'Future Media',
-  'Moments that move',
-  'Brands · People · Events',
-  'Namibia',
-];
 ---
 <Layout title="Gallery – FutureMedia" bodyClass="gallery-page">
 <section class="gallery-hero">
@@ -52,41 +50,23 @@ const breakLines = [
     ))}
   </nav>
 
-  {albums.map((album, albumIndex) => {
-    const line = breakLines[albumIndex % breakLines.length];
-    return (
-      <section class="gallery-album" id={album.id} data-album={album.id}>
-        <div class="gallery-album-head">
-          <h2>{album.title}</h2>
-          <p>{album.blurb}</p>
-        </div>
-        <div class="gallery-masonry">
-          {album.images.map((img, i) => (
-            <figure class="gallery-item" style={`--d:${(i % 8) * 0.05}s`} data-src={img.src} data-title={album.title}>
-              <button type="button" class="gallery-frame" aria-label={`Open ${album.title} photo`}>
-                <img src={img.src} alt={img.alt} loading="lazy" decoding="async">
-              </button>
-            </figure>
-          ))}
-        </div>
-
-        <div class="gallery-break" aria-hidden="true">
-          <div class="gallery-break-glow"></div>
-          <div class="gallery-marquee gallery-marquee-words">
-            <div class="gallery-marquee-track">
-              {[0, 1].map(() => (
-                <div class="gallery-marquee-group">
-                  {[album.title, line, 'Future Media', album.title, line, 'Captured live'].map((text) => (
-                    <span>{text}</span>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  })}
+  {albums.map((album) => (
+    <section class="gallery-album" id={album.id} data-album={album.id}>
+      <div class="gallery-album-head">
+        <h2>{album.title}</h2>
+        <p>{album.blurb}</p>
+      </div>
+      <div class="gallery-masonry">
+        {album.images.map((img, i) => (
+          <figure class="gallery-item" style={`--d:${(i % 8) * 0.05}s`} data-src={img.src} data-title={album.title}>
+            <button type="button" class="gallery-frame" aria-label={`Open ${album.title} photo`}>
+              <img src={img.src} alt={img.alt} loading="lazy" decoding="async">
+            </button>
+          </figure>
+        ))}
+      </div>
+    </section>
+  ))}
 </main>
 
 <div class="gallery-lightbox" id="galleryLightbox" hidden>

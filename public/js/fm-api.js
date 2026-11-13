@@ -9,25 +9,35 @@ window.FM = (function () {
     if (!options.form && options.body && typeof options.body !== "string") {
       headers["Content-Type"] = "application/json";
     }
-    const response = await fetch(base + path, {
-      method: options.method || "GET",
-      headers,
-      body: options.form
-        ? options.body
-        : options.body && typeof options.body !== "string"
-          ? JSON.stringify(options.body)
-          : options.body
-    });
-    const text = await response.text();
-    let data = {};
-    try { data = text ? JSON.parse(text) : {}; } catch { data = { message: text }; }
-    if (!response.ok || data.success === false) {
-      const error = new Error(data.message || "Request failed");
-      error.status = response.status;
-      error.payload = data;
-      throw error;
+    const timeoutMs = typeof options.timeoutMs === "number" ? options.timeoutMs : 4000;
+    const controller = typeof AbortController !== "undefined" ? new AbortController() : null;
+    const timer = controller
+      ? setTimeout(() => controller.abort(), timeoutMs)
+      : null;
+    try {
+      const response = await fetch(base + path, {
+        method: options.method || "GET",
+        headers,
+        signal: controller ? controller.signal : undefined,
+        body: options.form
+          ? options.body
+          : options.body && typeof options.body !== "string"
+            ? JSON.stringify(options.body)
+            : options.body
+      });
+      const text = await response.text();
+      let data = {};
+      try { data = text ? JSON.parse(text) : {}; } catch { data = { message: text }; }
+      if (!response.ok || data.success === false) {
+        const error = new Error(data.message || "Request failed");
+        error.status = response.status;
+        error.payload = data;
+        throw error;
+      }
+      return data;
+    } finally {
+      if (timer) clearTimeout(timer);
     }
-    return data;
   }
 
   function fileUrl(path) {

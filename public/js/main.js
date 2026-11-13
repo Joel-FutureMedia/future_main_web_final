@@ -1,5 +1,5 @@
 const NAV=[
-  {href:"/advertise.html",label:"Advertise",menu:[["/advertise.html","Solutions"],["/advertise.html","Advertise"],["/terms.html","Policy"],["/index.html#offers","Offers"]]},
+  {href:"/advertise.html",label:"Advertise",menu:[["/advertise.html","Solutions"],["/index.html#offers","Offers"]]},
   {href:"/conferences.html",label:"Conferences"},
   {href:"/brands.html",label:"Brands",menu:[["/brands.html","Broadcast"],["/digital.html","Digital"]]},
   {href:"/audience.html",label:"Audience Insights",menu:[["/audience.html","Insights"],["/media-audit.html","Media Audit"]]},
@@ -23,9 +23,9 @@ document.querySelectorAll(".drop").forEach(drop=>{
   });
 });
 document.querySelector("#ftr").innerHTML=`<footer>
-<a class="lg" href="/index.html" aria-label="FutureMedia"><img src="/assets/Broadcast%20Brands/logo-cirlce.png" alt=""></a>
+<a class="lg" href="/index.html" aria-label="FutureMedia"><img src="/assets/Logos/logo-cirlce.png" alt=""></a>
 <ul><li><a href="/team.html">Team</a></li><li><a href="/gallery.html">Gallery</a></li><li><a href="/about.html">About Us</a></li></ul>
-<ul><li><a href="/vacancies.html">Vacancies</a></li><li><a href="/terms.html">Terms &amp; Conditions</a></li><li><a href="/audience.html" data-company-profile>Company Profile</a></li></ul>
+<ul><li><a href="/vacancies.html">Vacancies</a></li><li><a href="/terms.html">Privacy Policy</a></li><li><a href="/audience.html" data-company-profile>Company Profile</a></li></ul>
 <div class="ct">Unit 44, Hyper Motor City, Maxwell Street, Windhoek<br><a href="tel:+264830001000">+264 83 000 1000</a><br><a href="mailto:sales@futuremedia.com.na">sales@futuremedia.com.na</a>
 <form data-subscribe class="sub-form"><input name="fullName" placeholder="Name" required><input name="email" type="email" placeholder="Email" required><button type="submit">Subscribe</button></form>
 </div>
@@ -47,7 +47,8 @@ document.querySelectorAll(".panel[data-offers], .panel[data-list]").forEach(pane
   }else{
     const offers=JSON.parse(panel.dataset.offers);
     rows.innerHTML=offers.map(o=>{
-      const img=`<img class="${o[4]==="contain"?"contain":"cover"}" src="${o[3]}" alt="" decoding="async" loading="lazy">`;
+      const fit=o[4]==="contain"||o[4]==="icon"?o[4]:"cover";
+      const img=`<img class="${fit}" src="${o[3]}" alt="" decoding="async" loading="lazy">`;
       return `<a class="offer" href="${o[2]}"><span class="thumb">${img}</span><span><b>${o[0]}</b><small>${o[1]}</small></span></a>`;
     }).join("");
   }
@@ -118,14 +119,94 @@ const chatLog=document.querySelector("#chatLog");
 const chatForm=document.querySelector("#chatForm");
 const chatInput=document.querySelector("#chatInput");
 const chatQuick=document.querySelector("#chatQuick");
-const answers={};
-let chatStep=0, chatStarted=false;
-const chatScript=[
-  {id:"name",ask:"Hi, I'm Nia from FutureMedia. What is your name?",placeholder:"Your name"},
-  {id:"contact",ask:()=>`Good to meet you, ${answers.name}. What phone number or email should we use?`,placeholder:"Phone or email",valid:v=>/@/.test(v)||/\d{6,}/.test(v),error:"Please share a phone number or an email so the team can reply."},
-  {id:"need",ask:"What can we help you with?",choices:["Advertising","A conference","A media audit","A general question"]},
-  {id:"detail",ask:"Tell us a little more and I'll pass it to the right person.",placeholder:"Your message"}
+let chatStarted=false;
+const chatIntents={
+  advertise:{
+    reply:"Perfect — Future Media places brands across radio, TV and digital. Tell sales what you’re building and they’ll map the mix.",
+    link:["/advertise.html","See advertising solutions"],
+    follow:["Speak to sales","Start a media audit","Contact us"]
+  },
+  offers:{
+    reply:"Here are the latest packages and promotions live across the network.",
+    link:["/index.html#offers","View latest offers"],
+    follow:["Advertise with us","See our solutions","Contact us"]
+  },
+  solutions:{
+    reply:"From radio and television to digital, studio and conferences — browse the solutions we run every day.",
+    link:["/advertise.html","Explore solutions"],
+    follow:["Advertise with us","Book a conference","Start a media audit"]
+  },
+  sales:{
+    reply:"A sales consultant can help with budgets, flighting and the right brand mix. Share your details on Contact Us, or chat on WhatsApp.",
+    link:["/contact.html","Talk to sales"],
+    follow:["Contact us","Advertise with us","Start a media audit"]
+  },
+  contact:{
+    reply:"You can reach us on +264 83 000 1000 or sales@futuremedia.com.na — or send a message on the Contact page.",
+    link:["/contact.html","Open Contact Us"],
+    follow:["Speak to sales","Advertise with us","See our solutions"]
+  },
+  audit:{
+    reply:"The free media audit is seven short questions. We’ll point you to the mix that fits audience, timing and budget.",
+    link:["/media-audit.html","Start media audit"],
+    follow:["Advertise with us","See our solutions","Contact us"]
+  },
+  conference:{
+    reply:"Future of Business and our other conferences put brands in the room with decision makers.",
+    link:["/conferences.html","See conferences"],
+    follow:["Book a conference table","Advertise with us","Contact us"]
+  },
+  brands:{
+    reply:"Seven broadcast brands and five digital platforms — one network. Scroll the decks to find your audience.",
+    link:["/brands.html","Browse broadcast brands"],
+    follow:["See digital brands","Advertise with us","See audience insights"]
+  },
+  digital:{
+    reply:"Specials.na, Shop Beat, Property News, PromoBasket and Entryfy reach shoppers and browsers across Namibia.",
+    link:["/digital.html","Browse digital brands"],
+    follow:["Advertise with us","See our solutions","Contact us"]
+  },
+  insights:{
+    reply:"Audience, engagement and media plays across the Future Media network — plus briefings you can request.",
+    link:["/audience.html","Open Audience Insights"],
+    follow:["Start a media audit","Advertise with us","Contact us"]
+  },
+  careers:{
+    reply:"We’re hiring across radio, digital, video and sales. Browse open roles or join the freelancer list.",
+    link:["/vacancies.html","See vacancies"],
+    follow:["Contact us","See our solutions","Main menu"]
+  },
+  news:{
+    reply:"Campaigns, conferences and brand stories from around the group.",
+    link:["/news.html","Read the news"],
+    follow:["See conferences","Advertise with us","Main menu"]
+  }
+};
+const chatStarter=[
+  ["Do you want to advertise with us?","advertise"],
+  ["Have a look at our latest offers.","offers"],
+  ["Do you want to see our solutions on offer?","solutions"],
+  ["Do you want to speak to a sales consultant?","sales"],
+  ["Contact us directly","contact"],
+  ["Start a free media audit","audit"],
+  ["Tell me about conferences","conference"],
+  ["Show me broadcast brands","brands"],
+  ["Show me digital brands","digital"],
+  ["See audience insights","insights"],
+  ["Are you hiring?","careers"],
+  ["What’s in the news?","news"]
 ];
+const chatFollowMap={
+  "Speak to sales":"sales",
+  "Advertise with us":"advertise",
+  "See our solutions":"solutions",
+  "Contact us":"contact",
+  "Start a media audit":"audit",
+  "Book a conference table":"conference",
+  "See digital brands":"digital",
+  "See audience insights":"insights",
+  "Main menu":"menu"
+};
 function chatBubble(text,who){
   const bubble=document.createElement("div");
   bubble.className="bubble "+who;
@@ -134,82 +215,81 @@ function chatBubble(text,who){
   chatLog.scrollTop=chatLog.scrollHeight;
   return bubble;
 }
-function askChat(){
-  const step=chatScript[chatStep];
-  if(!step){finishChat();return}
+function chatLink(href,label){
+  const link=document.createElement("a");
+  link.className="bubble bot link";
+  link.href=href;
+  link.textContent=label;
+  chatLog.appendChild(link);
+  chatLog.scrollTop=chatLog.scrollHeight;
+}
+function paintQuick(items){
+  chatQuick.innerHTML="";
+  items.forEach(([label,key])=>{
+    const button=document.createElement("button");
+    button.type="button";
+    button.textContent=label;
+    button.addEventListener("click",()=>handleChatChoice(label,key));
+    chatQuick.appendChild(button);
+  });
+}
+function showChatMenu(){
+  chatInput.disabled=false;
+  chatInput.placeholder="Or type your question…";
+  paintQuick(chatStarter);
+}
+function botReply(text,after){
   const typing=chatBubble("…","bot typing");
   setTimeout(()=>{
     typing.remove();
-    chatBubble(typeof step.ask==="function"?step.ask():step.ask,"bot");
-    chatQuick.innerHTML="";
-    if(step.choices){
-      chatInput.disabled=true;
-      step.choices.forEach(choice=>{
-        const button=document.createElement("button");
-        button.type="button";
-        button.textContent=choice;
-        button.addEventListener("click",()=>answerChat(choice));
-        chatQuick.appendChild(button);
-      });
-    }else{
-      chatInput.disabled=false;
-      chatInput.placeholder=step.placeholder||"Type a message";
-      chatInput.focus();
-    }
-  },620);
+    chatBubble(text,"bot");
+    if(after) after();
+  },480);
 }
-function answerChat(value){
-  const step=chatScript[chatStep];
-  value=(value||"").trim();
-  if(!value||!step) return;
-  chatBubble(value,"me");
-  if(step.valid&&!step.valid(value)){
-    chatBubble(step.error,"bot");
+function handleChatChoice(label,key){
+  chatBubble(label,"me");
+  if(key==="menu"){
+    botReply("Sure — pick another option below, or type your own question.",showChatMenu);
     return;
   }
-  answers[step.id]=value;
-  chatInput.value="";
-  chatQuick.innerHTML="";
-  if(step.id==="need"&&value.toLowerCase()==="a media audit"){
-    chatInput.disabled=true;
-    const typing=chatBubble("…","bot typing");
-    setTimeout(()=>{
-      typing.remove();
-      chatBubble("Great — the media audit is a short 7-step form. Open it here and we’ll recommend the right mix.","bot");
-      const link=document.createElement("a");
-      link.className="bubble bot link";
-      link.href="/media-audit.html";
-      link.textContent="Start the media audit";
-      chatLog.appendChild(link);
-      chatLog.scrollTop=chatLog.scrollHeight;
-    },620);
+  const intent=chatIntents[key];
+  if(!intent){
+    botReply("I can help with advertising, offers, solutions, sales, conferences and more. Choose an option below.",showChatMenu);
     return;
   }
-  chatStep++;
-  askChat();
+  botReply(intent.reply,()=>{
+    if(intent.link) chatLink(intent.link[0],intent.link[1]);
+    const follow=(intent.follow||[]).map(text=>[text,chatFollowMap[text]||"menu"]);
+    follow.push(["Main menu","menu"]);
+    paintQuick(follow);
+    chatInput.disabled=false;
+    chatInput.placeholder="Or type your question…";
+  });
 }
-function finishChat(){
-  chatInput.disabled=true;
-  chatQuick.innerHTML="";
-  const typing=chatBubble("…","bot typing");
-  const summary=`Hello FutureMedia, my name is ${answers.name}. Contact: ${answers.contact}. I need help with: ${answers.need}. ${answers.detail}`;
-  setTimeout(()=>{
-    typing.remove();
-    chatBubble(`Thanks ${answers.name}. I've got that. A producer will follow up, or you can send this chat now.`,"bot");
-    const link=document.createElement("a");
-    link.className="bubble bot link";
-    link.href="https://wa.me/264830001000?text="+encodeURIComponent(summary);
-    link.target="_blank";
-    link.rel="noopener";
-    link.textContent="Send this chat";
-    chatLog.appendChild(link);
-    chatLog.scrollTop=chatLog.scrollHeight;
-  },620);
+function matchChatIntent(text){
+  const q=text.toLowerCase();
+  if(/advert|campaign|radio|tv|spot/.test(q)) return "advertise";
+  if(/offer|special|promo|package/.test(q)) return "offers";
+  if(/solution|studio|product/.test(q)) return "solutions";
+  if(/sales|consultant|rep|account/.test(q)) return "sales";
+  if(/contact|email|phone|call|whatsapp/.test(q)) return "contact";
+  if(/audit|recommend|mix/.test(q)) return "audit";
+  if(/conference|event|future of business|table/.test(q)) return "conference";
+  if(/digital|shopbeat|specials|property news/.test(q)) return "digital";
+  if(/brand|station|99fm|fresh|omulunga|nova|wave|one africa/.test(q)) return "brands";
+  if(/insight|audience|reach|metric/.test(q)) return "insights";
+  if(/job|vacanc|career|hire|freelance/.test(q)) return "careers";
+  if(/news|story|update/.test(q)) return "news";
+  return null;
+}
+function startChat(){
+  chatLog.innerHTML="";
+  botReply("Hi, I’m Nia from Future Media. Pick a question below — or type your own.",showChatMenu);
 }
 document.querySelector("#waOpen").addEventListener("click",()=>{
   chat.hidden=!chat.hidden;
-  if(!chat.hidden&&!chatStarted){chatStarted=true;askChat()}
-  if(!chat.hidden&&!chatInput.disabled) chatInput.focus();
+  if(!chat.hidden&&!chatStarted){chatStarted=true;startChat()}
+  if(!chat.hidden) chatInput.focus();
 });
 document.querySelector("#chatClose").addEventListener("click",()=>{chat.hidden=true});
 if(!matchMedia("(prefers-reduced-motion: reduce)").matches){
@@ -227,5 +307,14 @@ if(!matchMedia("(prefers-reduced-motion: reduce)").matches){
 }
 chatForm.addEventListener("submit",event=>{
   event.preventDefault();
-  if(!chatInput.disabled) answerChat(chatInput.value);
+  const value=(chatInput.value||"").trim();
+  if(!value) return;
+  chatInput.value="";
+  const key=matchChatIntent(value);
+  if(key){handleChatChoice(value,key);return}
+  chatBubble(value,"me");
+  botReply("Thanks — I can help with advertising, offers, solutions, sales, conferences, brands and careers. Choose an option below, or contact sales directly.",()=>{
+    chatLink("/contact.html","Contact us");
+    showChatMenu();
+  });
 });

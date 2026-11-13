@@ -10,6 +10,17 @@ const confs = [
   ["Join us for the", "Future of", "Business", "2027"],
   ["Join us for", "Flight Club", "", "Invitation only"]
 ];
+const icons = "/assets/conference_icons/FM_Conferences_Icon_";
+const actions = [
+  ["Become a Sponsor", "Put your brand in front of the room.", "/contact.html", `${icons}Sponsor.svg`, "icon"],
+  ["Sponsor Coffee", "Host the coffee break delegates remember.", "/contact.html", `${icons}Coffee.svg`, "icon"],
+  ["Buy Tickets", "Reserve your seat at the next event.", "/contact.html", `${icons}Ticket.svg`, "icon"],
+  ["Newsletter Sign Up", "Conference news, straight to your inbox.", "/news.html", `${icons}Newsletter.svg`, "icon"],
+  ["FAQ", "Answers on tickets, venues and timings.", "/about.html", `${icons}FAQ.svg`, "icon"],
+  ["Past Events", "Highlights from previous conferences.", "/gallery.html", `${icons}Past%20Event.svg`, "icon"],
+  ["Request a Proposal", "Get a package tailored to your goals.", "/contact.html", `${icons}Proposal.svg`, "icon"],
+  ["Book a Table", "Bring your team or host your clients.", "/contact.html", `${icons}Booking.svg`, "icon"]
+];
 ---
 <Layout title="Conferences – FutureMedia" bodyClass="conf" preload="/assets/conference/slide2.webp">
 <section class="confhero">
@@ -32,16 +43,7 @@ const confs = [
       </h1>
       <p class="conf-date" id="cdesc">16 - 17 February 2027</p>
     </div>
-    <div class="panel" data-list={JSON.stringify([
-      ["Become a Sponsor", "/contact.html"],
-      ["Sponsor Coffee", "/contact.html"],
-      ["Buy Tickets", "/contact.html"],
-      ["Newsletter Sign Up", "/news.html"],
-      ["FAQ", "/about.html"],
-      ["Past Events", "/gallery.html"],
-      ["Request a Proposal", "/contact.html"],
-      ["Book a Table", "/contact.html"]
-    ])}>
+    <div class="panel" data-offers={JSON.stringify(actions)}>
       <div class="top"><h2>Join the conversation</h2></div>
       <div class="rows"></div>
     </div>

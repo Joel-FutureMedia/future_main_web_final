@@ -9,7 +9,74 @@ const offers = [
   ["Entryfy", "AI competitions with WhatsApp entries and clean data.", "/digital.html#entryfy", "/assets/Logos/fm_web_scroll_entryfy.png", "contain"],
   ["Free media audit", "A clear read on where your brand should be.", "/media-audit.html", "/assets/landingpage_image.webp", "cover"]
 ];
-const solutions = [
+const order = ["radio", "television", "specials", "shopbeat", "entryfy", "sway", "video", "audio", "studio"];
+const sections = [
+  {
+    id: "radio",
+    title: "Radio",
+    bg: `${root}/FM_Advertise_Solutions_Radio.jpg`,
+    pos: "72% center",
+    kind: "accordion",
+    items: [
+      {
+        title: "Reach that moves Namibia",
+        body: "Radio travels with people - in the car, at work and at home. Future Media’s five stations, 99FM, Fresh FM, Nova FM, Omulunga Radio and Radio Wave, each speak to a distinct audience, and one team plans, produces and flights your campaign across them."
+      },
+      {
+        title: "Spot Advertising",
+        body: "Commercials flighted across the day or concentrated in the shows your customers listen to most, on one station or the full network."
+      },
+      {
+        title: "Show & Feature Sponsorships",
+        body: "Own a show, a feature or a regular moment in the schedule, with opening and closing billboards that carry your name."
+      },
+      {
+        title: "Live Reads & Presenter Mentions",
+        body: "Presenters deliver your message in their own voice, live on air, with the trust they have built with their listeners."
+      },
+      {
+        title: "Competitions & Promotions",
+        body: "On-air competitions and giveaways that get listeners calling, messaging and talking about your brand."
+      },
+      {
+        title: "Outside Broadcasts",
+        body: "We bring the station to your store, launch or event and broadcast live from site."
+      }
+    ]
+  },
+  {
+    id: "television",
+    title: "Television",
+    bg: `${root}/FM_Advertise_Solutions_TV.jpeg`,
+    pos: "right center",
+    kind: "accordion",
+    items: [
+      {
+        title: "Your brand in the living room",
+        body: "One Africa Television brings Namibians news, drama, sport and entertainment on DStv and free-to-air. Television pairs sight, sound and motion, so your brand is seen as well as heard. We plan the schedule, produce the advert and flight it for you."
+      },
+      {
+        title: "TV Commercials",
+        body: "Spots flighted in the programmes your audience watches, from the evening news to sport and entertainment."
+      },
+      {
+        title: "Programme Sponsorships",
+        body: "Attach your brand to a show with opening and closing billboards, break bumpers and on-screen branding."
+      },
+      {
+        title: "Squeezebacks & On-Screen Branding",
+        body: "Squeezebacks and on-screen branding keep your name in view without waiting for the ad break."
+      },
+      {
+        title: "Branded Content",
+        body: "Segments, interviews and features built around your story and produced with our team."
+      },
+      {
+        title: "Sport & Event Packages",
+        body: "Sponsorship packages around live sport and major events, when viewers are most engaged."
+      }
+    ]
+  },
   {
     id: "audio",
     title: "Audio Production",
@@ -48,7 +115,7 @@ const solutions = [
     items: [
       {
         title: "Stories that move",
-        body: "From social clips to full TV commercials for One Africa, our video team handles script, voice, music, graphics and edit. We craft stories that hold attention on every screen — phone, web and living room."
+        body: "From social clips to full TV commercials for One Africa, our video team handles script, voice, music, graphics and edit. We craft stories that hold attention on every screen - phone, web and living room."
       },
       {
         title: "Graphic Adverts",
@@ -114,7 +181,7 @@ const solutions = [
     tagline: "Namibia's home of the best deals.",
     body: [
       "Specials.na is Namibia’s most popular destination for shoppers hunting deals. Retailers and brands list multi-page pamphlets, single deals, flash offers and custom brand pages where audiences already come to compare and buy.",
-      "Pair your listing with social and WhatsApp amplification so every special reaches more of the right people — online and into store."
+      "Pair your listing with social and WhatsApp amplification so every special reaches more of the right people - online and into store."
     ]
   },
   {
@@ -154,16 +221,17 @@ const solutions = [
     ]
   }
 ];
+const solutions = order.map(id => sections.find(section => section.id === id));
 ---
 <Layout title="Advertise – FutureMedia" bodyClass="advertise" preload={`${root}/FM_Advertise_Solutions_0_BG.jpeg`}>
-<div class="branddeck" style="--n:8">
+<div class="branddeck" style={`--n:${solutions.length + 1}`}>
 <div class="brandstage">
 
 <section class="slide sol-hero on" id="solutions">
   <div class="bgimg" style={`background-image:url('${root}/FM_Advertise_Solutions_0_BG.jpeg');background-position:center`}></div>
   <div class="sol-hero-copy">
     <h1>More than airtime.</h1>
-    <p>Future Media is Namibia’s home of radio, television and digital. We build the content, own the platforms and craft the tools that put brands in front of the right people — on air, on screen and online.</p>
+    <p>Future Media is Namibia’s home of radio, television and digital. We build the content, own the platforms and craft the tools that put brands in front of the right people - on air, on screen and online.</p>
   </div>
   <div class="panel" data-offers={JSON.stringify(offers)}>
     <div class="top"><h2>Latest Offers</h2></div>
