@@ -623,53 +623,87 @@
     };
   }
 
+  function openDocumentRequestForm(doc) {
+    const modal = pop(`
+      <p class="eyebrow">Document request</p>
+      <h2>${escape(doc.title || "Company Profile")}</h2>
+      <p class="fm-lead">${escape(doc.description || "Tell us where to send it and we’ll email the document to you.")}</p>
+      <form id="docForm" class="fm-form-body">
+        <div class="fm-row">
+          <label>Name<input name="name" required placeholder="Your full name" autocomplete="name"></label>
+          <label>Company<input name="company" required placeholder="Company name" autocomplete="organization"></label>
+        </div>
+        <div class="fm-row">
+          <label>Email<input name="email" type="email" required placeholder="you@email.com" autocomplete="email"></label>
+          <label>Telephone<input name="telephone" required placeholder="+264 …" autocomplete="tel"></label>
+        </div>
+        <p class="note" id="docNote" hidden></p>
+        <div class="pop-actions">
+          <button class="fm-btn fm-btn-idle" data-close type="button">Cancel</button>
+          <button class="fm-btn" type="submit">Send me the document</button>
+        </div>
+      </form>
+    `, "pop-card fm-form doc-request");
+    modal.querySelector("#docForm").onsubmit = async ev => {
+      ev.preventDefault();
+      const release = busy(ev.target, "Sending…");
+      const email = ev.target.email.value;
+      note("#docNote", "Sending " + (doc.title || "document") + "…", true);
+      try {
+        await FM.request("/api/gated-documents/" + doc.id + "/request", {
+          method: "POST",
+          body: Object.fromEntries(new FormData(ev.target).entries())
+        });
+        ev.target.innerHTML = `<p class="note ok" role="status">Request received. We’ll email ${escape(doc.title || "the document")} to ${escape(email)}.</p>`;
+      } catch (error) {
+        note("#docNote", error.message || "We could not send that document. Please try again.", false);
+        release();
+      }
+    };
+  }
+
   async function companyProfile(event) {
     event.preventDefault();
     try {
       const res = await FM.request("/api/gated-documents/public");
       const items = res.data || [];
       if (!items.length) {
-        pop(`<h2>Company Profile</h2><p>The company profile is not available for download yet.</p><div class="pop-actions"><button class="btn ghost" data-close type="button">Close</button></div>`);
+        pop(`
+          <p class="eyebrow">Company profile</p>
+          <h2>Not available yet</h2>
+          <p class="fm-lead">The company profile is not available for download yet. Please check back soon.</p>
+          <div class="pop-actions"><button class="fm-btn fm-btn-idle" data-close type="button">Close</button></div>
+        `, "pop-card fm-form doc-request");
         return;
       }
-      const list = items.map(doc => `<button class="btn ghost" type="button" data-doc="${doc.id}">${escape(doc.title)}</button>`).join("");
+      if (items.length === 1) {
+        openDocumentRequestForm(items[0]);
+        return;
+      }
+      const list = items.map(doc => `
+        <button class="doc-choice" type="button" data-doc="${doc.id}">
+          <strong>${escape(doc.title)}</strong>
+          <span>${escape(doc.description || "Request this document by email.")}</span>
+        </button>`).join("");
       const modal = pop(`
-        <h2>Company Profile</h2>
-        <p>Tell us where to send it and we’ll email the document to you.</p>
-        <div class="pop-actions" id="docChoices">${list}</div>
-      `);
+        <p class="eyebrow">Company profile</p>
+        <h2>Choose a document</h2>
+        <p class="fm-lead">Select a document and we’ll email it to you.</p>
+        <div class="doc-choices" id="docChoices">${list}</div>
+      `, "pop-card fm-form doc-request");
       modal.querySelector("#docChoices").onclick = async ev => {
         const choice = ev.target.closest("[data-doc]");
         if (!choice) return;
         const doc = (await FM.request("/api/gated-documents/public/" + choice.dataset.doc)).data;
-        const form = pop(`
-          <h2>${escape(doc.title)}</h2>
-          <p>${escape(doc.description || "We’ll email this document to you.")}</p>
-          <form id="docForm">
-            <label>Name<input name="name" required></label>
-            <label>Email<input name="email" type="email" required></label>
-            <label>Telephone<input name="telephone" required></label>
-            <label>Company<input name="company" required></label>
-            <p class="note" id="docNote" hidden></p>
-            <div class="pop-actions"><button class="btn ghost" data-close type="button">Cancel</button><button class="btn" type="submit">Send me the document</button></div>
-          </form>
-        `);
-        form.querySelector("#docForm").onsubmit = async ev2 => {
-          ev2.preventDefault();
-          const release = busy(ev2.target, "Sending…");
-          const email = ev2.target.email.value;
-          note("#docNote", "Sending " + doc.title + "…", true);
-          try {
-            await FM.request("/api/gated-documents/" + doc.id + "/request", { method: "POST", body: Object.fromEntries(new FormData(ev2.target).entries()) });
-            ev2.target.innerHTML = `<p class="note ok" role="status">Request received. We’ll email ${escape(doc.title)} to ${escape(email)}.</p>`;
-          } catch (error) {
-            note("#docNote", error.message || "We could not send that document. Please try again.", false);
-            release();
-          }
-        };
+        openDocumentRequestForm(doc);
       };
     } catch (error) {
-      pop(`<h2>Company Profile</h2><p>${escape(error.message)}</p><div class="pop-actions"><button class="btn ghost" data-close type="button">Close</button></div>`);
+      pop(`
+        <p class="eyebrow">Company profile</p>
+        <h2>Something went wrong</h2>
+        <p class="fm-lead">${escape(error.message || "Please try again shortly.")}</p>
+        <div class="pop-actions"><button class="fm-btn fm-btn-idle" data-close type="button">Close</button></div>
+      `, "pop-card fm-form doc-request");
     }
   }
 
@@ -690,42 +724,27 @@
       if (card.dataset.demo === "1") {
         const doc = demoDocuments.find(item => String(item.id) === card.dataset.id) || { title: "Document", description: "" };
         pop(`
+          <p class="eyebrow">Document request</p>
           <h2>${escape(doc.title)}</h2>
-          <p>${escape(doc.description || "")}</p>
+          <p class="fm-lead">${escape(doc.description || "")}</p>
           <p class="fm-lead">Live document requests sync when the API is available. For now, email us and we’ll send the latest pack.</p>
-          <div class="pop-actions"><button class="btn ghost" data-close type="button">Close</button><a class="btn" href="mailto:sales@futuremedia.com.na?subject=${encodeURIComponent("Request: " + doc.title)}">Email request</a></div>
-        `);
+          <div class="pop-actions">
+            <button class="fm-btn fm-btn-idle" data-close type="button">Close</button>
+            <a class="fm-btn" href="mailto:sales@futuremedia.com.na?subject=${encodeURIComponent("Request: " + doc.title)}">Email request</a>
+          </div>
+        `, "pop-card fm-form doc-request");
         return;
       }
       try {
         const doc = (await FM.request("/api/gated-documents/public/" + card.dataset.id)).data;
-        const modal = pop(`
-          <h2>${escape(doc.title)}</h2>
-          <p>${escape(doc.description || "")}</p>
-          <form id="docForm">
-            <label>Name<input name="name" required></label>
-            <label>Email<input name="email" type="email" required></label>
-            <label>Telephone<input name="telephone" required></label>
-            <label>Company<input name="company" required></label>
-            <p class="note" id="docNote" hidden></p>
-            <div class="pop-actions"><button class="btn ghost" data-close type="button">Cancel</button><button class="btn" type="submit">Send me the document</button></div>
-          </form>
-        `);
-        modal.querySelector("#docForm").onsubmit = async ev => {
-          ev.preventDefault();
-          const release = busy(ev.target, "Sending…");
-          const email = ev.target.email.value;
-          note("#docNote", "Sending " + doc.title + "…", true);
-          try {
-            await FM.request("/api/gated-documents/" + doc.id + "/request", { method: "POST", body: Object.fromEntries(new FormData(ev.target).entries()) });
-            ev.target.innerHTML = `<p class="note ok" role="status">Request received. We’ll email ${escape(doc.title)} to ${escape(email)}.</p>`;
-          } catch (error) {
-            note("#docNote", error.message || "We could not send that document. Please try again.", false);
-            release();
-          }
-        };
+        openDocumentRequestForm(doc);
       } catch (error) {
-        pop(`<h2>Document unavailable</h2><p>${escape(error.message || "Please try again shortly.")}</p><div class="pop-actions"><button class="btn ghost" data-close type="button">Close</button></div>`);
+        pop(`
+          <p class="eyebrow">Document request</p>
+          <h2>Document unavailable</h2>
+          <p class="fm-lead">${escape(error.message || "Please try again shortly.")}</p>
+          <div class="pop-actions"><button class="fm-btn fm-btn-idle" data-close type="button">Close</button></div>
+        `, "pop-card fm-form doc-request");
       }
     };
   }
