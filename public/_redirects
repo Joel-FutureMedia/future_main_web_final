@@ -40,10 +40,7 @@
 /admin/        /admin.html         200
 /shopbeat      /shopbeat.html      200
 /shopbeat/     /shopbeat.html      200
-<<<<<<< HEAD
-=======
 /offers        /offers.html        200
 /offers/       /offers.html        200
 /outdoor       /outdoor.html       200
 /outdoor/      /outdoor.html       200
->>>>>>> 169f12a (Initial project upload)

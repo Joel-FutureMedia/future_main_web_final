@@ -1,28 +1,12 @@
 const NAV=[
-<<<<<<< HEAD
-  {href:"/advertise.html",label:"Advertise",menu:[["/advertise.html","Solutions"],["/index.html#offers","Offers"]]},
-  {href:"/conferences.html",label:"Conferences"},
-  {href:"/brands.html",label:"Brands",menu:[["/brands.html","Broadcast"],["/digital.html","Digital"]]},
-=======
   {href:"/advertise.html",label:"Advertise",menu:[["/advertise.html","Solutions"],["/offers.html","Latest Offers"]]},
   {href:"/conferences.html",label:"Conferences"},
   {href:"/brands.html",label:"Brands",menu:[["/brands.html","Broadcast"],["/digital.html","Digital"],["/outdoor.html","Outdoor and Promotions"]]},
->>>>>>> 169f12a (Initial project upload)
   {href:"/audience.html",label:"Audience Insights",menu:[["/audience.html","Insights"],["/media-audit.html","Media Audit"]]},
   {href:"/news.html",label:"News"}
 ];
 const file=(location.pathname.split("/").filter(Boolean).pop()||"index").replace(/\.html$/,"");
 const page=file+".html";
-<<<<<<< HEAD
-const brandPages=["brands.html","digital.html"];
-const link=(href,label,mark)=>{
-  const path=href.split("#")[0].split("/").pop();
-  const on=mark&&(path===page||(label==="Brands"&&brandPages.includes(page)));
-  return `<a href="${href}" class="${on?"on":""}">${label}</a>`;
-};
-document.querySelector("#hdr").innerHTML=`<header><a class="logo" href="/index.html"><img src="/assets/logo.png" alt="FutureMedia"></a>
-<div class="nav-bar"><nav id="nav">${NAV.map(item=>item.menu?`<div class="drop">${link(item.href,item.label,true)}<div class="menu">${item.menu.map(([h,t])=>link(h,t,item.label==="Brands")).join("")}</div></div>`:link(item.href,item.label,true)).join("")}</nav>
-=======
 const brandPages=["brands.html","digital.html","outdoor.html"];
 const advertisePages=["advertise.html","offers.html"];
 const link=(href,label,mark)=>{
@@ -32,7 +16,6 @@ const link=(href,label,mark)=>{
 };
 document.querySelector("#hdr").innerHTML=`<header><a class="logo" href="/index.html"><img src="/assets/logo.png" alt="FutureMedia"></a>
 <div class="nav-bar"><nav id="nav">${NAV.map(item=>item.menu?`<div class="drop">${link(item.href,item.label,true)}<div class="menu">${item.menu.map(([h,t])=>link(h,t,item.label==="Brands"||item.label==="Advertise")).join("")}</div></div>`:link(item.href,item.label,true)).join("")}</nav>
->>>>>>> 169f12a (Initial project upload)
 <div class="head-actions"><a class="pill" href="/contact.html">Contact Us</a><a class="search" href="/search.html" aria-label="Search"><img src="/assets/search.svg" alt=""></a></div></div>
 <button class="burger" aria-label="Menu" onclick="nav.classList.toggle('open')">☰</button></header>`;
 document.querySelectorAll(".drop").forEach(drop=>{
@@ -146,11 +129,7 @@ const chatIntents={
   },
   offers:{
     reply:"Here are the latest packages and promotions live across the network.",
-<<<<<<< HEAD
-    link:["/index.html#offers","View latest offers"],
-=======
     link:["/offers.html","View latest offers"],
->>>>>>> 169f12a (Initial project upload)
     follow:["Advertise with us","See our solutions","Contact us"]
   },
   solutions:{
@@ -179,16 +158,6 @@ const chatIntents={
     follow:["Book a conference table","Advertise with us","Contact us"]
   },
   brands:{
-<<<<<<< HEAD
-    reply:"Seven broadcast brands and five digital platforms — one network. Scroll the decks to find your audience.",
-    link:["/brands.html","Browse broadcast brands"],
-    follow:["See digital brands","Advertise with us","See audience insights"]
-  },
-  digital:{
-    reply:"Specials.na, Shop Beat, Property News, PromoBasket and Entryfy reach shoppers and browsers across Namibia.",
-    link:["/digital.html","Browse digital brands"],
-    follow:["Advertise with us","See our solutions","Contact us"]
-=======
     reply:"Seven broadcast brands, four digital platforms and PromoBasket outdoor — one network. Scroll the decks to find your audience.",
     link:["/brands.html","Browse broadcast brands"],
     follow:["See digital brands","Outdoor & promotions","Advertise with us"]
@@ -202,7 +171,6 @@ const chatIntents={
     reply:"PromoBasket covers gazebos, apparel, stationery and activation kits — outdoor and promotional work you can hold.",
     link:["/outdoor.html","Explore Outdoor & Promotions"],
     follow:["See latest offers","Advertise with us","Contact us"]
->>>>>>> 169f12a (Initial project upload)
   },
   insights:{
     reply:"Audience, engagement and media plays across the Future Media network — plus briefings you can request.",
@@ -230,10 +198,7 @@ const chatStarter=[
   ["Tell me about conferences","conference"],
   ["Show me broadcast brands","brands"],
   ["Show me digital brands","digital"],
-<<<<<<< HEAD
-=======
   ["Outdoor & promotions","outdoor"],
->>>>>>> 169f12a (Initial project upload)
   ["See audience insights","insights"],
   ["Are you hiring?","careers"],
   ["What’s in the news?","news"]
@@ -246,11 +211,8 @@ const chatFollowMap={
   "Start a media audit":"audit",
   "Book a conference table":"conference",
   "See digital brands":"digital",
-<<<<<<< HEAD
-=======
   "Outdoor & promotions":"outdoor",
   "See latest offers":"offers",
->>>>>>> 169f12a (Initial project upload)
   "See audience insights":"insights",
   "Main menu":"menu"
 };
@@ -322,12 +284,8 @@ function matchChatIntent(text){
   if(/contact|email|phone|call|whatsapp/.test(q)) return "contact";
   if(/audit|recommend|mix/.test(q)) return "audit";
   if(/conference|event|future of business|table/.test(q)) return "conference";
-<<<<<<< HEAD
-  if(/digital|shopbeat|specials|property news/.test(q)) return "digital";
-=======
   if(/outdoor|promo.?basket|gazebo|apparel|stationery/.test(q)) return "outdoor";
   if(/digital|shopbeat|specials|property news|entryfy/.test(q)) return "digital";
->>>>>>> 169f12a (Initial project upload)
   if(/brand|station|99fm|fresh|omulunga|nova|wave|one africa/.test(q)) return "brands";
   if(/insight|audience|reach|metric/.test(q)) return "insights";
   if(/job|vacanc|career|hire|freelance/.test(q)) return "careers";
@@ -345,11 +303,7 @@ document.querySelector("#waOpen").addEventListener("click",()=>{
 });
 document.querySelector("#chatClose").addEventListener("click",()=>{chat.hidden=true});
 if(!matchMedia("(prefers-reduced-motion: reduce)").matches){
-<<<<<<< HEAD
-  const revealNodes=[...document.querySelectorAll(".team h1, .member, .about-story, .about-stats, .belief, .careers-intro, .careers-body .job-grid, .careers-body .job-freelance, main.sub > *, .wrap .card, .hero .panel, .upc h2, .upc .e, .quotes:not(.quotes-slider) article, .quotes.quotes-slider")];
-=======
   const revealNodes=[...document.querySelectorAll(".team h1, .member, .about-story, .about-stats, .belief, .careers-intro, .careers-body .job-grid, .careers-body .job-freelance, .news-section-intro, .news-section .card, main.sub > *, .wrap .card, .hero .panel, .upc h2, .upc .e, .quotes:not(.quotes-slider) article, .quotes.quotes-slider")];
->>>>>>> 169f12a (Initial project upload)
   const reveal=new IntersectionObserver(entries=>{
     entries.forEach(entry=>{
       if(!entry.isIntersecting)return;

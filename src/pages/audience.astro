@@ -1,11 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
-<<<<<<< HEAD
-const period = "Apr-Jun 2026";
-=======
 const period = "Apr - Jun 2026";
 const hero = "/assets/insights/signage.jpg";
->>>>>>> 169f12a (Initial project upload)
 const audience = [
   { name: "Omulunga", value: 876915, color: "#196232" },
   { name: "One Africa", value: 837602, color: "#ff4d00" },
@@ -49,21 +45,6 @@ function donut(items) {
 const audienceRing = donut(audience);
 const engagementRing = donut(engagement);
 ---
-<<<<<<< HEAD
-<Layout title="Audience Insights – FutureMedia" bodyClass="insights-page" preload="/assets/insights/signage.jpg">
-<section class="insights-hero">
-  <div class="insights-hero-copy">
-    <p class="eyebrow">Audience Insights</p>
-    <h1>Our universe <span class="insights-period">{period}</span></h1>
-    <p>How Namibia listens, watches and engages with Future Media - audience, engagement and media plays in one view.</p>
-  </div>
-  <aside class="insights-signage" aria-hidden="true">
-    <img src="/assets/insights/signage.jpg" alt="" decoding="async" fetchpriority="high">
-  </aside>
-</section>
-
-<main class="insights-main">
-=======
 <Layout title="Audience Insights – FutureMedia" bodyClass="insights-page" preload={hero}>
 <section class="insights-landing" style={`--insights-bg:url('${hero}')`}>
   <div class="insights-landing-copy">
@@ -85,16 +66,12 @@ const engagementRing = donut(engagement);
     <div><b>{period}</b><span>Reporting period</span></div>
   </section>
 
->>>>>>> 169f12a (Initial project upload)
   <section class="insights-layout">
     <article class="insight-card insight-ring">
       <div class="insight-card-head">
         <h2>Audience</h2>
         <b class="insight-metric">2 530 000</b>
-<<<<<<< HEAD
-=======
         <p>People reached across broadcast brands</p>
->>>>>>> 169f12a (Initial project upload)
       </div>
       <div class="ring-wrap">
         <svg viewBox="0 0 120 120" aria-hidden="true">
@@ -116,10 +93,7 @@ const engagementRing = donut(engagement);
       <div class="insight-card-head">
         <h2>Engagement</h2>
         <b class="insight-metric">2 459 350</b>
-<<<<<<< HEAD
-=======
         <p>Active listens, views and interactions</p>
->>>>>>> 169f12a (Initial project upload)
       </div>
       <div class="ring-wrap">
         <svg viewBox="0 0 120 120" aria-hidden="true">
@@ -157,14 +131,10 @@ const engagementRing = donut(engagement);
         {plays.map((item, i) => (
           <li style={`--w:${(item.value / maxPlay) * 100}%;--c:${item.color};--d:${0.05 + i * 0.06}s`}>
             <img src={item.logo} alt="" width="48" height="48" decoding="async" loading="lazy">
-<<<<<<< HEAD
-            <div class="play-track"><span class="play-fill"></span></div>
-=======
             <div class="play-meta">
               <span>{item.name}</span>
               <div class="play-track"><span class="play-fill"></span></div>
             </div>
->>>>>>> 169f12a (Initial project upload)
             <b>{fmt(item.value)}</b>
           </li>
         ))}
