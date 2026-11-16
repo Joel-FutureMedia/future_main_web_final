@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+<<<<<<< HEAD
 ---
 <Layout title="News – FutureMedia" bodyClass="news-page">
 <section class="wrap news-hero">
@@ -14,4 +15,38 @@ import Layout from '../layouts/Layout.astro';
   <h2>Upcoming Events</h2>
   <div class="cards" id="eventGrid"><p>Loading events…</p></div>
 </section>
+=======
+const hero = "/assets/news/news-landing-hero.jpg";
+---
+<Layout title="News – FutureMedia" bodyClass="news-page" preload={hero}>
+<section class="news-landing" style={`--news-bg:url('${hero}')`}>
+  <div class="news-landing-copy">
+    <p class="eyebrow">Newsroom</p>
+    <h1>Stories from the <br>Future Media network.</h1>
+    <p>Campaigns, conferences and brand moments from across Namibia — the work that keeps our audiences connected and our clients in the conversation.</p>
+    <div class="news-landing-actions">
+      <a class="pill" href="#stories">Read the stories</a>
+      <a class="news-landing-link" href="#events">See upcoming events</a>
+    </div>
+  </div>
+</section>
+
+<main class="news-body">
+  <section class="news-section" id="stories">
+    <div class="news-section-intro">
+      <h2>Latest stories</h2>
+      <p>From on-air moments to conference floors — updates from the brands and teams that make up Future Media.</p>
+    </div>
+    <div class="cards" id="newsGrid"><p>Loading news…</p></div>
+  </section>
+
+  <section class="news-section upc" id="events">
+    <div class="news-section-intro">
+      <h2>Upcoming events</h2>
+      <p>Conferences, breakfasts and brand days coming up across the network.</p>
+    </div>
+    <div class="cards" id="eventGrid"><p>Loading events…</p></div>
+  </section>
+</main>
+>>>>>>> 169f12a (Initial project upload)
 </Layout>

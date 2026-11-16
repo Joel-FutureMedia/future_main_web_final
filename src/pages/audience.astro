@@ -1,6 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
+<<<<<<< HEAD
 const period = "Apr-Jun 2026";
+=======
+const period = "Apr - Jun 2026";
+const hero = "/assets/insights/signage.jpg";
+>>>>>>> 169f12a (Initial project upload)
 const audience = [
   { name: "Omulunga", value: 876915, color: "#196232" },
   { name: "One Africa", value: 837602, color: "#ff4d00" },
@@ -44,6 +49,7 @@ function donut(items) {
 const audienceRing = donut(audience);
 const engagementRing = donut(engagement);
 ---
+<<<<<<< HEAD
 <Layout title="Audience Insights – FutureMedia" bodyClass="insights-page" preload="/assets/insights/signage.jpg">
 <section class="insights-hero">
   <div class="insights-hero-copy">
@@ -57,11 +63,38 @@ const engagementRing = donut(engagement);
 </section>
 
 <main class="insights-main">
+=======
+<Layout title="Audience Insights – FutureMedia" bodyClass="insights-page" preload={hero}>
+<section class="insights-landing" style={`--insights-bg:url('${hero}')`}>
+  <div class="insights-landing-copy">
+    <p class="eyebrow">Audience Insights</p>
+    <h1>How Namibia <br>listens and watches.</h1>
+    <p>Audience, engagement and media plays across the Future Media network - a clear view of who we reach and how they respond. Period: {period}.</p>
+    <div class="insights-landing-actions">
+      <a class="pill" href="#universe">Explore the numbers</a>
+      <a class="insights-landing-link" href="/media-audit.html">Start a media audit</a>
+    </div>
+  </div>
+</section>
+
+<main class="insights-main">
+  <section class="insights-strip" id="universe" aria-label="Key totals">
+    <div><b>2.53M</b><span>Audience</span></div>
+    <div><b>2.46M</b><span>Engagement</span></div>
+    <div><b>7.43M</b><span>Media plays</span></div>
+    <div><b>{period}</b><span>Reporting period</span></div>
+  </section>
+
+>>>>>>> 169f12a (Initial project upload)
   <section class="insights-layout">
     <article class="insight-card insight-ring">
       <div class="insight-card-head">
         <h2>Audience</h2>
         <b class="insight-metric">2 530 000</b>
+<<<<<<< HEAD
+=======
+        <p>People reached across broadcast brands</p>
+>>>>>>> 169f12a (Initial project upload)
       </div>
       <div class="ring-wrap">
         <svg viewBox="0 0 120 120" aria-hidden="true">
@@ -83,6 +116,10 @@ const engagementRing = donut(engagement);
       <div class="insight-card-head">
         <h2>Engagement</h2>
         <b class="insight-metric">2 459 350</b>
+<<<<<<< HEAD
+=======
+        <p>Active listens, views and interactions</p>
+>>>>>>> 169f12a (Initial project upload)
       </div>
       <div class="ring-wrap">
         <svg viewBox="0 0 120 120" aria-hidden="true">
@@ -120,7 +157,14 @@ const engagementRing = donut(engagement);
         {plays.map((item, i) => (
           <li style={`--w:${(item.value / maxPlay) * 100}%;--c:${item.color};--d:${0.05 + i * 0.06}s`}>
             <img src={item.logo} alt="" width="48" height="48" decoding="async" loading="lazy">
+<<<<<<< HEAD
             <div class="play-track"><span class="play-fill"></span></div>
+=======
+            <div class="play-meta">
+              <span>{item.name}</span>
+              <div class="play-track"><span class="play-fill"></span></div>
+            </div>
+>>>>>>> 169f12a (Initial project upload)
             <b>{fmt(item.value)}</b>
           </li>
         ))}
