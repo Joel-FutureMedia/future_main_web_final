@@ -1,0 +1,27 @@
+---
+import Layout from '../layouts/Layout.astro';
+const hero = "/assets/news/news-landing-hero.jpg";
+---
+<Layout title="News | FutureMedia" bodyClass="news-page" preload={hero}>
+<section class="news-landing" style={`--news-bg:url('${hero}')`}>
+  <div class="news-landing-copy">
+    <p class="eyebrow">Newsroom</p>
+    <h1>Stories from the Futuremedia Network.</h1>
+    <p class="news-tag">The people behind the brands.</p>
+    <p>Go behind the scenes of campaigns across Namibia, catch the highlights from our conferences and see how brands connect with people on air, on screen and in their communities.</p>
+    <div class="news-landing-actions">
+      <a class="pill" href="#stories">Read the stories</a>
+    </div>
+  </div>
+</section>
+
+<main class="news-body">
+  <section class="news-section" id="stories">
+    <div class="news-section-intro">
+      <h2>The Latest Stories</h2>
+      <p>From the radio studio to the conference floor, see how Futuremedia’s brands and teams work with clients to bring their brands to audiences across Namibia.</p>
+    </div>
+    <div class="cards" id="newsGrid"><p>Loading news…</p></div>
+  </section>
+</main>
+</Layout>

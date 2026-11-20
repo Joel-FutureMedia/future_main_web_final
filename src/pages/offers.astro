@@ -1,0 +1,183 @@
+---
+import Layout from '../layouts/Layout.astro';
+import data from '../data/sponsorship-offers.json';
+
+const logos: Record<string, string> = {
+  radiowave: "/assets/offers/logos/radiowave.webp",
+  omulunga: "/assets/offers/logos/omulunga.webp",
+  "fresh-fm": "/assets/offers/logos/fresh-fm.webp",
+  nova: "/assets/offers/logos/nova.webp",
+  "99fm": "/assets/offers/logos/99fm.webp",
+  oneafrica: "/assets/offers/logos/oneafrica.webp"
+};
+const brands = data.brands.map(brand => ({
+  ...brand,
+  logo: logos[brand.id] || "/assets/logo.png"
+}));
+const totalOffers = brands.reduce((n, b) => n + b.offers.length, 0);
+---
+<Layout title="Latest Offers | FutureMedia" bodyClass="offers-page offers-hub-mode">
+<link slot="head" rel="stylesheet" href="/css/offers.css">
+
+<div class="sp" id="offersApp" data-total={String(totalOffers)}>
+  <!-- HUB: categories + brand logos -->
+  <section class="sp-hub" id="spHub" aria-labelledby="spTitle">
+    <div class="sp-hub-bg" aria-hidden="true"></div>
+    <div class="sp-hub-in">
+      <p class="sp-org">Future Media</p>
+      <p class="sp-kicker">Advertise · Latest Offers</p>
+      <h1 id="spTitle">Latest Offers</h1>
+      <p class="sp-lede">Find your next opportunity to advertise or sponsor in Namibia.</p>
+      <p class="sp-lede sp-lede-soft">There are plenty of ways to carry your message and reach your audience across Namibia. Browse the latest opportunities and let us know what works for your brand.</p>
+
+      <div class="sp-cats" aria-label="Brand categories">
+        <p class="sp-cat-label">Broadcast brands</p>
+        <div class="sp-logo-grid">
+          {brands.map((brand, i) => (
+            <button
+              type="button"
+              class="sp-logo-tile"
+              data-open-brand={brand.id}
+              style={`--c:${brand.color};--a:${brand.accent};--i:${i}`}
+              aria-label={`Open ${brand.name} offers`}
+            >
+              <span class="sp-logo-glow" aria-hidden="true"></span>
+              <span class="sp-logo-disk">
+                <img src={brand.logo} alt="" decoding="async">
+              </span>
+              <span class="sp-logo-meta">
+                <strong>{brand.name}</strong>
+                <small>{brand.offers.length} segments</small>
+              </span>
+              <span class="sp-logo-cta">View offers →</span>
+            </button>
+          ))}
+        </div>
+      </div>
+      <p class="sp-note">Audience figures: MediaMetrics 2025, Google and social analytics, January to March 2026.</p>
+    </div>
+  </section>
+
+  <!-- BRAND EXPERIENCE -->
+  <div class="sp-stage" id="spStage" hidden>
+    <div class="sp-toolbar" id="spToolbar">
+      <div class="sp-toolbar-in">
+        <button type="button" class="sp-back" id="spBack">← All brands</button>
+        <nav class="sp-bar-nav" aria-label="Brands">
+          {brands.map(brand => (
+            <button type="button" class="sp-chip" data-jump-brand={brand.id} style={`--c:${brand.color}`}>
+              <i></i>{brand.name}
+            </button>
+          ))}
+        </nav>
+        <label class="sp-search">
+          <span class="vh">Search programmes</span>
+          <input id="spSearch" type="search" placeholder="Search programmes" autocomplete="off">
+        </label>
+      </div>
+      <p class="sp-status" id="spStatus" role="status" aria-live="polite"></p>
+    </div>
+
+    {brands.map(brand => (
+      <section
+        class="sp-brand"
+        id={brand.id}
+        data-brand={brand.id}
+        hidden
+        style={`--c:${brand.color};--a:${brand.accent}`}
+        aria-labelledby={`${brand.id}-h`}
+      >
+        <div class="sp-intro">
+          <div class="sp-intro-in">
+            <figure class="sp-fig">
+              {brand.audienceImage ? (
+                <button type="button" class="sp-fig-btn" data-full={brand.audienceImage} aria-label={`Enlarge ${brand.name} audience figures`}>
+                  <img src={brand.audienceImage} alt={`${brand.name} audience figures`} loading="lazy" decoding="async">
+                </button>
+              ) : (
+                <div class="sp-fig-fallback"><img src={brand.logo} alt=""></div>
+              )}
+              <figcaption>Select the image to enlarge it.</figcaption>
+            </figure>
+            <div class="sp-intro-copy">
+              <div class="sp-intro-logo"><img src={brand.logo} alt=""></div>
+              <h2 id={`${brand.id}-h`}>{brand.name}</h2>
+              {brand.reach ? (
+                <p class="sp-reach"><strong>{brand.reach}</strong><span>{brand.reachLabel}</span></p>
+              ) : null}
+              {brand.about ? <p>{brand.about}</p> : null}
+              <p class="sp-src">{brand.source || `${brand.offers.length} sponsorable segments follow.`}</p>
+              <button type="button" class="sp-start" data-start-steps={brand.id}>Start step-by-step →</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="sp-steps" data-steps={brand.id}>
+          <div class="sp-steps-bar">
+            <button type="button" class="sp-step-btn" data-prev disabled>← Prev</button>
+            <p class="sp-step-count"><span data-step-current>1</span> / <span data-step-total>{brand.offers.length}</span></p>
+            <div class="sp-step-track" aria-hidden="true"><i data-step-fill></i></div>
+            <button type="button" class="sp-step-btn" data-next>Next →</button>
+            <button type="button" class="sp-step-all" data-show-all>View all</button>
+          </div>
+
+          <div class="sp-list">
+            {brand.offers.map((offer, index) => (
+              <article
+                class="sp-card"
+                data-offer-index={String(index)}
+                data-s={`${brand.name} ${offer.title} ${offer.when} ${offer.withHost} ${offer.desc}`.toLowerCase()}
+                hidden={index !== 0}
+              >
+                <div class="sp-card-media">
+                  {offer.image
+                    ? <img src={offer.image} alt={`${offer.title} on ${brand.name}`} loading="lazy" decoding="async">
+                    : <img src={brand.logo} alt="" class="sp-card-logo">}
+                </div>
+                <div class="sp-card-body">
+                  <p class="sp-card-brand">{brand.name}</p>
+                  <h3>{offer.title}</h3>
+                  {offer.when ? <p class="sp-when">{offer.when}</p> : null}
+                  {offer.withHost ? <p class="sp-with">{offer.withHost}</p> : null}
+                  {offer.desc ? <p class="sp-desc">{offer.desc}</p> : null}
+                  {offer.benefits?.length ? (
+                    <div class="sp-receive">
+                      <h4>As a sponsor you receive</h4>
+                      <ul>
+                        {offer.benefits.map(item => <li>{item}</li>)}
+                      </ul>
+                    </div>
+                  ) : null}
+                  {offer.prime ? <p class="sp-prime">{offer.prime}</p> : null}
+                  <a class="sp-enquire" href={`/contact.html?subject=${encodeURIComponent(`Sponsorship: ${brand.name} | ${offer.title}`)}`}>Enquire about this offer</a>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    ))}
+
+    <section class="sp-cta">
+      <div class="sp-cta-in">
+        <h2>Ready to put your brand on air?</h2>
+        <p>Tell us your audience, timing and budget. We’ll match you to the right programmes across radio and television.</p>
+        <ul class="sp-contact">
+          <li><a href="tel:+264830001000">+264 83 000 1000</a></li>
+          <li><a href="mailto:sales@futuremedia.com.na">sales@futuremedia.com.na</a></li>
+        </ul>
+        <a class="sp-cta-btn" href="/contact.html">Contact sales</a>
+      </div>
+    </section>
+  </div>
+</div>
+
+<dialog class="sp-lightbox" id="spLightbox">
+  <button type="button" data-close>Close</button>
+  <img alt="">
+</dialog>
+
+<Fragment slot="scripts">
+<script is:inline src="/js/offers.js"></script>
+</Fragment>
+</Layout>

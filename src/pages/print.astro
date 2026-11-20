@@ -1,0 +1,82 @@
+---
+import Layout from '../layouts/Layout.astro';
+const hero = "/assets/Digital/10_Property%20News/FM_Brands_PropNews_Hero.png";
+const logo = "/assets/Logos/fm_web_scroll_propnews.png";
+const copy = "Reach people as they browse listings, compare properties and plan their next move. Advertise in the Property News booklet to showcase a property development, promote your listings or introduce your services to buyers, sellers and investors in Namibia.";
+const offers = [
+  ["Property developments", "Showcase a development in the Property News booklet.", "/contact.html", logo, "contain"],
+  ["Listings", "Promote your listings to people comparing properties.", "/contact.html", logo, "contain"],
+  ["Services", "Introduce your services to buyers, sellers and investors.", "/contact.html", logo, "contain"],
+  ["Talk to sales", "Plan a print campaign with the Future Media team.", "/contact.html", logo, "contain"]
+];
+const ways = [
+  {
+    title: "Showcase a development",
+    body: "Put a property development in the hands of readers who are already comparing what is on the market."
+  },
+  {
+    title: "Promote your listings",
+    body: "Reach people as they browse listings and plan their next move."
+  },
+  {
+    title: "Introduce your services",
+    body: "Speak to buyers, sellers and investors in Namibia through the Property News booklet."
+  }
+];
+---
+<Layout title="Print | FutureMedia" bodyClass="brands digital print" preload={hero}>
+<div class="branddeck" style="--n:2">
+<div class="brandstage">
+<section class="slide bintro on" id="network">
+  <div class="bgimg" style="background-image:url(/assets/landingpage_image.webp)"></div>
+  <div class="introcopy">
+    <p class="eyebrow">Print</p>
+    <h1>Property News<br>in Print</h1>
+    <p class="print-tag">Showcase your brand and properties in the hands of Namibia’s property readers.</p>
+    <p>{copy}</p>
+  </div>
+  <div class="intro-person-wrap">
+    <img class="intro-person" src={hero} alt="Property News magazine cover" decoding="async">
+  </div>
+  <a class="scroll-cue" href="#propertynews">
+    <span class="scroll-arrow" aria-hidden="true"></span>
+    <span>Scroll down to explore Property News</span>
+  </a>
+</section>
+
+<section class="slide brand" id="propertynews" style="--c:#9C2D58;--panel:#E23B3B">
+  <img class="personality" src={hero} alt="">
+  <div class="bwrap">
+    <div class="bmain">
+      <img class="blogo" decoding="async" src={logo} alt="Property News">
+      <p>{copy}</p>
+    </div>
+    <div class="panel" data-offers={JSON.stringify(offers)}><div class="top"><h2>Latest Offers</h2></div><div class="rows"></div></div>
+  </div>
+</section>
+</div>
+</div>
+
+<nav class="rail" aria-label="Print">
+  <a href="#propertynews" style="--c:#9C2D58" aria-label="Property News"></a>
+</nav>
+
+<section class="wrap upc print-ways" id="booklet">
+  <h2>Advertise in the booklet</h2>
+  <div class="print-grid">
+    {ways.map(item => (
+      <article>
+        <h3>{item.title}</h3>
+        <p>{item.body}</p>
+      </article>
+    ))}
+  </div>
+  <div class="outdoor-enquire">
+    <a class="cta-pill" href="/contact.html">Enquire about print</a>
+  </div>
+</section>
+
+<Fragment slot="scripts">
+<script is:inline src="/js/brands.js"></script>
+</Fragment>
+</Layout>

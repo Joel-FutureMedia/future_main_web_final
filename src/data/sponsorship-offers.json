@@ -1,0 +1,1359 @@
+{
+  "brands": [
+    {
+      "id": "radiowave",
+      "color": "#17323F",
+      "accent": "#E5262C",
+      "name": "Radiowave 96.7",
+      "reach": "184,979",
+      "reachLabel": "people reached across radio and digital",
+      "about": "Namibia’s leading commercial radio station and a multiple PMR Diamond Arrow winner, setting the standard for personality-driven radio. Listeners are mainly 25 to 39 (64.3%), LSM 7 to 9 and 57.4% female, and mostly Afrikaans- and English-speaking.",
+      "source": "Sources: MediaMetrics 2025, Google and social analytics, January to March 2026. 15 sponsorable segments follow.",
+      "audienceImage": "/assets/offers/radiowave-96-7-audience.jpg",
+      "offers": [
+        {
+          "title": "Papercuts",
+          "when": "Mon–Fri · 06h45",
+          "withHost": "",
+          "desc": "Start the day in your customers’ ears. Papercuts digs up the unbelievable stories listeners may have missed, creating a warm, family-friendly moment during the school run and morning commute. Parents and children listen together, and your brand becomes part of a routine they look forward to.",
+          "image": "/assets/offers/radiowave-96-7-papercuts.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Pop Quiz",
+          "when": "Mon–Fri · 07h45",
+          "withHost": "With Jacques and G",
+          "desc": "Get in on the morning buzz. Every weekday, listeners take on 10 quick-fire questions in a 60-second challenge with a prize on the line. It’s a high-energy moment in the middle of the school run and commute that drives awareness, engagement and recall as audiences start their day.",
+          "image": "/assets/offers/radiowave-96-7-papercuts.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Morning Patrol",
+          "when": "Mon–Fri · 07h45",
+          "withHost": "With G",
+          "desc": "This is no ordinary traffic update. G turns the morning commute into the most creative, entertaining and genuinely useful traffic report on Namibian radio. Audiences love it, and it sits right in the heart of breakfast prime time.",
+          "image": "/assets/offers/radiowave-96-7-papercuts.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Tech Tuesdays",
+          "when": "Tuesdays · 08h10",
+          "withHost": "",
+          "desc": "Plug into what’s next. Tech Tuesdays is Radiowave’s weekly rundown of trending technology, from must-have apps to cutting-edge gaming gear and the hottest entertainment tech. Airing in prime listening time, it speaks to an engaged, tech-savvy community that’s always ahead of the curve.",
+          "image": "/assets/offers/radiowave-96-7-tech-tuesdays.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme.",
+            "Promotions throughout the week punting the content, each one naming you as the sponsor."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Millennial Mixtape",
+          "when": "Mon–Fri · 09h23",
+          "withHost": "With Sunet",
+          "desc": "A daily sing-along on Brunch with Sunet. This high-energy throwback rewinds listeners to the defining songs of the 2000s and 2010s, a feel-good moment of pure nostalgia that listeners turn up and share.",
+          "image": "/assets/offers/radiowave-96-7-millennial-mixtape.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "20 Minute Music Sweep",
+          "when": "Mon–Fri · 10h20–10h40",
+          "withHost": "",
+          "desc": "Own the spotlight. Twenty minutes of uninterrupted hits, with your message placed shoulder to shoulder with the world’s biggest artists. An uncluttered, high-impact window built for attention and brand recall.",
+          "image": "/assets/offers/radiowave-96-7-millennial-mixtape.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme.",
+            "Show sweepers throughout the programme naming your brand."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Grand Prix Pulse",
+          "when": "Mondays and Fridays · 11h47",
+          "withHost": "With Sunet",
+          "desc": "Pole position for your brand. Sunet delivers the latest Formula 1 insights: weekend race results, exclusive driver audio, track updates and Grand Prix predictions. A premium sports property followed closely by passionate motorsport fans.",
+          "image": "/assets/offers/radiowave-96-7-grand-prix-pulse.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme.",
+            "Promotions throughout the week punting the content, each one naming you as the sponsor."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "New Music Thursdays",
+          "when": "Thursdays · 13h30",
+          "withHost": "With Yanika and Arthur",
+          "desc": "Lead the charge on new music discovery. Yanika and Arthur unveil the freshest international pop releases every week, a high-engagement moment with music lovers that travels well beyond the airwaves.",
+          "image": "/assets/offers/radiowave-96-7-new-music-thursdays.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme.",
+            "Promotions throughout the week punting the content, each one naming you as the sponsor.",
+            "The featured music video embedded on the Radiowave website and pushed across social media."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Afternoon Sport Plug",
+          "when": "Mon–Fri · 14h45",
+          "withHost": "With Yanika and Arthur",
+          "desc": "The day’s biggest sports talk. Yanika and Arthur run through the top three headlines from Namibia, South Africa, the continent and the world, plus the most anticipated matches of the night, reaching committed fans while they’re at their most engaged.",
+          "image": "/assets/offers/radiowave-96-7-new-music-thursdays.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "What’s Trending?",
+          "when": "Mon–Fri · 15h20",
+          "withHost": "With Odile",
+          "desc": "Be part of the conversations that matter. Odile’s fast-paced feature covers entertainment and online culture: celebrity news, industry buzz, sport, studies, surveys and the stories making waves. Fresh, relevant content that sparks engagement every afternoon.",
+          "image": "/assets/offers/radiowave-96-7-what-s-trending.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Odile Chats",
+          "when": "Fridays · 15h30",
+          "withHost": "With Odile",
+          "desc": "Namibia’s most engaging local conversations. Every Friday, Odile sits down with Namibians making waves in business, entertainment, music and beyond. Authentic stories, community connection and real local influence.",
+          "image": "/assets/offers/radiowave-96-7-what-s-trending.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme.",
+            "Promotions throughout the week punting the content, each one naming you as the sponsor.",
+            "Each conversation filmed, promoted across social media and featured on the Radiowave website."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "The Gig Guide",
+          "when": "Wednesdays and Fridays · 17h50",
+          "withHost": "",
+          "desc": "Step into the spotlight as listeners plan their evenings. The Gig Guide rounds up the must-see events and can’t-miss happenings across Windhoek and Namibia, giving an engaged local audience the insider track on where to go.",
+          "image": "/assets/offers/radiowave-96-7-grand-prix-pulse.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme.",
+            "Promotions throughout the week punting the content, each one naming you as the sponsor."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Song of the Week",
+          "when": "Saturdays · 09h50",
+          "withHost": "With G",
+          "desc": "Take centre stage on The Weekend Geek with G. Every Saturday morning, listeners tune in for the biggest international track of the week, a feel-good feature audiences genuinely look forward to as they head out for the weekend.",
+          "image": "/assets/offers/radiowave-96-7-papercuts.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme.",
+            "Promotions throughout the week punting the content, each one naming you as the sponsor."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Weekend Gig Guide",
+          "when": "Saturdays · 10h20",
+          "withHost": "With G",
+          "desc": "Give your weekend a lift. This community-driven feature on The Weekend Geek with G spotlights the biggest events and cultural highlights across Windhoek and Namibia, reaching listeners as they make their weekend plans.",
+          "image": "/assets/offers/radiowave-96-7-papercuts.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme.",
+            "Promotions throughout the week punting the content, each one naming you as the sponsor.",
+            "The segment repurposed as a podcast and shared across social media, with an optional podcast pre-roll."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Sugar Radio Show",
+          "when": "Saturdays · 20h00–21h00",
+          "withHost": "",
+          "desc": "Own Saturday night. Chart-topping artist Robin Schulz sets the mood with an hour of feel-good music as listeners unwind into the weekend. With less ad clutter and an audience that stays tuned for non-stop music, your brand speaks to engaged listeners when they are relaxed and receptive.",
+          "image": "/assets/offers/radiowave-96-7-sugar-radio-show.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme.",
+            "Promotions throughout the week punting the content, each one naming you as the sponsor.",
+            "Show sweepers throughout the programme naming your brand.",
+            "Promotional support in the lead-up, plus exposure before, during and after the show."
+          ],
+          "prime": ""
+        }
+      ]
+    },
+    {
+      "id": "omulunga",
+      "color": "#1D5E33",
+      "accent": "#C9D82B",
+      "name": "Omulunga Radio",
+      "reach": "959,488",
+      "reachLabel": "people reached across radio and digital",
+      "about": "Namibia’s premier commercial radio station with the largest listener base, with a northern studio launched in August 2025 serving Oshana, Ohangwena, Oshikoto and Omusati. Listeners are mainly 25 to 34 (58%), LSM 4 to 8, 62% female and 77% Oshiwambo-speaking.",
+      "source": "Sources: MediaMetrics 2025, Google and social analytics, January to March 2026. 13 sponsorable segments follow.",
+      "audienceImage": "/assets/offers/omulunga-radio-audience.jpg",
+      "offers": [
+        {
+          "title": "Hot Seat: Current Affairs Interviews",
+          "when": "Mon–Fri · 07h20",
+          "withHost": "With DJ Munene “The Big Man” and Joy",
+          "desc": "Be part of the conversation the nation is having. Hot Seat tackles the day’s biggest stories from the local papers through sharp interviews, expert opinion and balanced analysis. Credible, trusted current affairs at the top of the morning, also available as a podcast.",
+          "image": "/assets/offers/omulunga-radio-hot-seat-current-affairs-interviews.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Sports Corner",
+          "when": "Mon–Fri · 07h45",
+          "withHost": "With DJ Munene “The Big Man” and Joy",
+          "desc": "Kick off the day with the fans. Sports Corner delivers a quick but complete roundup of local and international sport, from football to athletics, with scores, headlines and highlights. A daily, high-recall touchpoint with an engaged sports audience.",
+          "image": "/assets/offers/omulunga-radio-hot-seat-current-affairs-interviews.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Make My Day",
+          "when": "Mon–Fri · 08h30",
+          "withHost": "With DJ Munene “The Big Man” and Joy",
+          "desc": "Brighten every morning. Make My Day is packed with funny, interesting and uplifting stories, light-hearted conversation, lifestyle topics and entertainment news. Feel-good content that listeners remember, and a natural home for brands that want to be part of the smile.",
+          "image": "/assets/offers/omulunga-radio-hot-seat-current-affairs-interviews.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Konalenale (Back to Roots)",
+          "when": "Thursdays · 09h30",
+          "withHost": "With DJ Munene “The Big Man” and Joy",
+          "desc": "Connect with heritage, values and identity. Konalenale explores how the wisdom of our ancestors can guide modern life, through storytelling, discussion and cultural insight. A meaningful platform that celebrates Namibian culture and community.",
+          "image": "/assets/offers/omulunga-radio-hot-seat-current-affairs-interviews.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme.",
+            "Promotions throughout the week punting the content, each one naming you as the sponsor."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Learn Oshiwambo",
+          "when": "Mondays, Wednesdays and Fridays · 11h30",
+          "withHost": "With Monika",
+          "desc": "Help the nation speak Oshiwambo. This engaging segment teaches simple words, phrases, pronunciation and everyday expressions to listeners of every background, from young learners to professionals and visitors. A champion of cultural preservation and inclusion.",
+          "image": "/assets/offers/omulunga-radio-learn-oshiwambo.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme.",
+            "Promotions throughout the week punting the content, each one naming you as the sponsor."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Kiddies Corner",
+          "when": "Mon–Fri · 12h15",
+          "withHost": "With Monika",
+          "desc": "Quality family listening time. Kiddies Corner entertains and inspires young listeners with stories, educational games, songs, riddles and life lessons. A warm, trusted environment built around learning, creativity and positive values.",
+          "image": "/assets/offers/omulunga-radio-learn-oshiwambo.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Smooth Track",
+          "when": "Mon–Fri · 13h15",
+          "withHost": "With Monika",
+          "desc": "Own the lunchtime mood. Each weekday, Smooth Track serves up one hand-picked feel-good song, a refreshing break in a busy day. Short, uncluttered and memorable.",
+          "image": "/assets/offers/omulunga-radio-learn-oshiwambo.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Taste of Home",
+          "when": "Mon–Fri · 13h30",
+          "withHost": "With Monika",
+          "desc": "Bring your brand to the family table. Taste of Home celebrates the flavours of Namibia with easy recipes, cooking tips, healthy-eating advice and traditional dishes made with local ingredients.",
+          "image": "/assets/offers/omulunga-radio-learn-oshiwambo.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Omulunga Sport Show",
+          "when": "Mon–Fri · 18h00–19h00",
+          "withHost": "With Anna and Jesaya",
+          "desc": "An hour of sport, every evening, in three parts. Sports Headlines covers Namibian, African and international action. International Sports Focus brings transfer, team and tournament news. Upcoming Fixtures previews the matches ahead across football, rugby, Formula 1, boxing, tennis and athletics.",
+          "image": "/assets/offers/omulunga-radio-omulunga-sport-show.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme.",
+            "Show sweepers throughout the programme naming your brand."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "On The Mix",
+          "when": "Fridays · 17h00–18h00",
+          "withHost": "With DJ Nambala",
+          "desc": "Kick-start the weekend. On The Mix is Omulunga’s high-energy Friday show, serving the hottest mixes, trending hits and listener requests to a vibrant audience getting ready for the weekend.",
+          "image": "/assets/offers/omulunga-radio-on-the-mix.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme.",
+            "Promotions throughout the week punting the content, each one naming you as the sponsor.",
+            "Show sweepers throughout the programme naming your brand."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Moshitila",
+          "when": "Saturdays · 09h00–10h00",
+          "withHost": "With Rosina",
+          "desc": "Saturday mornings, the Oshiwambo way. Moshitila celebrates culture, humour, storytelling, music and community conversation, offering light-hearted learning while preserving local traditions. A warm, interactive hour that brings listeners together.",
+          "image": "/assets/offers/omulunga-radio-moshitila.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme.",
+            "Promotions throughout the week punting the content, each one naming you as the sponsor.",
+            "Show sweepers throughout the programme naming your brand."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Local Top 10",
+          "when": "Saturdays · 15h00–16h00",
+          "withHost": "With DJ Tatito",
+          "desc": "Celebrate home-grown talent. Local Top 10 counts down Namibia’s most popular songs, with listeners voting for their favourite local hits. A proud showcase of Namibian artists for a loyal, music-loving audience.",
+          "image": "/assets/offers/omulunga-radio-local-top-10.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme.",
+            "Promotions throughout the week punting the content, each one naming you as the sponsor.",
+            "Show sweepers throughout the programme naming your brand."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Be Enlightened",
+          "when": "Sundays · 10h00",
+          "withHost": "With DJ Munene “The Big Man”",
+          "desc": "Sunday morning inspiration. Be Enlightened delivers deep, uplifting and transformative discussions that encourage spiritual growth, strengthen hope and help listeners overcome life’s challenges through biblical principles and practical wisdom.",
+          "image": "/assets/offers/omulunga-radio-be-enlightened.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme.",
+            "Promotions throughout the week punting the content, each one naming you as the sponsor."
+          ],
+          "prime": ""
+        }
+      ]
+    },
+    {
+      "id": "fresh-fm",
+      "color": "#1E1E1E",
+      "accent": "#E3202B",
+      "name": "Fresh FM",
+      "reach": "283,431",
+      "reachLabel": "people reached across radio and digital",
+      "about": "The pulse of a young, ambitious Namibia, playing the most popular Afro Pop and Urban hits with a focus on local and African artists. Listeners are mainly 25 to 34 (56.6%), LSM 4 to 7 and 55% female, with the drive and disposable income to build the lifestyle they want.",
+      "source": "Sources: MediaMetrics 2025, Google and social analytics, January to March 2026. 24 sponsorable segments follow.",
+      "audienceImage": "/assets/offers/fresh-fm-audience.jpg",
+      "offers": [
+        {
+          "title": "Junior Fresh",
+          "when": "Weekdays · 06h35",
+          "withHost": "With NSK and Shai_Quan",
+          "desc": "One of Fresh FM’s best-loved features. Primary school learners join the Fresh Breakfast live on air for fun, educational games and conversation on their way to school. A warm, trusted moment that children, parents and teachers share every morning.",
+          "image": "/assets/offers/fresh-fm-junior-fresh.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Who Said That?",
+          "when": "Mondays · 07h15",
+          "withHost": "",
+          "desc": "Start the week with a challenge. Listeners hear a mystery voice, from celebrities and public figures to unforgettable media moments, then race to guess who said it for the chance to win. Fun, interactive and built for appointment listening every Monday.",
+          "image": "/assets/offers/fresh-fm-who-said-that.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme.",
+            "Promotions throughout the week punting the content, each one naming you as the sponsor."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "My Job Is...",
+          "when": "Wednesdays · 07h15",
+          "withHost": "",
+          "desc": "Guess the profession. Listeners piece together creative, humorous and often unexpected clues to name a job, and win prizes along the way. A fun celebration of the many careers that keep our communities and economy moving.",
+          "image": "/assets/offers/fresh-fm-who-said-that.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme.",
+            "Promotions throughout the week punting the content, each one naming you as the sponsor."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Mind Body Green",
+          "when": "Mon, Fri · 08h15",
+          "withHost": "",
+          "desc": "Live your best life. Practical, inspiring advice on mental wellbeing, physical health, personal growth, emotional balance, spirituality and sustainable living. A positive, uplifting space on the Fresh Breakfast, with room for tailored content integration.",
+          "image": "/assets/offers/fresh-fm-who-said-that.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Financial Breakfast",
+          "when": "Mondays · 08h50",
+          "withHost": "With Juliana Zeripi",
+          "desc": "Start the week money-wise. Financial expert Juliana Zeripi shares practical advice on budgeting, saving, investing, managing debt, financial planning and building wealth. A natural space for brands that believe in helping Namibians take control of their money.",
+          "image": "/assets/offers/fresh-fm-who-said-that.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme.",
+            "Promotions throughout the week punting the content, each one naming you as the sponsor."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Real Estate Breakfast",
+          "when": "Tuesdays · 08h50",
+          "withHost": "",
+          "desc": "Property, made practical. Expert insight on homeownership, investment, market trends, financing and opportunities in Namibia’s real estate sector, for an audience actively planning to buy, build, invest in or improve property.",
+          "image": "/assets/offers/fresh-fm-who-said-that.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme.",
+            "Promotions throughout the week punting the content, each one naming you as the sponsor."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "The Fresh Fix with Sirka",
+          "when": "Mon, Fri · 10h37",
+          "withHost": "With Sirka",
+          "desc": "Life, made a little easier. Sirka serves up quick, clever hacks and bite-sized solutions to everyday situations, useful takeaways listeners put to work straight away. Helpful, practical and part of the everyday routine.",
+          "image": "/assets/offers/fresh-fm-the-fresh-fix-with-sirka.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Mystery Clip",
+          "when": "Mon, Fri · 11h27",
+          "withHost": "",
+          "desc": "Can you name that sound? Listeners identify a mystery audio clip, from a movie trailer or song snippet to a famous soundbite, and play along in real time. Playful, interactive and buzzing with live engagement.",
+          "image": "/assets/offers/fresh-fm-the-fresh-fix-with-sirka.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "What’s for Lunch?",
+          "when": "Mon, Fri · 12h46",
+          "withHost": "",
+          "desc": "The answer to the daily lunch dilemma. Quick, easy and healthy meal ideas, practical recipes and cooking tips for busy professionals and families. Branded recipe integration and live reads can put your weekly offers right on the menu.",
+          "image": "/assets/offers/fresh-fm-the-fresh-fix-with-sirka.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "The Daily Gig Guide",
+          "when": "Mon, Fri · 13h15",
+          "withHost": "With Sirka Simon",
+          "desc": "Namibia’s creative scene, every day. Sirka Simon keeps listeners up to date with live music, theatre, exhibitions, cultural festivals and creative showcases across the country, right when they’re deciding where to go.",
+          "image": "/assets/offers/fresh-fm-the-fresh-fix-with-sirka.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Kiddies No. 1",
+          "when": "Mon, Fri · 13h35",
+          "withHost": "With Elise",
+          "desc": "The ride home, soundtracked by kids. School children request their favourite song for the trip home, a much-loved moment for kids and parents on the afternoon school run, with room for prizes that make a child’s day.",
+          "image": "/assets/offers/fresh-fm-kiddies-no-1.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Fresh Comedy",
+          "when": "Mon, Fri · 14h17",
+          "withHost": "",
+          "desc": "Take the edge off the afternoon. A 2 to 3 minute comedy sketch from local and international comedians gives listeners a well-earned laugh. A feel-good moment that leaves the audience smiling.",
+          "image": "/assets/offers/fresh-fm-kiddies-no-1.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Too Good To Be True",
+          "when": "Mon, Fri · 14h17",
+          "withHost": "",
+          "desc": "A daily dose of positivity. Two uplifting news stories from around the world, from inspiring acts of kindness to remarkable achievements and heart-warming moments. Good news that listeners love to share.",
+          "image": "/assets/offers/fresh-fm-kiddies-no-1.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme.",
+            "Promotions throughout the week punting the content, each one naming you as the sponsor."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "The Men’s Room",
+          "when": "Mondays · 14h30",
+          "withHost": "",
+          "desc": "Honest conversations for modern men. Experts and real-life voices talk physical and mental health, money, relationships, fatherhood, careers and lifestyle. A trusted space for open dialogue and practical insight.",
+          "image": "/assets/offers/fresh-fm-kiddies-no-1.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme.",
+            "Promotions throughout the week punting the content, each one naming you as the sponsor."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "The Women’s Room",
+          "when": "Wednesdays · 14h30",
+          "withHost": "",
+          "desc": "Authentic, empowering conversations about women’s lives. Health and wellness, careers, money, relationships, motherhood, confidence and personal growth, combining expert advice with real-life stories that inform and inspire.",
+          "image": "/assets/offers/fresh-fm-kiddies-no-1.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme.",
+            "Promotions throughout the week punting the content, each one naming you as the sponsor."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Fresh Finance: The Encyclopedia",
+          "when": "Mon, Fri · 15h10",
+          "withHost": "",
+          "desc": "Finance, made simple. Each day unpacks one financial term, from banking and investing to budgeting, insurance, entrepreneurship and personal finance. A daily commitment to financial literacy that listeners genuinely value.",
+          "image": "/assets/offers/fresh-fm-kiddies-no-1.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Quiz Master",
+          "when": "Mon, Fri · 16h45",
+          "withHost": "With Chazz and Skrypt",
+          "desc": "Think fast, win big. Listeners answer the question of the day via WhatsApp, and the first correct answer takes the prize. High-frequency engagement on Fresh Air that keeps listeners coming back every day.",
+          "image": "/assets/offers/fresh-fm-quiz-master.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "The Joybox",
+          "when": "Tuesdays · 18h15",
+          "withHost": "",
+          "desc": "Fresh FM’s home of gaming and tech: the latest news, trends and releases in gaming, esports, consumer technology and digital culture, made for a digitally savvy, trend-conscious audience.",
+          "image": "/assets/offers/fresh-fm-quiz-master.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme.",
+            "Promotions throughout the week punting the content, each one naming you as the sponsor."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Fresh Local Top 10 (“Fresh 10”)",
+          "when": "Mon - Thu · 19h00–20h00",
+          "withHost": "With Chiinga Jay Vinn",
+          "desc": "A nightly celebration of Namibian music. Fresh 10 counts down the top 10 local songs of the day, with exclusive interviews with charting artists. A proud stage for home-grown culture and creativity, with room for artist integrations and digital promotion.",
+          "image": "/assets/offers/fresh-fm-fresh-local-top-10-fresh-10.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme.",
+            "Show sweepers throughout the programme naming your brand."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "The Business Corner",
+          "when": "Mondays · The Fresh Lounge · 45–60 minutes",
+          "withHost": "With Chiinga Jay Vinn",
+          "desc": "Where Namibia’s business story is told. Through expert analysis and conversations with entrepreneurs, business leaders, economists and innovators, the show makes complex business topics practical, and gives businesses a stage to share their story with future customers, partners and investors.",
+          "image": "/assets/offers/fresh-fm-the-business-corner.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme.",
+            "Promotions throughout the week punting the content, each one naming you as the sponsor.",
+            "Show sweepers throughout the programme naming your brand."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Beyond the Touchline",
+          "when": "Thursdays · The Fresh Lounge · 45–60 minutes",
+          "withHost": "With Chiinga Jay Vinn",
+          "desc": "The stories behind Namibian sport. In-depth interviews with athletes, coaches, administrators and experts explore the challenges, successes and future of the game, celebrating sporting excellence with an active, passionate audience.",
+          "image": "/assets/offers/fresh-fm-the-business-corner.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme.",
+            "Promotions throughout the week punting the content, each one naming you as the sponsor.",
+            "Show sweepers throughout the programme naming your brand."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Fresh Fridays",
+          "when": "Fridays · 08h00–09h00, 12h00–13h00, 14h00–15h00 and 18h00–19h00",
+          "withHost": "",
+          "desc": "Premium live DJ sets from some of Namibia’s top DJs, four times every Friday. High energy from breakfast to sundown as listeners count down to the weekend.",
+          "image": "/assets/offers/fresh-fm-fresh-fridays.jpg",
+          "benefits": [
+            "A pre-produced opening billboards naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored segements.",
+            "One 30-second commercial aired within 30 minutes of the programme.",
+            "Promotions throughout the week punting the content, each one naming you as the sponsor.",
+            "Show sweepers throughout the programme naming your brand.",
+            "Your logo on all associated digital artwork."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "The Fresh Hitlist",
+          "when": "Fridays · 19h00–21h00 · repeated Saturdays · 13h00–15h00",
+          "withHost": "With Elise",
+          "desc": "Fresh FM’s flagship Top 20 countdown of the hottest Namibian and African songs, with regular exclusive interviews with the continent’s leading artists and rising stars. The go-to show for young professionals, urban music lovers and trendsetters, twice every weekend.",
+          "image": "/assets/offers/fresh-fm-the-fresh-hitlist.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme.",
+            "Promotions throughout the week punting the content, each one naming you as the sponsor.",
+            "Show sweepers throughout the programme naming your brand."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Fresh Fridays Outside",
+          "when": "Last Friday of the month · 18h00–21h00",
+          "withHost": "",
+          "desc": "Fresh FM’s after-work party. Our popular on-air DJs play live at a trendy Windhoek venue, a vibrant social evening for young professionals and music lovers to unwind and celebrate the start of the weekend.",
+          "image": "/assets/offers/fresh-fm-fresh-fridays-outside.jpg",
+          "benefits": [
+            "Promotions in the week leading up to each edition, each one naming you as the sponsor.",
+            "Brand visibility, activations and product sampling at the venue."
+          ],
+          "prime": ""
+        }
+      ]
+    },
+    {
+      "id": "nova",
+      "color": "#1B6FA3",
+      "accent": "#EF4B3F",
+      "name": "NOVA 103.5",
+      "reach": "51,747",
+      "reachLabel": "people reached across radio and digital",
+      "about": "The top Pop and Rock hits of the past 40 years in English and Afrikaans, carried on Namibia’s largest private transmitter network of more than 23 transmitters. NOVA speaks to an older, more affluent audience: LSM 7 to 10, mainly 35 to 40 (55%), and 62% female.",
+      "source": "Sources: MediaMetrics 2025, Google and social analytics, January to March 2026. 3 sponsorable segments follow.",
+      "audienceImage": "/assets/offers/nova-103-5-audience.jpg",
+      "offers": [
+        {
+          "title": "Eco-Geek",
+          "when": "Mon–Fri · 07h45 · Nova Sunrise",
+          "withHost": "With David",
+          "desc": "Proof that being an Eco-Geek has never been cooler. David explores the fascinating side of nature, science, technology and sustainability, from renewable energy to clever innovations and environmental stories that matter, in a way that’s fun, easy to follow and relevant to everyday life.",
+          "image": "/assets/offers/nova-103-5-eco-geek.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Dating for Grownups",
+          "when": "Mondays and Wednesdays · 11h00–12h00",
+          "withHost": "With Karlien",
+          "desc": "Relationships don’t come with a manual, especially after 35. Karlien explores modern dating, starting over, long-term love and emotional connection with honest conversation, practical insight and gentle humour. Real love for real life.",
+          "image": "/assets/offers/nova-103-5-dating-for-grownups.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme.",
+            "Promotions throughout the week punting the content, each one naming you as the sponsor.",
+            "Show sweepers throughout the programme naming your brand.",
+            "Each episode podcasted after broadcast."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Sakegesprekke (Business Conversations)",
+          "when": "First Friday of the month · 12h30",
+          "withHost": "With Karlien and Wilmar Fourie",
+          "desc": "Meet the people building Namibian business. In these inspiring Afrikaans conversations with Karlien and Wilmar Fourie of Netwerk vir Afrikaans, successful entrepreneurs share how they built their businesses, the challenges they overcame and what they’ve learned about leadership, with a look at innovation and opportunity across Africa.",
+          "image": "/assets/offers/nova-103-5-sakegesprekke-business-conversations.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme.",
+            "Promotions in the week leading up to each edition, each one naming you as the sponsor."
+          ],
+          "prime": ""
+        }
+      ]
+    },
+    {
+      "id": "99fm",
+      "color": "#B80068",
+      "accent": "#F39200",
+      "name": "99FM",
+      "reach": "266,203",
+      "reachLabel": "people reached across radio and digital",
+      "about": "Hip-Hop, Afro and RnB with uplifting, empowering content for listeners driven by economic, social and personal growth. Listeners are LSM 6 to 9, 52% male, and largely English- (40.2%) and Oshiwambo-speaking (34%).",
+      "source": "Sources: MediaMetrics 2025, Google and social analytics, January to March 2026. 19 sponsorable segments follow.",
+      "audienceImage": "/assets/offers/99fm-audience.jpg",
+      "offers": [
+        {
+          "title": "Future Media News",
+          "when": "Mon–Fri · top of every hour",
+          "withHost": "",
+          "desc": "Be the name behind the information listeners rely on. The latest local and international headlines from Future Media, every hour on the hour. Trusted, frequent and impossible to miss.",
+          "image": "/assets/offers/99fm-future-media-news.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Economic Indicators",
+          "when": "Mon–Fri · five past every hour",
+          "withHost": "",
+          "desc": "A quick hourly snapshot of the global markets, with the latest moves in major currencies and the key commodities that shape the economy. Credible, useful information for a business-minded audience.",
+          "image": "/assets/offers/99fm-future-media-news.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Weather Report",
+          "when": "Mon–Fri · five past every hour",
+          "withHost": "",
+          "desc": "Current conditions, temperatures and the forecast ahead, with alerts for any severe weather that could affect listeners’ plans. Practical, hourly and part of every listener’s day.",
+          "image": "/assets/offers/99fm-future-media-news.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "The Business Lens",
+          "when": "Mon–Fri · 06h32",
+          "withHost": "",
+          "desc": "The pulse of the Namibian economy, every weekday. Market moves, major deals, regulatory shifts and what the country’s top businesses are doing, then the operational upgrades, AI tools and digital platforms changing how companies run. Insight professionals and business owners can act on.",
+          "image": "/assets/offers/99fm-future-media-news.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Bumper to Bumper",
+          "when": "Mon–Fri · 06h32",
+          "withHost": "",
+          "desc": "Namibians spend a big part of their morning behind the wheel, and Bumper to Bumper owns that time. Automotive news, practical car tips, music, travel inspiration and lifestyle content in one of the most-loved parts of the morning line-up.",
+          "image": "/assets/offers/99fm-future-media-news.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Baby Steps",
+          "when": "Mon–Fri · 08h06",
+          "withHost": "",
+          "desc": "Little milestones, big moments. A warm, practical guide to early childhood and modern parenthood, with developmental milestones, real tips from other parents, and expert insight on learning, nutrition, routines and planning for a growing family.",
+          "image": "/assets/offers/99fm-future-media-news.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Wealth Talks",
+          "when": "Mon–Fri · 08h45",
+          "withHost": "",
+          "desc": "The building blocks of financial health explained plainly. Expert guests deliver real, actionable steps on budgeting, saving, investing, managing debt, building an emergency fund and planning for retirement, advice listeners can use straight away.",
+          "image": "/assets/offers/99fm-future-media-news.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Mindful Minute",
+          "when": "Wednesdays · 08h45",
+          "withHost": "",
+          "desc": "Short, but punching well above its weight. A licensed psychologist shares sixty seconds of credible advice on stress, focus, relationships, self-care and everyday clarity. Mental wellness is a growing priority for Namibian consumers, and this is easy to absorb and easy to share.",
+          "image": "/assets/offers/99fm-future-media-news.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme.",
+            "Promotions throughout the week punting the content, each one naming you as the sponsor."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Botify",
+          "when": "Mon–Fri · 08h45",
+          "withHost": "",
+          "desc": "Tech moves fast; Botify keeps listeners ahead of it. Software updates, device launches, AI tools, app releases, cybersecurity and the digital trends shaping work and life, explained for everyday professionals, small-business owners and curious minds.",
+          "image": "/assets/offers/99fm-botify.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Unlocked Potential",
+          "when": "Mon–Fri · 11h15",
+          "withHost": "",
+          "desc": "Open doors for the next generation of leaders. Each episode breaks down one Masters or PhD scholarship, fellowship or funding opportunity from around the world, with the application link shared on the station’s WhatsApp platform so listeners can apply in their own time.",
+          "image": "/assets/offers/99fm-future-media-news.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Lost and Found",
+          "when": "Mondays, Wednesdays and Fridays · 12h40",
+          "withHost": "",
+          "desc": "A midday burst of energy. Lost and Found revisits songs that deserve another listen: forgotten classics, new AI hits and underplayed gems. Soulful, surprising and the perfect lift in the middle of the working day.",
+          "image": "/assets/offers/99fm-future-media-news.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme.",
+            "Promotions throughout the week punting the content, each one naming you as the sponsor."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Digital Download",
+          "when": "Mondays, Wednesdays and Fridays · 12h40",
+          "withHost": "",
+          "desc": "AI, technology and digital innovation in clear, jargon-free language. Smart tools for work and life, trends worth knowing, online safety, digital literacy and social media developments, keeping listeners informed and ahead.",
+          "image": "/assets/offers/99fm-botify.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme.",
+            "Promotions throughout the week punting the content, each one naming you as the sponsor."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Top 5",
+          "when": "Mon–Fri · 13h40",
+          "withHost": "",
+          "desc": "Fun, fast and endlessly curious. Each segment counts down five items in one category, from the world’s biggest coffee producers to the strangest land animals and the safest car brands, getting listeners comparing, debating and learning.",
+          "image": "/assets/offers/99fm-future-media-news.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Sweet Escape",
+          "when": "Mon–Fri · 16h15",
+          "withHost": "",
+          "desc": "Discover Namibia, one destination at a time. Must-see places, hidden gems and unforgettable stays, from iconic landscapes to lodges, campsites and unique local experiences. A daily nudge to stop dreaming about the next getaway and start planning it.",
+          "image": "/assets/offers/99fm-future-media-news.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Viral Moment of the Day",
+          "when": "Mon–Fri · 16h15",
+          "withHost": "",
+          "desc": "What’s got everyone talking today? The TikTok everyone’s recreating, the clip taking over timelines, the meme breaking the internet: Viral Moment of the Day brings it straight to radio. Fast, fun and always plugged in to pop culture.",
+          "image": "/assets/offers/99fm-botify.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Your Weekly Round-Up",
+          "when": "Fridays · 16h15",
+          "withHost": "",
+          "desc": "Close the week with the stories, songs and moments that defined the last seven days. [Description to be confirmed.]",
+          "image": "/assets/offers/99fm-future-media-news.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme.",
+            "Promotions throughout the week punting the content, each one naming you as the sponsor."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Behind the Hit",
+          "when": "Mon–Fri · 17h08",
+          "withHost": "",
+          "desc": "Every hit has a story. We know the song and sing every word, but what made it iconic? Behind the Hit uncovers the surprising stories, defining moments and fascinating facts behind some of the world’s biggest songs and artists.",
+          "image": "/assets/offers/99fm-future-media-news.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "Shebeen Shackers",
+          "when": "Fridays · 07h00–08h00",
+          "withHost": "",
+          "desc": "A full hour back in time, every Friday morning. The Namibian, South African and pan-African hits of the 70s, 80s and early 90s, loved by the generation that lived them and discovered by the one that wishes it had. Nostalgia, shared history and national pride.",
+          "image": "/assets/offers/99fm-future-media-news.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme.",
+            "Promotions throughout the week punting the content, each one naming you as the sponsor.",
+            "Show sweepers throughout the programme naming your brand."
+          ],
+          "prime": ""
+        },
+        {
+          "title": "The Pitch",
+          "when": "Mon–Fri · 19h30",
+          "withHost": "",
+          "desc": "Football never stops, and neither does The Pitch. Premier League, La Liga, Serie A, Bundesliga, CAF and FIFA: the results, standout performances, transfer talk, World Cup qualifying and AFCON. And every night, Namibian football, our national team and local players get their due. Built for real football people.",
+          "image": "/assets/offers/99fm-the-pitch.jpg",
+          "benefits": [
+            "A pre-produced opening billboard naming your brand.",
+            "A presenter mention of your brand during or at the end of the sponsored programme.",
+            "One 30-second commercial aired within 30 minutes of the programme.",
+            "Show sweepers throughout the programme naming your brand."
+          ],
+          "prime": ""
+        }
+      ]
+    },
+    {
+      "id": "oneafrica",
+      "color": "#D9430F",
+      "accent": "#FFB000",
+      "name": "OneAfrica TV",
+      "reach": "885,895",
+      "reachLabel": "viewers reached across TV and digital",
+      "about": "Namibia’s multi-genre, multi-platform entertainment brand, on DStv Channel 284, GOtv Channel 24 and on demand at oneafrica.tv. Viewers watch an average of 47 minutes a day, are LSM 6 to 9 and 65% female.",
+      "source": "Sources: MediaMetrics 2025, Google and social analytics, January to March 2026. 21 sponsorable segments follow.",
+      "audienceImage": "/assets/offers/oneafrica-tv-audience.jpg",
+      "offers": [
+        {
+          "title": "Suidooster",
+          "when": "Weekdays · 18h30",
+          "withHost": "",
+          "desc": "Prime-time drama, every weeknight. Set in the fictional Cape Town suburb of Ruiterbosch, Suidooster follows a close-knit business community as families and friends navigate joy, sorrow, romance, betrayal, rivalry and reconciliation. Loyal, daily viewing at the start of prime time.",
+          "image": "/assets/offers/oneafrica-tv-suidooster.jpg",
+          "benefits": [
+            "Your brand will be included in all promotional elements to punt the content (across all selected platforms, be it on television, radio or digital).",
+            "A pre-produced opening &amp; closing billboard, before and after the programme, including your brand.",
+            "Branded show sweepers throughout the programme including your brand.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": "Place your ad during this popular PRIME TIME programme."
+        },
+        {
+          "title": "NewsOnOne Bulletin",
+          "when": "Weekdays · 19h00",
+          "withHost": "",
+          "desc": "Stand behind the news Namibians trust. NewsOnOne delivers comprehensive coverage of the day’s most pressing stories in politics, business, technology and community news. A premium prime-time slot and a credible home for your brand.",
+          "image": "/assets/offers/oneafrica-tv-newsonone-bulletin.jpg",
+          "benefits": [
+            "A pre-produced opening &amp; closing billboard, before and after the segment, including your brand.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": "Place your ad during this popular PRIME TIME programme."
+        },
+        {
+          "title": "Final Whistle",
+          "when": "Tuesdays · 19h30",
+          "withHost": "With Skrypt and Mickey",
+          "desc": "Sport isn’t just a game, it’s a lifestyle. Popular sports and media personalities Skrypt and Mickey host this high-energy weekly wrap-up, bringing local flavour and international flair from Namibian fields to the world stage.",
+          "image": "/assets/offers/oneafrica-tv-final-whistle.jpg",
+          "benefits": [
+            "Your brand will be included in all promotional elements to punt the content (across all selected platforms, be it on television, radio or digital).",
+            "A pre-produced opening &amp; closing billboard, before and after the programme, including your brand.",
+            "Branded show sweepers throughout the programme including your brand.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": "Place your ad during this popular PRIME TIME programme."
+        },
+        {
+          "title": "The Black &amp; Yellow Podcast",
+          "when": "Tuesdays · 20h00",
+          "withHost": "With Reggie and Frozen",
+          "desc": "Bold opinions, real stories and laugh-out-loud moments. Creative duo Reggie and Frozen bring contrast, chemistry and real-life experience to an unscripted take on everyday Namibian life, blending comedy, social commentary and storytelling.",
+          "image": "/assets/offers/oneafrica-tv-the-black-and-yellow-podcast.jpg",
+          "benefits": [
+            "Your brand will be included in all promotional elements to punt the content (across all selected platforms, be it on television, radio or digital).",
+            "A pre-produced opening &amp; closing billboard, before and after the programme, including your brand.",
+            "Branded show sweepers throughout the programme including your brand.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": "Place your ad during this popular PRIME TIME programme."
+        },
+        {
+          "title": "Omukuluntu’s News",
+          "when": "Thursdays · 20h00",
+          "withHost": "With DJ Munene",
+          "desc": "“The Big Man’s News.” DJ Munene breaks down current affairs, social issues, culture and trending topics for Oshiwambo-speaking audiences with his signature mix of satire, humour and sharp insight, joined by well-known public figures and everyday voices.",
+          "image": "/assets/offers/oneafrica-tv-omukuluntu-s-news.jpg",
+          "benefits": [
+            "Your brand will be included in all promotional elements to punt the content (across all selected platforms, be it on television, radio or digital).",
+            "A pre-produced opening &amp; closing billboard, before and after the programme, including your brand.",
+            "Branded show sweepers throughout the programme including your brand.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": "Place your ad during this popular PRIME TIME programme."
+        },
+        {
+          "title": "The Fresh Hitlist",
+          "when": "Fridays · 20h00",
+          "withHost": "With Elise Akooko",
+          "desc": "Namibia’s hottest weekly music and lifestyle show. Elise Akooko blends music, style and pop culture, showcasing the best Namibian talent alongside Africa’s biggest stars.",
+          "image": "/assets/offers/oneafrica-tv-the-fresh-hitlist.jpg",
+          "benefits": [
+            "Your brand will be included in all promotional elements to punt the content (across all selected platforms, be it on television, radio or digital).",
+            "A pre-produced opening &amp; closing billboard, before and after the programme, including your brand.",
+            "Branded show sweepers throughout the programme including your brand.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": "Place your ad during this popular PRIME TIME programme."
+        },
+        {
+          "title": "English Premier League",
+          "when": "Saturdays · 17h00 · August to May",
+          "withHost": "",
+          "desc": "Put your brand alongside the most-watched football league in the world. OneAfrica brings Saturday Premier League football to passionate, loyal fans every week of the season.",
+          "image": "/assets/offers/oneafrica-tv-english-premier-league.jpg",
+          "benefits": [
+            "Your brand will be included in all promotional elements to punt the content (across all selected platforms, be it on television, radio or digital).",
+            "A pre-produced opening &amp; closing billboard, before and after the programme, including your brand.",
+            "Branded show sweepers throughout the programme including your brand.One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": "Place your ad during this popular PRIME TIME programme."
+        },
+        {
+          "title": "NamFlix",
+          "when": "November to January · prime-time evenings",
+          "withHost": "",
+          "desc": "Namibian stories on a Namibian channel. Since 2019, NamFlix has given local creatives a home for their films and series, with 10 to 15 projects featured every year, supporting creatives financially while bringing Namibian culture to the screen.",
+          "image": "/assets/offers/oneafrica-tv-namflix.jpg",
+          "benefits": [
+            "Your brand will be included in all promotional elements to punt the content (across all selected platforms, be it on television, radio or digital).",
+            "A pre-produced opening &amp; closing billboard, before and after the programme, including your brand.",
+            "Branded show sweepers throughout the programme including your brand.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": "Place your ad during this popular PRIME TIME programme."
+        },
+        {
+          "title": "MasterChef South Africa",
+          "when": "Coming soon",
+          "withHost": "",
+          "desc": "The cordon bleu of reality cooking competitions. Passionate home cooks are tested on everything from signature dishes to complex techniques, judged on taste, presentation and originality, until one is crowned MasterChef. Prime family viewing.",
+          "image": "/assets/offers/oneafrica-tv-masterchef-south-africa.jpg",
+          "benefits": [
+            "Your brand will be included in all promotional elements to punt the content (across all selected platforms, be it on television, radio or digital).",
+            "A pre-produced opening &amp; closing billboard, before and after the programme, including your brand.",
+            "Branded show sweepers throughout the programme including your brand.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": "Place your ad during this popular PRIME TIME programme."
+        },
+        {
+          "title": "The Masked Singer South Africa",
+          "when": "Coming soon",
+          "withHost": "",
+          "desc": "The world’s craziest singing contest and guessing game. A-list celebrities perform in dazzling costumes while the panel and viewers at home chase the clues, and the reveal is often a huge surprise. Season two unmasked stars including UFC champion Dricus du Plessis and winner Warren Masemola.",
+          "image": "/assets/offers/oneafrica-tv-the-masked-singer-south-africa.jpg",
+          "benefits": [
+            "Your brand will be included in all promotional elements to punt the content (across all selected platforms, be it on television, radio or digital).",
+            "A pre-produced opening &amp; closing billboard, before and after the programme, including your brand.",
+            "Branded show sweepers throughout the programme including your brand.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": "Place your ad during this popular PRIME TIME programme."
+        },
+        {
+          "title": "Cartunes",
+          "when": "Coming soon",
+          "withHost": "",
+          "desc": "A car becomes a moving stage. Cartunes blends live performances, authentic conversation and fun in-car moments with artists, across different vehicles, in a highly shareable music and lifestyle format.",
+          "image": "/assets/offers/oneafrica-tv-cartunes.jpg",
+          "benefits": [
+            "Your brand will be included in all promotional elements to punt the content (across all selected platforms, be it on television, radio or digital).",
+            "A pre-produced opening &amp; closing billboard, before and after the programme, including your brand.",
+            "Branded show sweepers throughout the programme including your brand.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": "Place your ad during this popular PRIME TIME programme."
+        },
+        {
+          "title": "Swartwater",
+          "when": "Coming soon",
+          "withHost": "",
+          "desc": "A gripping drama of grief, guilt and redemption. After a tragic accident, a couple moves to a small fishing village to save their marriage, and a hidden corruption case threatens to devastate the town. Compelling, binge-worthy storytelling.",
+          "image": "/assets/offers/oneafrica-tv-swartwater.jpg",
+          "benefits": [
+            "Your brand will be included in all promotional elements to punt the content (across all selected platforms, be it on television, radio or digital).",
+            "A pre-produced opening &amp; closing billboard, before and after the programme, including your brand.",
+            "Branded show sweepers throughout the programme including your brand.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": "Place your ad during this popular PRIME TIME programme."
+        },
+        {
+          "title": "EFC (Extreme Fighting Championship)",
+          "when": "Coming soon",
+          "withHost": "",
+          "desc": "A sports entertainment phenomenon. EFC stages 10 live events a year, sells out some of Africa’s biggest arenas, and showcases more than 120 exclusively contracted fighters from across Africa and Europe for passionate, loyal fans.",
+          "image": "/assets/offers/oneafrica-tv-efc-extreme-fighting-championship.jpg",
+          "benefits": [
+            "Your brand will be included in all promotional elements to punt the content (across all selected platforms, be it on television, radio or digital).",
+            "A pre-produced opening &amp; closing billboard, before and after the programme, including your brand.",
+            "Branded show sweepers throughout the programme including your brand.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": "Place your ad during this popular PRIME TIME programme."
+        },
+        {
+          "title": "Africa Within",
+          "when": "Schedule to be confirmed",
+          "withHost": "",
+          "desc": "An intimate look at life on the African continent today. Social, political and deeply human stories that capture both the inspirations and the struggles of Africans.",
+          "image": "/assets/offers/oneafrica-tv-africa-within.jpg",
+          "benefits": [
+            "Your brand will be included in all promotional elements to punt the content (across all selected platforms, be it on television, radio or digital).",
+            "A pre-produced opening &amp; closing billboard, before and after the programme, including your brand.",
+            "Branded show sweepers throughout the programme including your brand.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": "Place your ad during this popular PRIME TIME programme."
+        },
+        {
+          "title": "African Legacy",
+          "when": "Schedule to be confirmed",
+          "withHost": "",
+          "desc": "The leaders who changed Africa’s course, remembered by their families. The children and grandchildren of figures including Patrice Lumumba, Nelson Mandela, Samora Machel, Julius Nyerere and Steve Biko share the stories behind Africa’s liberation and development.",
+          "image": "/assets/offers/oneafrica-tv-african-legacy.jpg",
+          "benefits": [
+            "Your brand will be included in all promotional elements to punt the content (across all selected platforms, be it on television, radio or digital).",
+            "A pre-produced opening &amp; closing billboard, before and after the programme, including your brand.",
+            "Branded show sweepers throughout the programme including your brand.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": "Place your ad during this popular PRIME TIME programme."
+        },
+        {
+          "title": "Wild Africa",
+          "when": "Schedule to be confirmed",
+          "withHost": "",
+          "desc": "Africa’s most remarkable wildlife and the people protecting it. Presenters Rumbie Takawira, Dr Mark Ofua and Zandile Ndhlovu, with ambassadors including Danai Gurira, Lupita Nyong’o and Djimon Hounsou, meet animals from Nigeria’s forest elephants to Namibia’s ground pangolins.",
+          "image": "/assets/offers/oneafrica-tv-wild-africa.jpg",
+          "benefits": [
+            "Your brand will be included in all promotional elements to punt the content (across all selected platforms, be it on television, radio or digital).",
+            "A pre-produced opening &amp; closing billboard, before and after the programme, including your brand.",
+            "Branded show sweepers throughout the programme including your brand.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": "Place your ad during this popular PRIME TIME programme."
+        },
+        {
+          "title": "Akili &amp; Me",
+          "when": "Weekdays · 13h30",
+          "withHost": "",
+          "desc": "Learning through play for little ones. Four-year-old Akili enters the magical world of Lala Land each night, where she and her animal friends learn about language, letters, numbers and art while developing kindness. Part of LearnOnOne.",
+          "image": "/assets/offers/oneafrica-tv-akili-and-me.jpg",
+          "benefits": [
+            "Your brand will be included in all promotional elements to punt the content (across all selected platforms, be it on television, radio or digital).",
+            "A pre-produced opening &amp; closing billboard, before and after the programme, including your brand.",
+            "Branded show sweepers throughout the programme including your brand.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": "Place your ad during this popular PRIME TIME programme."
+        },
+        {
+          "title": "Ubongo Kids",
+          "when": "Weekdays · 13h30",
+          "withHost": "",
+          "desc": "STEM adventures for curious kids. Five friends use science, technology, engineering, maths and life skills to solve problems and mysteries in Kokotoa Village. Part of LearnOnOne.",
+          "image": "/assets/offers/oneafrica-tv-ubongo-kids.jpg",
+          "benefits": [
+            "Your brand will be included in all promotional elements to punt the content (across all selected platforms, be it on television, radio or digital).",
+            "A pre-produced opening &amp; closing billboard, before and after the programme, including your brand.",
+            "Branded show sweepers throughout the programme including your brand.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": "Place your ad during this popular PRIME TIME programme."
+        },
+        {
+          "title": "Kiki &amp; Nuna",
+          "when": "Weekdays · 14h30",
+          "withHost": "",
+          "desc": "Six lovable friends, from a curious little pig to a helpful elephant, navigate friendships, safety, good behaviour and the wonders of science in their everyday lives. Part of LearnOnOne.",
+          "image": "/assets/offers/oneafrica-tv-kiki-and-nuna.jpg",
+          "benefits": [
+            "Your brand will be included in all promotional elements to punt the content (across all selected platforms, be it on television, radio or digital).",
+            "A pre-produced opening &amp; closing billboard, before and after the programme, including your brand.",
+            "Branded show sweepers throughout the programme including your brand.",
+            "One 30-second commercial aired within 30 minutes of the programme."
+          ],
+          "prime": "Place your ad during this popular PRIME TIME programme."
+        }
+      ]
+    }
+  ]
+}

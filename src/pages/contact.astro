@@ -1,0 +1,67 @@
+---
+import Layout from '../layouts/Layout.astro';
+const bg = "/assets/ContactUs/CLB8469.jpg";
+---
+<Layout title="Contact Us | FutureMedia" bodyClass="contact" preload={bg}>
+<section class="contact-hero" style={`--contact-bg:url('${bg}')`}>
+  <div class="contact-intro">
+    <p class="eyebrow">Talk to us</p>
+    <h1>We’re here to help.</h1>
+    <p>Tell us who you are and what you need. Sales will follow up with the right brand team.</p>
+    <div class="contact-quick">
+      <a href="tel:+264830001000">+264 83 000 1000</a>
+      <a href="mailto:sales@futuremedia.com.na">sales@futuremedia.com.na</a>
+      <span>Unit 44, Hyper Motor City, Windhoek</span>
+    </div>
+  </div>
+  <div class="contact-panel fm-form">
+    <h2>Send a message</h2>
+    <p class="fm-lead">Share a few details and we’ll get back to you.</p>
+    <form class="contact-form" id="contactForm">
+      <div class="fm-row">
+        <label>Name<input name="name" required placeholder="Your name"></label>
+        <label>Email<input name="email" type="email" required placeholder="you@company.com"></label>
+      </div>
+      <label>Telephone
+        <span class="phone-field">
+          <select name="phoneCode" aria-label="Country code" required>
+            <option value="+264" selected>Namibia (+264)</option>
+            <option value="+27">South Africa (+27)</option>
+            <option value="+267">Botswana (+267)</option>
+            <option value="+260">Zambia (+260)</option>
+            <option value="+263">Zimbabwe (+263)</option>
+            <option value="+258">Mozambique (+258)</option>
+            <option value="+244">Angola (+244)</option>
+            <option value="+243">DRC (+243)</option>
+            <option value="+255">Tanzania (+255)</option>
+            <option value="+265">Malawi (+265)</option>
+            <option value="+266">Lesotho (+266)</option>
+            <option value="+268">Eswatini (+268)</option>
+            <option value="+261">Madagascar (+261)</option>
+            <option value="+230">Mauritius (+230)</option>
+            <option value="+248">Seychelles (+248)</option>
+            <option value="+269">Comoros (+269)</option>
+          </select>
+          <input name="phoneNumber" type="tel" inputmode="tel" autocomplete="tel-national" required placeholder="81 000 0000">
+        </span>
+        <input type="hidden" name="telephone" value="">
+      </label>
+      <label>Company<input name="company" required placeholder="Company name"></label>
+      <label>Brand<select name="brandId" required><option value="">Loading…</option></select></label>
+      <label>Sales need<select name="salesId" required><option value="">Loading…</option></select></label>
+      <label>Service<select name="serviceId" required><option value="">Loading…</option></select></label>
+      <button class="fm-btn" type="submit">Send message</button>
+      <p class="note" id="contactNote" hidden></p>
+    </form>
+  </div>
+</section>
+
+<section class="contact-info wrap">
+  <div class="info-cards">
+    <div class="info-card"><b>Visit</b><span>Unit 44, Hyper Motor City, Maxwell Street, Windhoek</span></div>
+    <div class="info-card"><b>Call</b><a href="tel:+264830001000">+264 83 000 1000</a></div>
+    <div class="info-card"><b>Email</b><a href="mailto:sales@futuremedia.com.na">sales@futuremedia.com.na</a></div>
+    <div class="info-card"><b>Media audit</b><span>Need a channel mix? <a href="/media-audit.html">Start the free audit</a>.</span></div>
+  </div>
+</section>
+</Layout>
