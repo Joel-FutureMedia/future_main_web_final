@@ -1,7 +1,7 @@
 window.FM = (function () {
   const local = location.hostname === "localhost" || location.hostname === "127.0.0.1";
   const LIVE = "https://futuremediaapi.simplyfound.com.na";
-  const base = local ? "http://localhost:8980" : (window.FM_API_BASE || LIVE);
+  const base = local ? "https://futuremediaapi.simplyfound.com.na" : (window.FM_API_BASE || LIVE);
 
   async function request(path, options = {}) {
     const headers = Object.assign({}, options.headers || {});

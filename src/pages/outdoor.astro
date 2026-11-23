@@ -1,16 +1,17 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { offerRow } from '../lib/latest-offers.mjs';
 const logo = "/assets/Logos/fm_web_scroll_promo.png";
-const person = "/assets/Digital/11_PromoBasket/Gemini_Generated_Image_165gx165gx165gx1.png";
-const landingPerson = "/assets/print.png";
+const person = "/assets/Digital/11_PromoBasket/Gemini_Generated_Image_165gx165gx165gx1.webp";
+const landingPerson = "/assets/print.webp";
 const landingBg = "/assets/landingpage_image.webp";
 const copy = "Put your brand on display at outdoor events, exhibitions and promotions across Namibia. Help people find your stand with branded banners and gazebos, make your team easy to spot in matching apparel, and give visitors something useful to take home with branded stationery and promotional items.";
 const offers = [
-  ["Branded Gazebos", "Own the activation with branded outdoor structures.", "/contact.html", logo, "contain"],
-  ["Apparel & Merch", "Staff kits, giveaways and event wear that travel with your brand.", "/contact.html", logo, "contain"],
-  ["Stationery Sets", "Folders, notebooks and desk kits for conferences and launches.", "/contact.html", logo, "contain"],
-  ["Activation Kits", "Full PromoBasket bundles for roadshows and brand days.", "/contact.html", logo, "contain"],
-  ["Talk to sales", "Plan outdoor and promotional work with the Future Media team.", "/contact.html", logo, "contain"]
+  offerRow("fresh-fm", "Fresh Fridays Outside", logo),
+  offerRow("fresh-fm", "Fresh Fridays", logo),
+  offerRow("radiowave", "Sugar Radio Show", logo),
+  offerRow("radiowave", "Grand Prix Pulse", logo),
+  offerRow("radiowave", "The Gig Guide", logo)
 ];
 const features = [
   {
@@ -42,12 +43,13 @@ const features = [
 <section class="slide bintro on" id="network">
   <div class="bgimg" style={`background-image:url(${landingBg})`}></div>
   <div class="introcopy">
-    <p class="eyebrow">Outdoor &amp; Promotions</p>
-    <h1>Promobasket<br>Where good brands go to look great.</h1>
+    <p class="eyebrow seo-only">Outdoor &amp; Promotions</p>
+    <h1>Promobasket</h1>
+    <p class="page-tag">Where good brands go to look great.</p>
     <p>Put your brand on display at outdoor events, exhibitions and promotions across Namibia. Help people find your stand with branded banners and gazebos, make your team easy to spot in matching apparel, and give visitors something useful to take home with branded stationery and promotional items.</p>
   </div>
   <div class="intro-person-wrap">
-    <img class="intro-person" src={landingPerson} alt="" decoding="async">
+    <img class="intro-person" src={landingPerson} alt="" decoding="async" fetchpriority="high">
   </div>
   <a class="scroll-cue" href="#promobasket">
     <span class="scroll-arrow" aria-hidden="true"></span>
@@ -56,7 +58,7 @@ const features = [
 </section>
 
 <section class="slide brand" id="promobasket" style="--c:#8A2040;--panel:#D42A42">
-  <img class="personality" src={person} alt="">
+  <img class="personality" alt="" decoding="async" data-src={person}>
   <div class="bwrap">
     <div class="bmain">
       <img class="blogo" decoding="async" src={logo} alt="PromoBasket">

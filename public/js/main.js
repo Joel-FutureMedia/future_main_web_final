@@ -35,9 +35,9 @@ document.querySelector("#ftr").innerHTML=`<footer>
 <button type="button" class="cta-pill cta-pill-footer" data-newsletter-open>Sign Up for the Newsletter</button>
 </div>
 </footer>
-<button class="wa" id="waOpen" type="button" aria-label="Chat with FutureMedia"><img src="/assets/FM_Website_Bot_Icon.svg" alt=""></button>
+<button class="wa" id="waOpen" type="button" aria-label="Chat with FutureMedia"><img src="/assets/FM_Website_Chat%20Icon.svg" alt=""></button>
 <div class="chat" id="chat" hidden role="dialog" aria-label="FutureMedia chat">
-<div class="chat-head"><span class="chat-avatar"><img src="/assets/FM_Website_Bot_Icon.svg" alt=""></span><div><b>FutureMedia</b><small><i></i>online</small></div><button type="button" id="chatClose" aria-label="Close chat">×</button></div>
+<div class="chat-head"><span class="chat-avatar"><img src="/assets/FM_Website_Chat%20Icon.svg" alt=""></span><div><b>FutureMedia</b><small><i></i>online</small></div><button type="button" id="chatClose" aria-label="Close chat">×</button></div>
 <div class="chat-log" id="chatLog"></div>
 <div class="chat-quick" id="chatQuick"></div>
 <form id="chatForm"><input id="chatInput" autocomplete="off" placeholder="Type a message"><button type="submit" aria-label="Send"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.2 20.8 21.2 12 3.2 3.2l.2 6.7L15.2 12 3.4 14.1z"/></svg></button></form>

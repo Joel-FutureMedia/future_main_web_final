@@ -174,6 +174,10 @@
 
   function renderNav() {
     const role = (state.user || user() || {}).role;
+    const drawer = $("#drawer");
+    if (drawer && !drawer.querySelector(".brand")) {
+      drawer.insertAdjacentHTML("afterbegin", `<a class="brand" href="#/overview" aria-label="FutureMedia"><img src="/assets/logo.png" alt="FutureMedia"></a>`);
+    }
     $("#nav").innerHTML = NAV.map(group => {
       const items = group.items.filter(item => !item.super || role === "SUPER_ADMIN");
       if (!items.length) return "";

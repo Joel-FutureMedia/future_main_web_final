@@ -39,16 +39,17 @@
   const nextBtn = document.querySelector("#auditNext");
   const skipBtn = document.querySelector("#auditSkip");
   const doneEl = document.querySelector("#auditDone");
-  const townSelect = document.querySelector("#namibiaTown");
+  const regionsEl = document.querySelector("#namibiaRegions");
+  const regionsWrap = document.querySelector("#namibiaRegionsWrap");
   const otherInput = document.querySelector("#locationOther");
   const otherLabel = document.querySelector("#auditOtherLabel");
-  const townLabel = document.querySelector("#auditTownLabel");
+  const regions = ["Country wide", "Windhoek", "Swakopmund", "Walvis Bay", "Oshakati", "Rundu", "Lüderitz", "Other town"];
   const campaignOther = document.querySelector("#campaignTypeOther");
 
   const state = {
     businessDescription: [],
     locationCountry: "",
-    namibiaTown: "",
+    namibiaRegions: [],
     locationOther: "",
     campaignType: [],
     campaignTypeOther: "",
@@ -82,7 +83,7 @@
       key: "location",
       kicker: "Step 2 of 7",
       title: "Where are you located?",
-      hint: "Choose Namibia for a town dropdown, South Africa, or another country.",
+      hint: "Choose Namibia to select regions, South Africa, or another country.",
       type: "single",
       field: "locationCountry",
       options: ["Namibia", "South Africa", "Other country"]
@@ -203,21 +204,37 @@
     errorEl.textContent = message;
   }
 
+  function renderRegions() {
+    regionsEl.replaceChildren();
+    regions.forEach(option => {
+      const label = document.createElement("label");
+      label.className = "audit-region-option";
+      const input = document.createElement("input");
+      input.type = "checkbox";
+      input.name = "namibiaRegions";
+      input.value = option;
+      input.checked = state.namibiaRegions.includes(option);
+      const text = document.createElement("span");
+      text.textContent = option;
+      label.append(input, text);
+      regionsEl.appendChild(label);
+    });
+  }
+
   function updateLocationExtras() {
     const namibia = state.locationCountry === "Namibia";
     const otherCountry = state.locationCountry === "Other country";
     extraLocation.hidden = !(namibia || otherCountry);
     if (extraLocation.hidden) return;
 
-    townSelect.hidden = !namibia;
-    townLabel.hidden = !namibia;
-    const showOtherTown = namibia && townSelect.value === "Other town";
+    regionsWrap.hidden = !namibia;
+    if (namibia) renderRegions();
+    const showOtherTown = namibia && state.namibiaRegions.includes("Other town");
     const showOtherCountry = otherCountry;
     otherInput.hidden = !(showOtherTown || showOtherCountry);
     otherLabel.hidden = otherInput.hidden;
     otherInput.placeholder = showOtherCountry ? "Enter your country" : "Enter your town";
     otherLabel.textContent = showOtherCountry ? "Other country" : "Other town";
-    if (namibia) townLabel.textContent = "Namibia town";
   }
 
   function renderProgress() {
@@ -253,7 +270,12 @@
         button.type = "button";
         button.className = "audit-tile" + (isOn(step, option) ? " on" : "");
         button.dataset.option = option;
-        button.textContent = option;
+        const parts = option.split("/");
+        parts.forEach((part, partIndex) => {
+          if (partIndex) button.append(document.createElement("wbr"));
+          button.append(part);
+          if (partIndex < parts.length - 1) button.append("/");
+        });
         tilesEl.appendChild(button);
       });
     }
@@ -277,8 +299,12 @@
       if (step.key === "budget") state.skippedBudget = false;
     }
     if (step.key === "location") {
-      if (state.locationCountry !== "Namibia") townSelect.value = "";
+      if (state.locationCountry !== "Namibia") state.namibiaRegions = [];
       if (state.locationCountry !== "Namibia" && state.locationCountry !== "Other country") {
+        otherInput.value = "";
+        state.locationOther = "";
+      }
+      if (state.locationCountry === "Namibia" && !state.namibiaRegions.includes("Other town")) {
         otherInput.value = "";
         state.locationOther = "";
       }
@@ -288,8 +314,10 @@
 
   function locationValue() {
     if (state.locationCountry === "Namibia") {
-      const town = townSelect.value === "Other town" ? otherInput.value.trim() : townSelect.value;
-      return town;
+      return state.namibiaRegions
+        .map(region => region === "Other town" ? otherInput.value.trim() : region)
+        .filter(Boolean)
+        .join(", ");
     }
     if (state.locationCountry === "Other country") {
       return otherInput.value.trim();
@@ -313,8 +341,8 @@
     if (step.key === "location") {
       if (!state.locationCountry) return "Please choose where you are located.";
       if (state.locationCountry === "Namibia") {
-        if (!townSelect.value) return "Please choose a Namibian town.";
-        if (townSelect.value === "Other town" && !otherInput.value.trim()) return "Please enter your town.";
+        if (!state.namibiaRegions.length) return "Please choose at least one region.";
+        if (state.namibiaRegions.includes("Other town") && !otherInput.value.trim()) return "Please enter your town.";
       }
       if (state.locationCountry === "Other country" && !otherInput.value.trim()) {
         return "Please enter your country.";
@@ -359,7 +387,8 @@
       location,
       locationCountry: state.locationCountry,
       locationTown,
-      otherTown: state.locationCountry === "Namibia" && townSelect.value === "Other town" ? otherInput.value.trim() : "",
+      namibiaRegions: state.locationCountry === "Namibia" ? state.namibiaRegions : [],
+      otherTown: state.locationCountry === "Namibia" && state.namibiaRegions.includes("Other town") ? otherInput.value.trim() : "",
       otherCountry: state.locationCountry === "Other country" ? otherInput.value.trim() : "",
       businessDescription: state.businessDescription,
       campaignType: state.campaignType.join(", "),
@@ -413,9 +442,23 @@
     choose(steps[index], button.dataset.option);
   });
 
-  townSelect.addEventListener("change", () => {
-    state.namibiaTown = townSelect.value;
-    if (townSelect.value !== "Other town") otherInput.value = "";
+  regionsEl.addEventListener("change", event => {
+    const input = event.target.closest("input[name=namibiaRegions]");
+    if (!input) return;
+    const option = input.value;
+    const current = new Set(state.namibiaRegions);
+    if (option === "Country wide") {
+      state.namibiaRegions = input.checked ? ["Country wide"] : [];
+    } else {
+      current.delete("Country wide");
+      if (input.checked) current.add(option);
+      else current.delete(option);
+      state.namibiaRegions = regions.filter(region => current.has(region));
+    }
+    if (!state.namibiaRegions.includes("Other town")) {
+      otherInput.value = "";
+      state.locationOther = "";
+    }
     updateLocationExtras();
     setError("");
   });

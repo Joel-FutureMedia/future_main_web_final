@@ -54,7 +54,24 @@ const links = [...document.querySelectorAll(".rail a")];
 let index = 0;
 let lock = false;
 
+function warm(slide) {
+  if (!slide) return;
+  slide.querySelectorAll("[data-bg]").forEach(el => {
+    if (el.style.backgroundImage) return;
+    const url = el.dataset.bg;
+    if (url) el.style.backgroundImage = `url("${url}")`;
+  });
+  slide.querySelectorAll("img[data-src]").forEach(img => {
+    if (img.getAttribute("src")) return;
+    img.src = img.dataset.src;
+  });
+}
+
 function show(slide) {
+  const at = slides.indexOf(slide);
+  warm(slide);
+  warm(slides[at - 1]);
+  warm(slides[at + 1]);
   slide.classList.add("in");
   slide.querySelectorAll(".count").forEach(runCount);
   slide.querySelectorAll(".gender .arc").forEach(arc => {

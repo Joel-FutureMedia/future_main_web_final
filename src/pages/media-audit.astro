@@ -2,10 +2,10 @@
 import Layout from '../layouts/Layout.astro';
 const bg = "/assets/2025_FUTUREMEDIA_CLIENT_FUNCTION/CLB8482.jpg";
 ---
-<Layout title="Media Audit | FutureMedia" bodyClass="audit" preload={bg}>
+<Layout title="Free media audit | FutureMedia" bodyClass="audit" preload={bg}>
 <section class="audit-shell" style={`--audit-bg:url('${bg}')`}>
   <div class="audit-landing">
-    <p class="eyebrow">Free media audit</p>
+    <p class="eyebrow seo-only">Free media audit</p>
     <h1>Where Should Your Brand Show Up Next?</h1>
     <p class="audit-tag">Find out with a free media audit.</p>
     <p class="audit-lead">Tell us who you want to reach in Namibia, where you advertise now and what you want your next campaign to achieve. We’ll review your current approach and recommend a mix of radio, television and digital solutions that fits your audience and goals.</p>
@@ -35,17 +35,11 @@ const bg = "/assets/2025_FUTUREMEDIA_CLIENT_FUNCTION/CLB8482.jpg";
         <div class="audit-tiles" id="auditTiles"></div>
 
         <div class="audit-extra" id="auditLocationExtra" hidden>
-          <label class="audit-label" id="auditTownLabel" for="namibiaTown">Namibia town</label>
-          <select id="namibiaTown" name="namibiaTown">
-            <option value="">Select a town</option>
-            <option>Windhoek</option>
-            <option>Swakopmund</option>
-            <option>Walvis Bay</option>
-            <option>Oshakati</option>
-            <option>Rundu</option>
-            <option>Lüderitz</option>
-            <option value="Other town">Other town</option>
-          </select>
+          <div id="namibiaRegionsWrap">
+            <p class="audit-label" id="auditTownLabel">Regions</p>
+            <p class="audit-region-note">Select all that apply.</p>
+            <div class="audit-region-widget" id="namibiaRegions" role="group" aria-label="Namibia regions"></div>
+          </div>
           <label class="audit-label" id="auditOtherLabel" for="locationOther" hidden>Other town</label>
           <input id="locationOther" name="locationOther" type="text" hidden placeholder="Enter your town">
         </div>

@@ -1,13 +1,14 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { offerRow } from '../lib/latest-offers.mjs';
 const root = "/assets/Solutions_Assets";
 const offers = [
-  ["Audio Production", "Broadcast-ready radio spots under one roof.", "/contact.html", "/assets/Brandlogos/99fm.webp", "contain"],
-  ["Video for One Africa", "Graphic ads, motion and full advert shoots.", "/contact.html", "/assets/Brandlogos/oneafrica.webp", "contain"],
-  ["Specials.na", "Put your deals where shoppers already look.", "/digital.html#specials", "/assets/Logos/fm_web_scroll_specials.png", "contain"],
-  ["Shop Beat", "Curated in-store audio that drives purchase.", "/shopbeat.html", "/assets/Logos/fm_web_scroll_shopbeat.png", "contain"],
-  ["Entryfy", "AI competitions with WhatsApp entries and clean data.", "/digital.html#entryfy", "/assets/Logos/fm_web_scroll_entryfy.png", "contain"],
-  ["Free media audit", "A clear read on where your brand should be.", "/media-audit.html", "/assets/landingpage_image.webp", "cover"]
+  offerRow("99fm", "The Pitch", "/assets/Brandlogos/99fm.webp"),
+  offerRow("oneafrica", "English Premier League", "/assets/Brandlogos/oneafrica.webp"),
+  offerRow("fresh-fm", "Fresh Fridays", "/assets/Logos/fm_web_scroll_fresh.png"),
+  offerRow("radiowave", "Papercuts", "/assets/Brandlogos/radiowave.webp"),
+  offerRow("omulunga", "Hot Seat: Current Affairs Interviews", "/assets/Brandlogos/omulungar.webp"),
+  offerRow("nova", "Eco-Geek", "/assets/Brandlogos/novafm.webp")
 ];
 const order = ["radio", "television", "specials", "shopbeat", "entryfy", "sway", "video", "audio", "studio"];
 const sections = [
@@ -242,7 +243,7 @@ const solutions = order.map(id => sections.find(section => section.id === id));
 
 {solutions.map(sol => (
 <section class={`slide sol-section${sol.kind === "copy" ? " sol-copy" : ""}`} id={sol.id}>
-  <div class="bgimg" style={`background-image:url('${sol.bg}');background-position:${sol.pos || "center"}`}></div>
+  <div class="bgimg" data-bg={sol.bg} style={`background-position:${sol.pos || "center"}`}></div>
   <div class="sol-inner">
     <h2>{sol.title}</h2>
     {sol.kind === "accordion" ? (

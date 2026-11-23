@@ -96,6 +96,9 @@
     if (cur) cur.textContent = String(state.index + 1);
     if (total) total.textContent = String(matched.length);
     if (fill) fill.style.width = `${((state.index + 1) / matched.length) * 100}%`;
+    if (active?.dataset.offerId && state.brandId) {
+      history.replaceState(null, "", `#${state.brandId}/${active.dataset.offerId}`);
+    }
     if (status) {
       status.textContent = q
         ? `Step ${state.index + 1} of ${matched.length} matching “${search.value.trim()}”`
@@ -105,7 +108,7 @@
 
   function openBrand(id, opts = {}) {
     state.brandId = id;
-    state.index = 0;
+    state.index = Number.isInteger(opts.index) ? opts.index : 0;
     state.mode = opts.mode || "steps";
     setHub(false);
     brands.forEach(brand => {
@@ -114,7 +117,6 @@
     paintChips();
     const brandEl = currentBrand();
     if (brandEl) paintSteps(brandEl);
-    history.replaceState(null, "", `#${id}`);
     if (opts.scrollToSteps) {
       brandEl?.querySelector(".sp-steps")?.scrollIntoView({ behavior: "smooth", block: "start" });
     } else {
@@ -131,7 +133,11 @@
   }
 
   document.querySelectorAll("[data-open-brand]").forEach(btn => {
-    btn.addEventListener("click", () => openBrand(btn.dataset.openBrand));
+    btn.addEventListener("click", () => {
+      const raw = btn.dataset.offerIndex;
+      const index = raw === undefined ? 0 : Number(raw);
+      openBrand(btn.dataset.openBrand, { index: Number.isFinite(index) ? index : 0 });
+    });
   });
 
   chips.forEach(chip => {
@@ -199,11 +205,63 @@
     if (e.key === "Escape") closeBrand();
   });
 
-  // Deep link: /offers.html#radiowave
-  const hash = location.hash.replace(/^#/, "");
-  if (hash && brands.some(b => b.dataset.brand === hash)) {
-    openBrand(hash);
+  const filters = [...document.querySelectorAll("[data-filter]")];
+  const rows = [...document.querySelectorAll("[data-brand-row]")];
+  const minis = [...document.querySelectorAll(".sp-mini")];
+  const count = document.querySelector("#spCount");
+  const empty = document.querySelector("#spEmpty");
+  const hubState = { cat: "all", brand: "" };
+
+  function applyHub() {
+    filters.forEach(btn => btn.classList.toggle("on", btn.dataset.filter === hubState.cat));
+    rows.forEach(row => {
+      row.hidden = hubState.cat === "all" || row.dataset.brandRow !== hubState.cat;
+    });
+    document.querySelectorAll("[data-pick-brand]").forEach(btn => {
+      btn.classList.toggle("on", btn.dataset.pickBrand === hubState.brand && btn.dataset.pickCat === hubState.cat);
+    });
+    let shown = 0;
+    minis.forEach(card => {
+      const catOk = hubState.cat === "all" || card.dataset.cat === hubState.cat;
+      const brandOk = !hubState.brand || card.dataset.brand === hubState.brand;
+      const show = catOk && brandOk;
+      card.hidden = !show;
+      if (show) shown += 1;
+    });
+    if (count) count.textContent = `${shown} offer${shown === 1 ? "" : "s"}`;
+    if (empty) empty.hidden = shown !== 0;
+  }
+
+  filters.forEach(btn => {
+    btn.addEventListener("click", () => {
+      hubState.cat = btn.dataset.filter || "all";
+      hubState.brand = "";
+      applyHub();
+    });
+  });
+
+  document.querySelectorAll("[data-pick-brand]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const same = hubState.brand === btn.dataset.pickBrand && hubState.cat === btn.dataset.pickCat;
+      hubState.cat = btn.dataset.pickCat || hubState.cat;
+      hubState.brand = same ? "" : btn.dataset.pickBrand || "";
+      applyHub();
+    });
+  });
+
+  // Deep link: /offers.html#99fm or /offers.html#99fm/the-pitch
+  const hash = decodeURIComponent(location.hash.replace(/^#/, ""));
+  const [brandId, offerId] = hash.split("/");
+  const linked = brands.find(brand => brand.dataset.brand === brandId);
+  if (linked) {
+    let index = 0;
+    if (offerId) {
+      const found = cards(linked).findIndex(card => card.dataset.offerId === offerId);
+      if (found >= 0) index = found;
+    }
+    openBrand(brandId, { index });
   } else {
     setHub(true);
+    applyHub();
   }
 })();

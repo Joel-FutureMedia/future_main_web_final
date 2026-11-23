@@ -1,56 +1,74 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { offerRow } from '../lib/latest-offers.mjs';
 const logosRoot = "/assets/Logos";
-const offer = (logo, href = "/contact.html") => [
-  ["Talk to sales", "Plan a campaign with the FutureMedia team.", href, logo, "contain"],
-  ["Free media audit", "A clear read on where your brand should be.", "/media-audit.html", logo, "contain"],
-  ["Book a demo", "See how Shopbeat can change the room.", "/shopbeat.html", logo, "contain"],
-  ["Launch package", "Launch-week content and amplification.", href, logo, "contain"],
-  ["Always-on plan", "Stay visible with a monthly digital mix.", href, logo, "contain"]
-];
 const brands = [
   {
     id: "specials", color: "#7A2D86", panel: "#8F9C4A", name: "specials.na",
     logo: `${logosRoot}/fm_web_scroll_specials.png`,
-    person: "/assets/Digital/7_Specials/FM_Brands_Specials_Hero.png",
+    person: "/assets/Digital/7_Specials/FM_Brands_Specials_Hero.webp",
     copy: "Promote your offers on Specials.na and reach shoppers looking for deals across Namibia.",
-    offers: offer(`${logosRoot}/fm_web_scroll_specials.png`)
+    offers: [
+      offerRow("fresh-fm", "What’s for Lunch?", `${logosRoot}/fm_web_scroll_specials.png`),
+      offerRow("fresh-fm", "Too Good To Be True", `${logosRoot}/fm_web_scroll_specials.png`),
+      offerRow("99fm", "Sweet Escape", `${logosRoot}/fm_web_scroll_specials.png`),
+      offerRow("fresh-fm", "The Joybox", `${logosRoot}/fm_web_scroll_specials.png`),
+      offerRow("fresh-fm", "Quiz Master", `${logosRoot}/fm_web_scroll_specials.png`)
+    ]
   },
   {
     id: "shopbeat", color: "#8A348C", panel: "#7EB8CC", name: "Shop Beat",
     logo: `${logosRoot}/fm_web_scroll_shopbeat.png`,
-    person: "/assets/Digital/8_Shop%20Beat/FM_Brands_Shopbeat_Hero.png",
+    person: "/assets/Digital/8_Shop%20Beat/FM_Brands_Shopbeat_Hero.webp",
     copy: "Reach shoppers in store with ShopBeat, putting your brand in the aisle where buying decisions happen.",
-    offers: offer(`${logosRoot}/fm_web_scroll_shopbeat.png`, "/shopbeat.html")
+    offers: [
+      offerRow("fresh-fm", "Fresh Fridays", `${logosRoot}/fm_web_scroll_shopbeat.png`),
+      offerRow("omulunga", "Taste of Home", `${logosRoot}/fm_web_scroll_shopbeat.png`),
+      offerRow("fresh-fm", "The Fresh Hitlist", `${logosRoot}/fm_web_scroll_shopbeat.png`),
+      offerRow("radiowave", "Millennial Mixtape", `${logosRoot}/fm_web_scroll_shopbeat.png`),
+      offerRow("radiowave", "Sugar Radio Show", `${logosRoot}/fm_web_scroll_shopbeat.png`)
+    ]
   },
   {
     id: "entryfy", color: "#241548", panel: "#E39B78", name: "Entryfy",
     logo: `${logosRoot}/fm_web_scroll_entryfy.png`,
-    person: "/assets/Digital/9_Entryfy/FM_Brands_Entryfy_Hero.png",
+    person: "/assets/Digital/9_Entryfy/FM_Brands_Entryfy_Hero.webp",
     copy: "Invite customers to enter competitions through Entryfy and grow engagement around your brand.",
-    offers: offer(`${logosRoot}/fm_web_scroll_entryfy.png`)
+    offers: [
+      offerRow("radiowave", "Pop Quiz", `${logosRoot}/fm_web_scroll_entryfy.png`),
+      offerRow("fresh-fm", "Quiz Master", `${logosRoot}/fm_web_scroll_entryfy.png`),
+      offerRow("fresh-fm", "Who Said That?", `${logosRoot}/fm_web_scroll_entryfy.png`),
+      offerRow("fresh-fm", "Mystery Clip", `${logosRoot}/fm_web_scroll_entryfy.png`),
+      offerRow("99fm", "Lost and Found", `${logosRoot}/fm_web_scroll_entryfy.png`)
+    ]
   },
   {
     id: "propertynews", color: "#9C2D58", panel: "#E23B3B", name: "Property News",
     logo: `${logosRoot}/fm_web_scroll_propnews.png`,
-    person: "/assets/Digital/10_Property%20News/PropertyNews%20Namibia%20Laptop%20Mockup.png",
+    person: "/assets/Digital/10_Property%20News/PropertyNews%20Namibia%20Laptop%20Mockup.webp",
     copy: "Connect with people exploring Namibia’s property market through Property News Online.",
-    offers: offer(`${logosRoot}/fm_web_scroll_propnews.png`)
+    offers: [
+      offerRow("fresh-fm", "Real Estate Breakfast", `${logosRoot}/fm_web_scroll_propnews.png`),
+      offerRow("fresh-fm", "The Business Corner", `${logosRoot}/fm_web_scroll_propnews.png`),
+      offerRow("nova", "Sakegesprekke (Business Conversations)", `${logosRoot}/fm_web_scroll_propnews.png`),
+      offerRow("99fm", "The Pitch", `${logosRoot}/fm_web_scroll_propnews.png`),
+      offerRow("99fm", "Wealth Talks", `${logosRoot}/fm_web_scroll_propnews.png`)
+    ]
   }
 ];
 ---
-<Layout title="Digital Brands | FutureMedia" bodyClass="brands digital" preload="/assets/Digital/7_Specials/FM_Brands_Specials_Hero.png">
+<Layout title="The network | Digital Brands | FutureMedia" bodyClass="brands digital" preload="/assets/Digital/FM_Brands_Digital_Intro_Personality.webp">
 <div class="branddeck" style="--n:5">
 <div class="brandstage">
 <section class="slide bintro on" id="network">
   <div class="bgimg" style="background-image:url(/assets/landingpage_image.webp)"></div>
   <div class="introcopy">
-    <p class="eyebrow">The network</p>
-    <h1>Four Digital Brands.<br>Four Innovative Solutions</h1>
+    <p class="eyebrow seo-only">The network</p>
+    <h1>Four Digital Brands<br>Four Innovative Solutions</h1>
     <p>Reach shoppers in store with ShopBeat, promote your offers on Specials.na, invite customers to enter competitions through Entryfy and connect with people exploring Namibia’s property market through Property News Online.</p>
   </div>
   <div class="intro-person-wrap">
-    <img class="intro-person" src="/assets/Digital/FM_Brands_Digital_Intro_Personality.png" alt="" decoding="async">
+    <img class="intro-person" src="/assets/Digital/FM_Brands_Digital_Intro_Personality.webp" alt="" decoding="async" fetchpriority="high">
   </div>
   <a class="scroll-cue" href={`#${brands[0].id}`}>
     <span class="scroll-arrow" aria-hidden="true"></span>
@@ -60,7 +78,7 @@ const brands = [
 
 {brands.map(brand => (
 <section class="slide brand" id={brand.id} style={`--c:${brand.color};--panel:${brand.panel}`}>
-  {brand.person ? <img class="personality" src={brand.person} alt=""> : null}
+  {brand.person ? <img class="personality" alt="" decoding="async" data-src={brand.person}> : null}
   <div class="bwrap">
     <div class="bmain">
       <img class="blogo" decoding="async" src={brand.logo} alt={brand.name}>

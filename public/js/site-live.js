@@ -120,7 +120,7 @@
       ].join("\n"),
       mediaType: "IMAGE",
       mediaPath: null,
-      demoImage: "/assets/Broadcast%20Brands/FM_Brands_Intro_Personality.png"
+      demoImage: "/assets/Broadcast%20Brands/FM_Brands_Intro_Personality.webp"
     },
     {
       id: "demo-digital-sales",
@@ -146,7 +146,7 @@
       ].join("\n"),
       mediaType: "IMAGE",
       mediaPath: null,
-      demoImage: "/assets/Digital/FM_Brands_Digital_Intro_Personality.png"
+      demoImage: "/assets/Digital/FM_Brands_Digital_Intro_Personality.webp"
     },
     {
       id: "demo-video-editor",
@@ -172,13 +172,13 @@
       ].join("\n"),
       mediaType: "IMAGE",
       mediaPath: null,
-      demoImage: "/assets/vacancies/handshake.png"
+      demoImage: "/assets/vacancies/handshake.webp"
     }
   ];
 
   function jobImageHtml(job, fallbackTitle) {
     const alt = escape(fallbackTitle || job.title || "Vacancy");
-    const fallback = `/assets/vacancies/handshake.png`;
+    const fallback = `/assets/vacancies/handshake.webp`;
     if (job.mediaType === "IMAGE" && job.mediaPath) {
       return `<img src="${escape(FM.fileUrl(job.mediaPath))}" alt="${alt}" onerror="this.onerror=null;this.src='${fallback}'">`;
     }
@@ -754,7 +754,7 @@
       detail.innerHTML = `<h3>${escape(profile.title || "Company Profile")}</h3><p>${escape(profile.description || "A concise overview of Future Media’s brands, reach and partnerships across Namibia.")}</p>`;
     }
     if (!btn) return;
-    btn.onclick = () => openCompanyProfileIntro(profile, isDemo);
+    btn.onclick = () => openDocumentRequestForm(profile);
   }
 
   async function documents() {

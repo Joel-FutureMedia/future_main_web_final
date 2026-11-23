@@ -1,6 +1,24 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import data from '../data/sponsorship-offers.json';
+import { offerSlug } from '../lib/latest-offers.mjs';
+
+type Offer = {
+  id: string;
+  category: "broadcast" | "digital" | "outdoor" | "promotion" | "conference";
+  brandId: string;
+  brand: string;
+  title: string;
+  subtitle: string;
+  image: string;
+  fit: "contain" | "cover";
+  when: string;
+  withHost: string;
+  desc: string;
+  benefits: string[];
+  prime: string;
+  enquire: string;
+};
 
 const logos: Record<string, string> = {
   radiowave: "/assets/offers/logos/radiowave.webp",
@@ -10,174 +28,404 @@ const logos: Record<string, string> = {
   "99fm": "/assets/offers/logos/99fm.webp",
   oneafrica: "/assets/offers/logos/oneafrica.webp"
 };
+
+function shortLine(text: string) {
+  const sentence = String(text || "").replace(/\s+/g, " ").trim().split(/(?<=\.)\s/)[0] || "";
+  return sentence.length > 88 ? `${sentence.slice(0, 85).trim()}…` : sentence;
+}
+
+function enquire(brand: string, title: string) {
+  return `/contact.html?subject=${encodeURIComponent(`Sponsorship: ${brand} | ${title}`)}`;
+}
+
+const broadcastOffers: Offer[] = data.brands.flatMap(brand =>
+  brand.offers.map(offer => {
+    const title = offer.title.replace(/&amp;/g, "&");
+    return {
+      id: `${brand.id}-${offerSlug(offer.title)}`,
+      category: "broadcast" as const,
+      brandId: brand.id,
+      brand: brand.name,
+      title,
+      subtitle: shortLine(offer.desc || offer.when || ""),
+      image: offer.image || logos[brand.id] || "/assets/logo.png",
+      fit: offer.image ? "cover" as const : "contain" as const,
+      when: offer.when || "",
+      withHost: offer.withHost || "",
+      desc: offer.desc || "",
+      benefits: offer.benefits || [],
+      prime: offer.prime || "",
+      enquire: enquire(brand.name, title)
+    };
+  })
+);
+
 const brands = data.brands.map(brand => ({
-  ...brand,
+  id: brand.id,
+  name: brand.name,
   logo: logos[brand.id] || "/assets/logo.png"
 }));
-const totalOffers = brands.reduce((n, b) => n + b.offers.length, 0);
+
+const otherOffers: Offer[] = [
+  { id: "digital-specials", category: "digital", brandId: "specials", brand: "Specials.na", title: "Specials.na", subtitle: "Deals where shoppers are already looking.", image: "/assets/Logos/fm_web_scroll_specials.png", fit: "contain", when: "", withHost: "", desc: "Put your deals on Specials.na and reach people comparing prices and promotions across Namibia. A clear placement for retail, food and local offers.", benefits: ["A featured placement on Specials.na.", "Your offer in front of shoppers looking for deals."], prime: "", enquire: enquire("Specials.na", "Specials.na") },
+  { id: "digital-shopbeat", category: "digital", brandId: "shopbeat", brand: "Shop Beat", title: "Shop Beat Demo", subtitle: "In-store audio while people are shopping.", image: "/assets/Logos/fm_web_scroll_shopbeat.png", fit: "contain", when: "", withHost: "", desc: "Shop Beat plays your message in store, at the moment a buying decision is being made. Use it for launches, price offers and always-on retail campaigns.", benefits: ["In-store audio around your product.", "A message heard while people are shopping."], prime: "", enquire: enquire("Shop Beat", "Shop Beat Demo") },
+  { id: "digital-entryfy", category: "digital", brandId: "entryfy", brand: "Entryfy", title: "Entryfy Competitions", subtitle: "Competitions with entries that come in clean.", image: "/assets/Logos/fm_web_scroll_entryfy.png", fit: "contain", when: "", withHost: "", desc: "Invite customers into a branded competition through Entryfy, with entries collected in one place and a simple way to keep the conversation going.", benefits: ["A branded competition page.", "Entries collected for your campaign."], prime: "", enquire: enquire("Entryfy", "Entryfy Competitions") },
+  { id: "digital-propertynews", category: "digital", brandId: "propertynews", brand: "Property News", title: "Property News", subtitle: "Reach buyers, agents and developers.", image: "/assets/Logos/fm_web_scroll_propnews.png", fit: "contain", when: "", withHost: "", desc: "Connect with people exploring homes, developments and the property market through Property News online.", benefits: ["A placement for property audiences.", "Your brand beside market news and listings."], prime: "", enquire: enquire("Property News", "Property News") },
+  { id: "outdoor-gazebos", category: "outdoor", brandId: "promobasket", brand: "PromoBasket", title: "PromoBasket Gazebos", subtitle: "A branded stand people can find.", image: "/assets/Logos/fm_web_scroll_promo.png", fit: "contain", when: "", withHost: "", desc: "Branded gazebos for activations, exhibitions and launches, so your stand is easy to see and easy to walk up to.", benefits: ["A branded outdoor structure.", "A clear meeting point at the event."], prime: "", enquire: enquire("PromoBasket", "PromoBasket Gazebos") },
+  { id: "outdoor-apparel", category: "outdoor", brandId: "promobasket", brand: "PromoBasket", title: "Apparel and Merch", subtitle: "Event wear that travels with your team.", image: "/assets/Logos/fm_web_scroll_promo.png", fit: "contain", when: "", withHost: "", desc: "Matching apparel and merchandise so your team is easy to spot at events, roadshows and brand days.", benefits: ["Branded apparel for your team.", "Merchandise guests can take away."], prime: "", enquire: enquire("PromoBasket", "Apparel and Merch") },
+  { id: "outdoor-stationery", category: "outdoor", brandId: "promobasket", brand: "PromoBasket", title: "Stationery Sets", subtitle: "Notebooks and desk kits for the room.", image: "/assets/Logos/fm_web_scroll_promo.png", fit: "contain", when: "", withHost: "", desc: "Notebooks, folders and desk kits that carry your brand through conferences and client meetings.", benefits: ["A branded stationery set.", "A useful item people keep after the event."], prime: "", enquire: enquire("PromoBasket", "Stationery Sets") },
+  { id: "outdoor-kits", category: "outdoor", brandId: "promobasket", brand: "PromoBasket", title: "Activation Kits", subtitle: "A full kit for roadshows and brand days.", image: "/assets/Logos/fm_web_scroll_promo.png", fit: "contain", when: "", withHost: "", desc: "A PromoBasket bundle for roadshows and brand days, bringing the stand, the team look and the take-home pieces together.", benefits: ["One kit for the activation.", "Gazebo, apparel and promotional pieces planned together."], prime: "", enquire: enquire("PromoBasket", "Activation Kits") },
+  { id: "conference-sponsor", category: "conference", brandId: "future-of-business", brand: "Future of Business", title: "Conference Offer", subtitle: "Sponsor the room and meet the delegates.", image: "/assets/conference/slide1.webp", fit: "cover", when: "", withHost: "", desc: "Sponsor Future of Business and put your brand in front of the people shaping business in Namibia, from the stage to the delegate pack.", benefits: ["Brand presence in the conference room.", "A direct introduction to delegates."], prime: "", enquire: enquire("Future of Business", "Conference Offer") },
+  { id: "conference-ticket", category: "conference", brandId: "conferences", brand: "Conferences", title: "Buy a Ticket", subtitle: "Reserve a seat at the next event.", image: "/assets/conference/slide2.webp", fit: "cover", when: "", withHost: "", desc: "Reserve your seat at the next Future Media conference and spend the day with speakers, sponsors and the business community.", benefits: ["A reserved seat.", "Access to the conference programme."], prime: "", enquire: enquire("Conferences", "Buy a Ticket") },
+  { id: "conference-table", category: "conference", brandId: "conferences", brand: "Conferences", title: "Book a Table", subtitle: "Bring your team or host your clients.", image: "/assets/conference/slide3.webp", fit: "cover", when: "", withHost: "", desc: "Book a table and bring your team, or host clients, at the next Future Media conference.", benefits: ["A hosted table.", "Seats for your team or guests."], prime: "", enquire: enquire("Conferences", "Book a Table") },
+  { id: "promotion-audit", category: "promotion", brandId: "future-media", brand: "Future Media", title: "Media Audit", subtitle: "A read on where your brand should be.", image: "/assets/landingpage_image.webp", fit: "cover", when: "", withHost: "", desc: "A media audit that looks at where your brand shows up now and where the next campaign should sit across radio, television, digital and events.", benefits: ["A clear view of your current mix.", "A recommendation for the next step."], prime: "", enquire: enquire("Future Media", "Media Audit") },
+  { id: "promotion-newsletter", category: "promotion", brandId: "future-media", brand: "Future Media", title: "Newsletter Offer", subtitle: "Weekly media notes, straight to the inbox.", image: "/assets/news/news01.webp", fit: "cover", when: "", withHost: "", desc: "A place in the Future Media newsletter for readers who follow campaigns, conferences and brand news across Namibia.", benefits: ["A note in the newsletter.", "A direct line to subscribers."], prime: "", enquire: enquire("Future Media", "Newsletter Offer") },
+  { id: "promotion-audio", category: "promotion", brandId: "advertise", brand: "Advertise", title: "Audio Production", subtitle: "Broadcast-ready radio spots, under one roof.", image: "/assets/Brandlogos/99fm.webp", fit: "contain", when: "", withHost: "", desc: "Write, record and finish radio commercials that are ready to flight across the Future Media stations.", benefits: ["A produced radio commercial.", "A spot ready for broadcast."], prime: "", enquire: enquire("Advertise", "Audio Production") },
+  { id: "promotion-video", category: "promotion", brandId: "oneafrica", brand: "One Africa", title: "Video for One Africa", subtitle: "Graphic ads, motion and full advert shoots.", image: "/assets/Brandlogos/oneafrica.webp", fit: "contain", when: "", withHost: "", desc: "Video for One Africa, from graphic ads and motion pieces to a full advert shoot, ready for television and digital.", benefits: ["A video made for television.", "A cut you can also use on digital."], prime: "", enquire: enquire("One Africa", "Video for One Africa") }
+];
+
+function mixByBrand(items: Offer[]) {
+  const groups = new Map<string, Offer[]>();
+  for (const item of items) {
+    const bucket = groups.get(item.brandId) || [];
+    bucket.push(item);
+    groups.set(item.brandId, bucket);
+  }
+  const queues = [...groups.values()];
+  const mixed: Offer[] = [];
+  let added = true;
+  while (added) {
+    added = false;
+    for (const queue of queues) {
+      const next = queue.shift();
+      if (next) {
+        mixed.push(next);
+        added = true;
+      }
+    }
+  }
+  return mixed;
+}
+
+const catalog: Offer[] = mixByBrand([...broadcastOffers, ...otherOffers]);
+const categories = [
+  { id: "all", label: "All offers" },
+  { id: "broadcast", label: "Broadcast" },
+  { id: "digital", label: "Digital" },
+  { id: "outdoor", label: "Outdoor" },
+  { id: "promotion", label: "Promotion" },
+  { id: "conference", label: "Conference" }
+] as const;
 ---
-<Layout title="Latest Offers | FutureMedia" bodyClass="offers-page offers-hub-mode">
+<Layout title="Advertise | Latest Offers | FutureMedia" bodyClass="offers-page">
 <link slot="head" rel="stylesheet" href="/css/offers.css">
+<section class="offers-hero">
+  <div class="offers-hero-copy">
+    <p class="eyebrow seo-only">Advertise</p>
+    <h1>Latest Offers</h1>
+    <p class="page-tag">Find your next opportunity to advertise or sponsor in Namibia.</p>
+    <p>There are plenty of ways to carry your message and reach your audience across Namibia. Browse the latest opportunities and let us know what works for your brand.</p>
+  </div>
+</section>
 
-<div class="sp" id="offersApp" data-total={String(totalOffers)}>
-  <!-- HUB: categories + brand logos -->
-  <section class="sp-hub" id="spHub" aria-labelledby="spTitle">
-    <div class="sp-hub-bg" aria-hidden="true"></div>
-    <div class="sp-hub-in">
-      <p class="sp-org">Future Media</p>
-      <p class="sp-kicker">Advertise · Latest Offers</p>
-      <h1 id="spTitle">Latest Offers</h1>
-      <p class="sp-lede">Find your next opportunity to advertise or sponsor in Namibia.</p>
-      <p class="sp-lede sp-lede-soft">There are plenty of ways to carry your message and reach your audience across Namibia. Browse the latest opportunities and let us know what works for your brand.</p>
-
-      <div class="sp-cats" aria-label="Brand categories">
-        <p class="sp-cat-label">Broadcast brands</p>
-        <div class="sp-logo-grid">
-          {brands.map((brand, i) => (
-            <button
-              type="button"
-              class="sp-logo-tile"
-              data-open-brand={brand.id}
-              style={`--c:${brand.color};--a:${brand.accent};--i:${i}`}
-              aria-label={`Open ${brand.name} offers`}
-            >
-              <span class="sp-logo-glow" aria-hidden="true"></span>
-              <span class="sp-logo-disk">
-                <img src={brand.logo} alt="" decoding="async">
-              </span>
-              <span class="sp-logo-meta">
-                <strong>{brand.name}</strong>
-                <small>{brand.offers.length} segments</small>
-              </span>
-              <span class="sp-logo-cta">View offers →</span>
-            </button>
-          ))}
-        </div>
-      </div>
-      <p class="sp-note">Audience figures: MediaMetrics 2025, Google and social analytics, January to March 2026.</p>
-    </div>
-  </section>
-
-  <!-- BRAND EXPERIENCE -->
-  <div class="sp-stage" id="spStage" hidden>
-    <div class="sp-toolbar" id="spToolbar">
-      <div class="sp-toolbar-in">
-        <button type="button" class="sp-back" id="spBack">← All brands</button>
-        <nav class="sp-bar-nav" aria-label="Brands">
-          {brands.map(brand => (
-            <button type="button" class="sp-chip" data-jump-brand={brand.id} style={`--c:${brand.color}`}>
-              <i></i>{brand.name}
-            </button>
-          ))}
-        </nav>
-        <label class="sp-search">
-          <span class="vh">Search programmes</span>
-          <input id="spSearch" type="search" placeholder="Search programmes" autocomplete="off">
-        </label>
-      </div>
-      <p class="sp-status" id="spStatus" role="status" aria-live="polite"></p>
-    </div>
-
-    {brands.map(brand => (
-      <section
-        class="sp-brand"
-        id={brand.id}
-        data-brand={brand.id}
-        hidden
-        style={`--c:${brand.color};--a:${brand.accent}`}
-        aria-labelledby={`${brand.id}-h`}
-      >
-        <div class="sp-intro">
-          <div class="sp-intro-in">
-            <figure class="sp-fig">
-              {brand.audienceImage ? (
-                <button type="button" class="sp-fig-btn" data-full={brand.audienceImage} aria-label={`Enlarge ${brand.name} audience figures`}>
-                  <img src={brand.audienceImage} alt={`${brand.name} audience figures`} loading="lazy" decoding="async">
-                </button>
-              ) : (
-                <div class="sp-fig-fallback"><img src={brand.logo} alt=""></div>
-              )}
-              <figcaption>Select the image to enlarge it.</figcaption>
-            </figure>
-            <div class="sp-intro-copy">
-              <div class="sp-intro-logo"><img src={brand.logo} alt=""></div>
-              <h2 id={`${brand.id}-h`}>{brand.name}</h2>
-              {brand.reach ? (
-                <p class="sp-reach"><strong>{brand.reach}</strong><span>{brand.reachLabel}</span></p>
-              ) : null}
-              {brand.about ? <p>{brand.about}</p> : null}
-              <p class="sp-src">{brand.source || `${brand.offers.length} sponsorable segments follow.`}</p>
-              <button type="button" class="sp-start" data-start-steps={brand.id}>Start step-by-step →</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="sp-steps" data-steps={brand.id}>
-          <div class="sp-steps-bar">
-            <button type="button" class="sp-step-btn" data-prev disabled>← Prev</button>
-            <p class="sp-step-count"><span data-step-current>1</span> / <span data-step-total>{brand.offers.length}</span></p>
-            <div class="sp-step-track" aria-hidden="true"><i data-step-fill></i></div>
-            <button type="button" class="sp-step-btn" data-next>Next →</button>
-            <button type="button" class="sp-step-all" data-show-all>View all</button>
-          </div>
-
-          <div class="sp-list">
-            {brand.offers.map((offer, index) => (
-              <article
-                class="sp-card"
-                data-offer-index={String(index)}
-                data-s={`${brand.name} ${offer.title} ${offer.when} ${offer.withHost} ${offer.desc}`.toLowerCase()}
-                hidden={index !== 0}
-              >
-                <div class="sp-card-media">
-                  {offer.image
-                    ? <img src={offer.image} alt={`${offer.title} on ${brand.name}`} loading="lazy" decoding="async">
-                    : <img src={brand.logo} alt="" class="sp-card-logo">}
-                </div>
-                <div class="sp-card-body">
-                  <p class="sp-card-brand">{brand.name}</p>
-                  <h3>{offer.title}</h3>
-                  {offer.when ? <p class="sp-when">{offer.when}</p> : null}
-                  {offer.withHost ? <p class="sp-with">{offer.withHost}</p> : null}
-                  {offer.desc ? <p class="sp-desc">{offer.desc}</p> : null}
-                  {offer.benefits?.length ? (
-                    <div class="sp-receive">
-                      <h4>As a sponsor you receive</h4>
-                      <ul>
-                        {offer.benefits.map(item => <li>{item}</li>)}
-                      </ul>
-                    </div>
-                  ) : null}
-                  {offer.prime ? <p class="sp-prime">{offer.prime}</p> : null}
-                  <a class="sp-enquire" href={`/contact.html?subject=${encodeURIComponent(`Sponsorship: ${brand.name} | ${offer.title}`)}`}>Enquire about this offer</a>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+<main class="offers-page-main">
+  <div class="offers-filters" role="tablist" aria-label="Offer categories">
+    {categories.map((cat, index) => (
+      <button
+        type="button"
+        class:list={["offers-filter", { on: index === 0 }]}
+        data-filter={cat.id}
+        role="tab"
+        aria-selected={index === 0 ? "true" : "false"}
+      >{cat.label}</button>
     ))}
+  </div>
 
-    <section class="sp-cta">
-      <div class="sp-cta-in">
-        <h2>Ready to put your brand on air?</h2>
-        <p>Tell us your audience, timing and budget. We’ll match you to the right programmes across radio and television.</p>
-        <ul class="sp-contact">
-          <li><a href="tel:+264830001000">+264 83 000 1000</a></li>
-          <li><a href="mailto:sales@futuremedia.com.na">sales@futuremedia.com.na</a></li>
-        </ul>
-        <a class="sp-cta-btn" href="/contact.html">Contact sales</a>
+  {categories.map(cat => (
+    <section class="offers-section" data-category={cat.id} hidden={cat.id !== "all"}>
+      {cat.id !== "all" ? <h2>{cat.label}</h2> : null}
+      {cat.id === "broadcast" ? (
+        <div class="offers-brands" role="tablist" aria-label="Broadcast brands">
+          <button type="button" class="offers-brand on" data-brand="">All brands</button>
+          {brands.map(brand => (
+            <button type="button" class="offers-brand" data-brand={brand.id}>
+              <img src={brand.logo} alt="" decoding="async">
+              <span>{brand.name}</span>
+            </button>
+          ))}
+        </div>
+      ) : null}
+      <div class="offers-grid">
+        {catalog.filter(item => cat.id === "all" || item.category === cat.id).map(item => (
+          <button type="button" class="offers-card" data-offer={item.id} data-brand={item.brandId} aria-haspopup="dialog">
+            <span class={`offers-thumb ${item.fit}`}>
+              <img src={item.image} alt="" decoding="async" loading="lazy">
+            </span>
+            <span class="offers-tag">{item.brand}</span>
+            <h3>{item.title}</h3>
+            <p>{item.subtitle}</p>
+          </button>
+        ))}
       </div>
     </section>
-  </div>
-</div>
+  ))}
+</main>
 
-<dialog class="sp-lightbox" id="spLightbox">
-  <button type="button" data-close>Close</button>
-  <img alt="">
+<dialog class="offer-dialog" id="offerDialog" aria-labelledby="offerDialogTitle">
+  <div class="offer-dialog-bar">
+    <button type="button" class="offer-dialog-close" data-close aria-label="Close">×</button>
+  </div>
+  <div class="offer-dialog-in">
+    <div class="offer-dialog-media" id="offerDialogMedia">
+      <img id="offerDialogImg" alt="">
+    </div>
+    <div class="offer-dialog-body">
+      <span class="offers-tag" id="offerDialogBrand"></span>
+      <h2 id="offerDialogTitle"></h2>
+      <p class="offer-dialog-meta" id="offerDialogMeta"></p>
+      <p class="offer-dialog-desc" id="offerDialogDesc"></p>
+      <div class="offer-dialog-benefits" id="offerDialogBenefits" hidden>
+        <h3>As a sponsor you receive</h3>
+        <ul></ul>
+      </div>
+      <p class="offer-dialog-prime" id="offerDialogPrime" hidden></p>
+      <button type="button" class="offer-enquire" id="offerDialogEnquire">Enquire about this offer</button>
+    </div>
+  </div>
 </dialog>
 
+<dialog class="offer-dialog offer-form-dialog" id="offerFormDialog" aria-labelledby="offerFormTitle">
+  <div class="offer-dialog-bar">
+    <button type="button" class="offer-dialog-close" data-close aria-label="Close">×</button>
+  </div>
+  <div class="offer-dialog-in">
+    <h2 id="offerFormTitle">Enquire about this offer</h2>
+    <form class="offer-form" id="offerForm">
+      <div class="offer-form-locked">
+        <div class="offer-form-line"><span class="offer-form-k">Offer</span><span id="offerFormOffer"></span></div>
+        <div class="offer-form-line"><span class="offer-form-k">Brand</span><span id="offerFormBrand"></span></div>
+        <div class="offer-form-line"><span class="offer-form-k">Category</span><span id="offerFormCategory"></span></div>
+      </div>
+      <label>Name<input name="name" required autocomplete="name" placeholder="Your name"></label>
+      <label>Email<input name="email" type="email" required autocomplete="email" placeholder="you@company.com"></label>
+      <label>Phone number<input name="phone" type="tel" required autocomplete="tel" placeholder="81 000 0000"></label>
+      <label>Company <span>Optional</span><input name="company" autocomplete="organization" placeholder="Company name"></label>
+      <button class="offer-enquire" type="submit">Send enquiry</button>
+      <p class="offer-form-note" id="offerFormNote" hidden></p>
+    </form>
+  </div>
+</dialog>
+
+<script type="application/json" id="offerCatalog" set:html={JSON.stringify(catalog).replace(/</g, "\\u003c")}></script>
 <Fragment slot="scripts">
-<script is:inline src="/js/offers.js"></script>
+<script is:inline>
+(() => {
+  const catalog = JSON.parse(document.querySelector("#offerCatalog").textContent || "[]");
+  const byId = new Map(catalog.map(item => [item.id, item]));
+  const filters = [...document.querySelectorAll(".offers-filter")];
+  const sections = [...document.querySelectorAll(".offers-section")];
+  const brandButtons = [...document.querySelectorAll(".offers-brand")];
+  const broadcastCards = [...document.querySelectorAll('.offers-section[data-category="broadcast"] .offers-card')];
+  const dialog = document.querySelector("#offerDialog");
+  const media = document.querySelector("#offerDialogMedia");
+  const img = document.querySelector("#offerDialogImg");
+  const brandEl = document.querySelector("#offerDialogBrand");
+  const titleEl = document.querySelector("#offerDialogTitle");
+  const metaEl = document.querySelector("#offerDialogMeta");
+  const descEl = document.querySelector("#offerDialogDesc");
+  const benefitsWrap = document.querySelector("#offerDialogBenefits");
+  const benefitsList = benefitsWrap?.querySelector("ul");
+  const primeEl = document.querySelector("#offerDialogPrime");
+  const enquireEl = document.querySelector("#offerDialogEnquire");
+  const formDialog = document.querySelector("#offerFormDialog");
+  const form = document.querySelector("#offerForm");
+  const formNote = document.querySelector("#offerFormNote");
+  const categoryNames = { broadcast: "Broadcast", digital: "Digital", outdoor: "Outdoor", promotion: "Promotion", conference: "Conference" };
+  let brand = "";
+  let current = null;
+
+  const paint = id => {
+    filters.forEach(btn => {
+      const on = btn.dataset.filter === id;
+      btn.classList.toggle("on", on);
+      btn.setAttribute("aria-selected", on ? "true" : "false");
+    });
+    sections.forEach(section => {
+      section.hidden = section.dataset.category !== id;
+    });
+  };
+
+  const paintBrands = () => {
+    brandButtons.forEach(btn => btn.classList.toggle("on", (btn.dataset.brand || "") === brand));
+    broadcastCards.forEach(card => {
+      card.hidden = Boolean(brand) && card.dataset.brand !== brand;
+    });
+  };
+
+  const openOffer = id => {
+    const item = byId.get(id);
+    if (!item || !dialog) return;
+    if (img) {
+      img.src = item.image;
+      img.alt = item.title;
+    }
+    media?.classList.toggle("contain", item.fit === "contain");
+    if (brandEl) brandEl.textContent = item.brand;
+    if (titleEl) titleEl.textContent = item.title;
+    const meta = [item.when, item.withHost].filter(Boolean).join(" · ");
+    if (metaEl) {
+      metaEl.textContent = meta;
+      metaEl.hidden = !meta;
+    }
+    if (descEl) descEl.textContent = item.desc || item.subtitle;
+    if (benefitsList) benefitsList.replaceChildren(...(item.benefits || []).map(text => {
+      const li = document.createElement("li");
+      li.textContent = text;
+      return li;
+    }));
+    if (benefitsWrap) benefitsWrap.hidden = !(item.benefits || []).length;
+    if (primeEl) {
+      primeEl.textContent = item.prime || "";
+      primeEl.hidden = !item.prime;
+    }
+    current = item;
+    if (formDialog?.open) formDialog.close();
+    if (form) form.reset();
+    if (formNote) formNote.hidden = true;
+    if (!dialog.open) dialog.showModal();
+  };
+
+  const showForm = () => {
+    if (!formDialog || !current) return;
+    const offerLine = document.querySelector("#offerFormOffer");
+    const brandLine = document.querySelector("#offerFormBrand");
+    const categoryLine = document.querySelector("#offerFormCategory");
+    if (offerLine) offerLine.textContent = current.title;
+    if (brandLine) brandLine.textContent = current.brand;
+    if (categoryLine) categoryLine.textContent = categoryNames[current.category] || current.category;
+    if (form) form.reset();
+    if (formNote) formNote.hidden = true;
+    const button = form?.querySelector("[type=submit]");
+    if (button) {
+      button.disabled = false;
+      button.textContent = "Send enquiry";
+    }
+    if (dialog?.open) dialog.close();
+    if (location.hash) history.replaceState(null, "", location.pathname + location.search);
+    if (!formDialog.open) formDialog.showModal();
+  };
+
+  const closeForm = () => {
+    if (formDialog?.open) formDialog.close();
+  };
+
+  const closeOffer = () => {
+    closeForm();
+    if (dialog?.open) dialog.close();
+    if (location.hash) history.replaceState(null, "", location.pathname + location.search);
+  };
+
+  filters.forEach(btn => btn.addEventListener("click", () => paint(btn.dataset.filter)));
+  brandButtons.forEach(btn => btn.addEventListener("click", () => {
+    brand = btn.dataset.brand || "";
+    paintBrands();
+  }));
+  document.querySelectorAll(".offers-card").forEach(card => {
+    card.addEventListener("click", () => openOffer(card.dataset.offer));
+  });
+  enquireEl?.addEventListener("click", showForm);
+  form?.addEventListener("submit", async event => {
+    event.preventDefault();
+    const data = Object.fromEntries(new FormData(form).entries());
+    const release = () => {
+      const button = form.querySelector("[type=submit]");
+      if (button) {
+        button.disabled = false;
+        button.textContent = "Send enquiry";
+      }
+    };
+    const button = form.querySelector("[type=submit]");
+    if (button) {
+      button.disabled = true;
+      button.textContent = "Sending…";
+    }
+    if (formNote) {
+      formNote.hidden = false;
+      formNote.textContent = "Sending your enquiry…";
+    }
+    const offerName = current?.title || "";
+    const brandName = current?.brand || "";
+    const categoryName = categoryNames[current?.category] || current?.category || "";
+    const details = `Latest Offers enquiry. Offer: ${offerName}. Brand: ${brandName}. Category: ${categoryName}.`;
+    try {
+      if (!window.FM) throw new Error("We could not send that enquiry. Please try again.");
+      const body = {
+        name: data.name,
+        email: data.email,
+        telephone: data.phone,
+        company: data.company || "Not supplied",
+        message: details
+      };
+      const lists = await Promise.all([
+        FM.request("/api/brands/public").catch(() => ({ data: [] })),
+        FM.request("/api/sales/public").catch(() => ({ data: [] })),
+        FM.request("/api/services/public").catch(() => ({ data: [] }))
+      ]);
+      const brands = lists[0].data || [];
+      const sales = lists[1].data || [];
+      const services = lists[2].data || [];
+      const match = brands.find(entry => String(entry.name || "").toLowerCase() === brandName.toLowerCase());
+      if (match?.id) body.brandId = match.id;
+      if (sales[0]?.id) body.salesId = sales[0].id;
+      if (services[0]?.id) body.serviceId = services[0].id;
+      await FM.request("/api/contact", { method: "POST", body });
+      if (formNote) formNote.textContent = "Enquiry received. The sales team will follow up shortly.";
+      if (button) button.textContent = "Enquiry sent";
+    } catch (error) {
+      if (formNote) formNote.textContent = error.message || "We could not send that enquiry. Please try again.";
+      release();
+    }
+  });
+  formDialog?.querySelector("[data-close]")?.addEventListener("click", event => {
+    event.stopPropagation();
+    closeForm();
+  });
+  formDialog?.addEventListener("click", event => {
+    if (!formDialog.open) return;
+    const box = formDialog.getBoundingClientRect();
+    const inside = event.clientX >= box.left && event.clientX <= box.right && event.clientY >= box.top && event.clientY <= box.bottom;
+    if (!inside) closeForm();
+  });
+  formDialog?.addEventListener("cancel", event => {
+    event.preventDefault();
+    closeForm();
+  });
+  dialog?.querySelector("[data-close]")?.addEventListener("click", event => {
+    event.stopPropagation();
+    closeOffer();
+  });
+  dialog?.addEventListener("click", event => {
+    if (!dialog.open) return;
+    const box = dialog.getBoundingClientRect();
+    const inside = event.clientX >= box.left && event.clientX <= box.right && event.clientY >= box.top && event.clientY <= box.bottom;
+    if (!inside) closeOffer();
+  });
+  dialog?.addEventListener("cancel", event => {
+    event.preventDefault();
+    closeOffer();
+  });
+
+  const hash = decodeURIComponent(location.hash.replace(/^#/, ""));
+  const linked = byId.get(hash.replace("/", "-"));
+  if (linked) {
+    paint(linked.category);
+    if (linked.category === "broadcast") {
+      brand = linked.brandId;
+      paintBrands();
+    }
+    openOffer(linked.id);
+  }
+})();
+</script>
 </Fragment>
 </Layout>

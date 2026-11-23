@@ -24,16 +24,13 @@
   }
 
   function paint(n) {
+    if (!lines.length) return;
     const conf = CONFS[n] || [];
-    if (lines.length) {
-      lines.forEach((el, idx) => {
-        const text = conf[idx] || "";
-        el.textContent = text || "\u00a0";
-        el.style.visibility = text ? "visible" : "hidden";
-      });
-    } else {
-      title.textContent = [conf[0], conf[1], conf[2]].filter(Boolean).join(" ");
-    }
+    lines.forEach((el, idx) => {
+      const text = conf[idx] || "";
+      el.textContent = text || "\u00a0";
+      el.style.visibility = text ? "visible" : "hidden";
+    });
     desc.textContent = conf[3] || "\u00a0";
   }
 
@@ -42,6 +39,7 @@
     sl.style.transform = `translate3d(-${i * 100}%,0,0)`;
     [...sl.querySelectorAll("figure")].forEach((fig, k) => fig.classList.toggle("is-active", k === i));
     if (dots) [...dots.children].forEach((dot, k) => dot.classList.toggle("on", k === i));
+    if (!lines.length) return;
     const current = ++token;
     title.classList.add("fade");
     desc.classList.add("fade");
