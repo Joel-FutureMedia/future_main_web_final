@@ -813,10 +813,10 @@
     const body = Object.fromEntries(new FormData(form).entries());
     body.language = body.language || "ENGLISH";
     const release = busy(form, "Signing up…");
-    note("#newsletterNote", "Signing you up for the FutureMedia newsletter…", true);
+    note("#newsletterNote", "Signing you up for the Future Media newsletter…", true);
     try {
       await FM.request("/api/subscriptions", { method: "POST", body });
-      form.innerHTML = `<p class="note ok" role="status">You’re signed up. We’ll send FutureMedia updates to your inbox.</p>`;
+      form.innerHTML = `<p class="note ok" role="status">You’re signed up. We’ll send Future Media updates to your inbox.</p>`;
     } catch (error) {
       note("#newsletterNote", error.message || "We could not sign you up right now. Please try again.", false);
       release();

@@ -3,7 +3,7 @@ const NAV=[
   {href:"/conferences.html",label:"Conferences"},
   {href:"/brands.html",label:"Brands",menu:[["/brands.html","Broadcast"],["/digital.html","Digital"],["/print.html","Print"],["/outdoor.html","Outdoor and Promotions"]]},
   {href:"/audience.html",label:"Audience Insights",menu:[["/audience.html","Insights"],["/media-audit.html","Media Audit"]]},
-  {href:"/news.html",label:"News"}
+  {href:"/news.html",label:"Latest News"}
 ];
 const file=(location.pathname.split("/").filter(Boolean).pop()||"index").replace(/\.html$/,"");
 const page=file+".html";
@@ -14,7 +14,7 @@ const link=(href,label,mark)=>{
   const on=mark&&(path===page||(label==="Brands"&&brandPages.includes(page))||(label==="Advertise"&&advertisePages.includes(page)));
   return `<a href="${href}" class="${on?"on":""}">${label}</a>`;
 };
-document.querySelector("#hdr").innerHTML=`<header><a class="logo" href="/index.html"><img src="/assets/logo.png" alt="FutureMedia"></a>
+document.querySelector("#hdr").innerHTML=`<header><a class="logo" href="/index.html"><img src="/assets/logo.png" alt="Future Media"></a>
 <div class="nav-bar"><nav id="nav">${NAV.map(item=>item.menu?`<div class="drop">${link(item.href,item.label,true)}<div class="menu">${item.menu.map(([h,t])=>link(h,t,item.label==="Brands"||item.label==="Advertise")).join("")}</div></div>`:link(item.href,item.label,true)).join("")}</nav>
 <div class="head-actions"><a class="pill" href="/contact.html">Contact Us</a><a class="search" href="/search.html" aria-label="Search"><img src="/assets/search.svg" alt=""></a></div></div>
 <button class="burger" aria-label="Menu" onclick="nav.classList.toggle('open')">☰</button></header>`;
@@ -24,7 +24,7 @@ document.querySelectorAll(".drop").forEach(drop=>{
   });
 });
 document.querySelector("#ftr").innerHTML=`<footer>
-<a class="lg" href="/index.html" aria-label="FutureMedia"><img src="/assets/Logos/logo-cirlce.png" alt=""></a>
+<a class="lg" href="/index.html" aria-label="Future Media"><img src="/assets/Logos/logo-cirlce.png" alt=""></a>
 <ul><li><a href="/team.html">Team</a></li><li><a href="/gallery.html">Gallery</a></li><li><a href="/about.html">About Us</a></li></ul>
 <ul>
 <li><a href="/vacancies.html">Vacancies</a></li>
@@ -35,9 +35,9 @@ document.querySelector("#ftr").innerHTML=`<footer>
 <button type="button" class="cta-pill cta-pill-footer" data-newsletter-open>Sign Up for the Newsletter</button>
 </div>
 </footer>
-<button class="wa" id="waOpen" type="button" aria-label="Chat with FutureMedia"><img src="/assets/FM_Website_Chat%20Icon.svg" alt=""></button>
-<div class="chat" id="chat" hidden role="dialog" aria-label="FutureMedia chat">
-<div class="chat-head"><span class="chat-avatar"><img src="/assets/FM_Website_Chat%20Icon.svg" alt=""></span><div><b>FutureMedia</b><small><i></i>online</small></div><button type="button" id="chatClose" aria-label="Close chat">×</button></div>
+<button class="wa" id="waOpen" type="button" aria-label="Chat with Future Media"><img src="/assets/FM_Website_Chat%20Icon.svg" alt=""></button>
+<div class="chat" id="chat" hidden role="dialog" aria-label="Future Media chat">
+<div class="chat-head"><span class="chat-avatar"><img src="/assets/FM_Website_Chat%20Icon.svg" alt=""></span><div><b>Future Media</b><small><i></i>online</small></div><button type="button" id="chatClose" aria-label="Close chat">×</button></div>
 <div class="chat-log" id="chatLog"></div>
 <div class="chat-quick" id="chatQuick"></div>
 <form id="chatForm"><input id="chatInput" autocomplete="off" placeholder="Type a message"><button type="submit" aria-label="Send"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.2 20.8 21.2 12 3.2 3.2l.2 6.7L15.2 12 3.4 14.1z"/></svg></button></form>

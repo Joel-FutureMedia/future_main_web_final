@@ -176,7 +176,7 @@
     const role = (state.user || user() || {}).role;
     const drawer = $("#drawer");
     if (drawer && !drawer.querySelector(".brand")) {
-      drawer.insertAdjacentHTML("afterbegin", `<a class="brand" href="#/overview" aria-label="FutureMedia"><img src="/assets/logo.png" alt="FutureMedia"></a>`);
+      drawer.insertAdjacentHTML("afterbegin", `<a class="brand" href="#/overview" aria-label="Future Media"><img src="/assets/logo.png" alt="Future Media"></a>`);
     }
     $("#nav").innerHTML = NAV.map(group => {
       const items = group.items.filter(item => !item.super || role === "SUPER_ADMIN");
@@ -897,7 +897,7 @@
     openModal(`<h2>New template</h2><form id="mform">${field("Name", "name")}<div class="modal-actions"><button type="button" class="ghost" data-close type="button">Cancel</button><button type="submit">Create</button></div></form>`);
     $("#mform").onsubmit = ev => saveForm(ev, "Creating template…", "Template created", async () => {
       if (!ev.target.name.value.trim()) throw new Error("A template name is required");
-      const created = await api("/api/email-templates", { method: "POST", body: { name: ev.target.name.value, headerHeadline: "Hello {{name}}", bodyContent: "Write your message here.", ctaText: "Visit FutureMedia", ctaUrl: "https://futuremedia.simplyfound.com.na", footerText: "Future Media · Namibia" } });
+      const created = await api("/api/email-templates", { method: "POST", body: { name: ev.target.name.value, headerHeadline: "Hello {{name}}", bodyContent: "Write your message here.", ctaText: "Visit Future Media", ctaUrl: "https://futuremedia.simplyfound.com.na", footerText: "Future Media · Namibia" } });
       location.hash = "#/templates/" + created.data.id;
     });
   }

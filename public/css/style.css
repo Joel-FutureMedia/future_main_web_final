@@ -2,7 +2,7 @@
 html{scroll-behavior:smooth}*{box-sizing:border-box;margin:0}body{font-family:Inter,sans-serif;color:#fff;background:linear-gradient(135deg,#19263a,#2c3a48 45%,#445d70);min-height:100vh}
 h1,h2,h3,.panel h2{font-family:Inter,sans-serif;font-weight:600;letter-spacing:.01em}
 a{color:inherit;text-decoration:none}img{max-width:100%}
-header{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;column-gap:20px;padding:16px 3vw 18px;position:absolute;top:0;left:0;right:0;z-index:5}
+header{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;column-gap:20px;padding:16px 3vw 18px;position:fixed;top:0;left:0;right:0;z-index:30}
 header::before{content:none}
 body.home header::before,
 body.careers header::before,
@@ -249,6 +249,9 @@ body.brands:not(.digital) .intro-person-wrap::after{content:"";position:absolute
 .bfigures .lsm{font-size:16px}
 .rail{position:fixed;right:22px;top:50%;transform:translateY(-50%);z-index:7;display:flex;flex-direction:column;gap:14px}
 .rail a{width:12px;height:12px;padding:0;border-radius:50%;background:var(--c);border:2px solid #fff;box-shadow:0 4px 10px rgba(0,0,0,.25);transition:transform .25s,box-shadow .25s}.rail a:hover,.rail a.on{transform:scale(1.7);box-shadow:0 0 0 5px rgba(255,255,255,.35)}
+body.brands .rail a{position:relative}
+body.brands .rail a::before{content:attr(aria-label);position:absolute;right:calc(100% + 14px);top:50%;transform:translateY(-50%);padding:7px 12px;border-radius:999px;background:rgba(10,21,80,.92);color:#fff;font-size:13px;font-weight:700;line-height:1;letter-spacing:0;white-space:nowrap;opacity:0;pointer-events:none;box-shadow:0 8px 18px rgba(0,0,0,.28)}
+body.brands .rail a:hover::before,body.brands .rail a:focus-visible::before{opacity:1;transform:translateY(-50%) scale(.588)}
 @keyframes ken{from{transform:scale(1.04)}to{transform:scale(1.14) translate3d(-1.5%,-1%,0)}}
 @keyframes region{0%,100%{fill:#fff}50%{fill:rgba(255,255,255,.62)}}
 @keyframes pop{from{transform:scale(.7);opacity:0}to{transform:none;opacity:1}}
